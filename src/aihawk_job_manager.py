@@ -64,6 +64,9 @@ class AIHawkJobManager:
         self.resume_path = Path(resume_path) if resume_path and Path(resume_path).exists() else None
         self.output_file_directory = Path(parameters['outputFileDirectory'])
         self.env_config = EnvironmentKeys()
+        self.max_daily_applications = int(parameters.get('max_daily_applications', 5))
+        self.applications_sent = 0
+        logger.info(f"Daily application limit configured: {self.max_daily_applications} applications max.")
         logger.debug("Parameters set successfully")
 
     def set_gpt_answerer(self, gpt_answerer):
@@ -130,12 +133,18 @@ class AIHawkJobManager:
         minimum_page_time = time.time() + minimum_time
 
         for position, location in searches:
+            if self.applications_sent >= self.max_daily_applications:
+                logger.info(f"Target daily limit of {self.max_daily_applications} applications reached. Exiting search.")
+                return
             location_url = "&location=" + location
             job_page_number = -1
             logger.debug(f"Starting the search for {position} in {location}.")
 
             try:
                 while True:
+                    if self.applications_sent >= self.max_daily_applications:
+                        logger.info(f"Target daily limit of {self.max_daily_applications} applications reached. Stopping.")
+                        return
                     page_sleep += 1
                     job_page_number += 1
                     logger.debug(f"Going to job page {job_page_number}")
@@ -306,6 +315,9 @@ class AIHawkJobManager:
         job_list = [Job(*self.extract_job_information_from_tile(job_element)) for job_element in job_list_elements]
 
         for job in job_list:
+            if self.applications_sent >= self.max_daily_applications:
+                logger.info(f"Target daily limit of {self.max_daily_applications} applications reached. Halting job applications.")
+                return
 
             logger.debug(f"Starting applicant for job: {job.title} at {job.company}")
             #TODO fix apply threshold
@@ -379,7 +391,11 @@ class AIHawkJobManager:
                 if job.apply_method not in {"Continue", "Applied", "Apply"}:
                     self.easy_applier_component.job_apply(job)
                     self.write_to_file(job, "success")
-                    logger.debug(f"Applied to job: {job.title} at {job.company}")
+                    self.applications_sent += 1
+                    logger.info(f"Successfully applied to {job.title} at {job.company}! [{self.applications_sent}/{self.max_daily_applications}]")
+                    if self.applications_sent >= self.max_daily_applications:
+                        logger.info(f"Target daily limit of {self.max_daily_applications} applications reached. Stopping applications.")
+                        return
             except Exception as e:
                 logger.error(f"Failed to apply for {job.title} at {job.company}: {e}")
                 self.write_to_file(job, "failed")

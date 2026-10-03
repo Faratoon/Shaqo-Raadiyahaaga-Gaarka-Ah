@@ -131,13 +131,14 @@ def chrome_browser_options():
     options.add_argument("--disable-logging")
     options.add_argument("--disable-autofill")
     options.add_argument("--disable-plugins")
-    options.add_argument("--disable-animations")
+    options.add_argument("--disable-blink-features=AutomationControlled")
     options.add_argument("--disable-cache")
     options.add_experimental_option("excludeSwitches", ["enable-automation", "enable-logging"])
+    options.add_experimental_option("useAutomationExtension", False)
 
     prefs = {
-        "profile.default_content_setting_values.images": 2,
-        "profile.managed_default_content_settings.stylesheets": 2,
+        "profile.default_content_setting_values.images": 1,
+        "profile.managed_default_content_settings.stylesheets": 1,
     }
     options.add_experimental_option("prefs", prefs)
 

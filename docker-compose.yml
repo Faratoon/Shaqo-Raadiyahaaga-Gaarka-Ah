@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  mohamed-job-portal:
+    build: .
+    container_name: mohamed-job-portal
+    ports:
+      - "5050:5050"
+    environment:
+      - PORT=5050
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    volumes:
+      - ./data_folder/output:/app/data_folder/output
+    restart: unless-stopped

@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mohamed Yasin Mohamoud | Career & Job Application Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-hover: #1d4ed8;
+            --accent: #0284c7;
+            --success: #16a34a;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.5;
+            padding-bottom: 50px;
+        }
+        .navbar {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+            color: white;
+            padding: 24px 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .nav-content {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .profile-title h1 {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+        .profile-title p {
+            font-size: 13.5px;
+            opacity: 0.85;
+            margin-top: 3px;
+        }
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .btn-download {
+            background: #22c55e;
+            color: white;
+            text-decoration: none;
+            padding: 9px 18px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 13.5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+        .btn-download:hover { background: #16a34a; transform: translateY(-1px); }
+
+        .container {
+            max-width: 1100px;
+            margin: 25px auto;
+            padding: 0 20px;
+        }
+
+        /* Quick Search Bar */
+        .search-panel {
+            background: var(--card-bg);
+            border-radius: 14px;
+            padding: 20px 24px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+            border: 1px solid var(--border);
+            margin-bottom: 25px;
+        }
+        .quick-actions {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+        .btn-quick {
+            background: #f1f5f9;
+            color: #1e293b;
+            border: 1px solid #cbd5e1;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 13.5px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-quick:hover {
+            background: #e2e8f0;
+            border-color: #94a3b8;
+        }
+        .btn-quick.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .search-inputs {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .input-group {
+            flex: 1;
+            min-width: 220px;
+        }
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .input-group input:focus, .input-group select:focus {
+            border-color: var(--accent);
+        }
+        .btn-search {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 11px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-search:hover { background: var(--primary-hover); }
+
+        /* Loading Spinner */
+        .spinner-container {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 12px auto;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* Section Header */
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        .results-header h2 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1e293b;
+        }
+        .limit-badge {
+            background: #dcfce7;
+            color: #166534;
+            font-size: 12.5px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        /* Job Cards */
+        .job-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 22px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border: 1px solid var(--border);
+            border-left: 5px solid var(--accent);
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+        .job-card:hover {
+            box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+            transform: translateY(-2px);
+        }
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        .job-title {
+            font-size: 18.5px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 4px;
+        }
+        .job-sub {
+            font-size: 14.5px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+        .match-badge {
+            background: #e0f2fe;
+            color: #0369a1;
+            font-weight: 800;
+            font-size: 13.5px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            white-space: nowrap;
+            border: 1px solid #bae6fd;
+        }
+        .meta-tags {
+            margin: 12px 0;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .tag {
+            background: #f1f5f9;
+            color: #475569;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 6px;
+        }
+        .pitch-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-size: 13.5px;
+            margin: 14px 0;
+            line-height: 1.6;
+        }
+        .letter-box {
+            background: #fffdf5;
+            border: 1px solid #fef08a;
+            border-radius: 8px;
+            padding: 14px 16px;
+            margin-top: 14px;
+        }
+        .letter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .letter-title {
+            font-size: 12.5px;
+            font-weight: 700;
+            color: #854d0e;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .cover-text {
+            font-size: 13px;
+            color: #334155;
+            white-space: pre-wrap;
+            line-height: 1.5;
+            max-height: 160px;
+            overflow-y: auto;
+            padding-right: 6px;
+        }
+        .card-actions {
+            margin-top: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .left-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .btn-apply {
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 13.5px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: background 0.2s;
+        }
+        .btn-apply:hover { background: #1d4ed8; }
+        .btn-copy {
+            background: #f1f5f9;
+            color: #1e293b;
+            border: 1px solid #cbd5e1;
+            padding: 9px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-copy:hover { background: #e2e8f0; }
+        .applied-check {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+        .applied-check input { cursor: pointer; }
+        .applied-badge {
+            background: #dcfce7;
+            color: #15803d;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            display: none;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 12px;
+            border: 1px dashed #cbd5e1;
+        }
+        .empty-state h3 { font-size: 18px; margin-bottom: 6px; color: #334155; }
+        .empty-state p { font-size: 14px; color: var(--text-muted); }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="profile-title">
+                <h1>Mohamed Yasin Mohamoud</h1>
+                <p>AI Educator & IT Specialist &bull; Edmonton, AB &bull; (587) 306-4137 &bull; Suxufi34@gmail.com</p>
+            </div>
+            <div class="header-actions">
+                <a href="/download/resume" class="btn-download" target="_blank">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/></svg>
+                    Download My PDF Resume
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        
+        <!-- Search & Control Panel -->
+        <div class="search-panel">
+            <div class="quick-actions">
+                <button class="btn-quick active" onclick="quickSearch('computer instructor', 'Edmonton, AB', false, this)">📍 5 Edmonton Teacher / IT Jobs</button>
+                <button class="btn-quick" onclick="quickSearch('digital literacy', 'Edmonton, AB', false, this)">💻 5 Digital Literacy Jobs</button>
+                <button class="btn-quick" onclick="quickSearch('AI automation', 'Canada', true, this)">🌐 5 Remote AI / Tech Jobs</button>
+                <button class="btn-quick" onclick="quickSearch('volunteer coordinator', 'Edmonton, AB', false, this)">🤝 5 Community / Volunteer Jobs</button>
+            </div>
+
+            <div class="search-inputs">
+                <div class="input-group">
+                    <input type="text" id="searchTerm" placeholder="Job Title (e.g. Computer Instructor, IT Support)" value="computer instructor">
+                </div>
+                <div class="input-group">
+                    <input type="text" id="searchLocation" placeholder="Location" value="Edmonton, AB">
+                </div>
+                <div style="display: flex; align-items: center; gap: 6px;">
+                    <input type="checkbox" id="searchRemote">
+                    <label for="searchRemote" style="font-size: 13.5px; font-weight: 500;">Remote only</label>
+                </div>
+                <div style="width: 90px;">
+                    <select id="searchLimit">
+                        <option value="5" selected>5 jobs</option>
+                        <option value="10">10 jobs</option>
+                    </select>
+                </div>
+                <button class="btn-search" onclick="executeSearch()">Search Jobs</button>
+            </div>
+        </div>
+
+        <!-- Spinner -->
+        <div class="spinner-container" id="spinner">
+            <div class="spinner"></div>
+            <p style="font-weight: 600; color: #1e3a8a;">Searching Indeed Canada & ZipRecruiter in real-time...</p>
+            <p style="font-size: 13px; color: var(--text-muted);">Analyzing match scores and generating tailored cover letters...</p>
+        </div>
+
+        <!-- Section Title -->
+        <div class="results-header" id="resultsHeader">
+            <h2>Today's Curated Applications</h2>
+            <span class="limit-badge" id="resultsCountBadge">5 Jobs Ready</span>
+        </div>
+
+        <!-- Job Cards Container -->
+        <div id="jobsList"></div>
+
+    </div>
+
+    <script>
+        // Load cached jobs on startup
+        document.addEventListener("DOMContentLoaded", () => {
+            fetchJobs();
+        });
+
+        async function fetchJobs() {
+            try {
+                const res = await fetch("/api/jobs");
+                const data = await res.json();
+                if (data.jobs && data.jobs.length > 0) {
+                    renderJobs(data.jobs);
+                } else {
+                    quickSearch("computer instructor", "Edmonton, AB", false, document.querySelector(".btn-quick"));
+                }
+            } catch (err) {
+                console.error("Error loading cached jobs:", err);
+            }
+        }
+
+        async function quickSearch(term, loc, remote, btn) {
+            document.querySelectorAll(".btn-quick").forEach(b => b.classList.remove("active"));
+            if (btn) btn.classList.add("active");
+            document.getElementById("searchTerm").value = term;
+            document.getElementById("searchLocation").value = loc;
+            document.getElementById("searchRemote").checked = remote;
+            await executeSearch();
+        }
+
+        async function executeSearch() {
+            const term = document.getElementById("searchTerm").value.trim();
+            const location = document.getElementById("searchLocation").value.trim();
+            const remote = document.getElementById("searchRemote").checked;
+            const limit = parseInt(document.getElementById("searchLimit").value) || 5;
+
+            document.getElementById("spinner").style.display = "block";
+            document.getElementById("jobsList").innerHTML = "";
+
+            try {
+                const res = await fetch("/api/search", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ term, location, remote, limit })
+                });
+                const data = await res.json();
+                document.getElementById("spinner").style.display = "none";
+                if (data.jobs && data.jobs.length > 0) {
+                    renderJobs(data.jobs);
+                } else {
+                    document.getElementById("jobsList").innerHTML = `
+                        <div class="empty-state">
+                            <h3>No exact jobs found</h3>
+                            <p>Try modifying your search term or broadening the location.</p>
+                        </div>
+                    `;
+                }
+            } catch (err) {
+                document.getElementById("spinner").style.display = "none";
+                alert("Search error: " + err);
+            }
+        }
+
+        function renderJobs(jobs) {
+            const container = document.getElementById("jobsList");
+            container.innerHTML = "";
+            document.getElementById("resultsCountBadge").innerText = `${jobs.length} Jobs Ready`;
+
+            jobs.forEach((job, index) => {
+                const card = document.createElement("div");
+                card.className = "job-card";
+                card.id = `job-${index}`;
+
+                card.innerHTML = `
+                    <div class="card-top">
+                        <div>
+                            <div class="job-title">${index + 1}. ${escapeHtml(job.title)}</div>
+                            <div class="job-sub">${escapeHtml(job.company)} &bull; ${escapeHtml(job.location)}</div>
+                        </div>
+                        <div class="match-badge">${job.match_score || "94%"} Match</div>
+                    </div>
+
+                    <div class="meta-tags">
+                        <span class="tag">Platform: ${escapeHtml(job.site)}</span>
+                        <span class="tag">Type: ${escapeHtml(job.job_type)}</span>
+                        <span class="tag">Posted: ${escapeHtml(job.date_posted)}</span>
+                        <span class="applied-badge" id="badge-${index}" style="${job.is_applied ? 'display:inline-block;' : ''}">✓ Applied</span>
+                    </div>
+
+                    <div class="pitch-box">
+                        <b>Why You Fit This Role:</b> ${escapeHtml(job.match_reason || "")}<br>
+                        <b>Key Application Strength:</b> ${escapeHtml(job.key_pitch || "")}
+                    </div>
+
+                    <div class="letter-box">
+                        <div class="letter-header">
+                            <span class="letter-title">Tailored Canadian Cover Letter</span>
+                            <button class="btn-copy" onclick="copyLetter(${index})">📋 Copy Letter</button>
+                        </div>
+                        <div class="cover-text" id="letter-${index}">${escapeHtml(job.cover_letter)}</div>
+                    </div>
+
+                    <div class="card-actions">
+                        <div class="left-actions">
+                            <a href="${job.job_url}" target="_blank" class="btn-apply" onclick="markAppliedDirectly('${escapeHtml(job.job_url)}', ${index})">
+                                Open & Apply on ${escapeHtml(job.site)} &rarr;
+                            </a>
+                            <button class="btn-copy" onclick="copyLetter(${index})">Copy Cover Letter</button>
+                        </div>
+                        <label class="applied-check">
+                            <input type="checkbox" id="check-${index}" ${job.is_applied ? 'checked' : ''} onchange="toggleApplied('${escapeHtml(job.job_url)}', ${index}, this.checked)">
+                            Mark as Applied
+                        </label>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function copyLetter(index) {
+            const text = document.getElementById(`letter-${index}`).innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                alert("Cover Letter copied to clipboard!");
+            });
+        }
+
+        async function toggleApplied(jobUrl, index, checked) {
+            const badge = document.getElementById(`badge-${index}`);
+            if (checked) {
+                badge.style.display = "inline-block";
+                await fetch("/api/mark_applied", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ job_url: jobUrl })
+                });
+            } else {
+                badge.style.display = "none";
+            }
+        }
+
+        function markAppliedDirectly(jobUrl, index) {
+            const check = document.getElementById(`check-${index}`);
+            if (check && !check.checked) {
+                check.checked = true;
+                toggleApplied(jobUrl, index, true);
+            }
+        }
+
+        function escapeHtml(text) {
+            if (!text) return "";
+            return String(text)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+    </script>
+</body>
+</html>

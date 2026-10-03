@@ -10,8 +10,8 @@ experienceLevel:
 
 jobTypes:
   full-time: true
-  contract: false
-  part-time: false
+  contract: true
+  part-time: true
   temporary: true
   internship: false
   other: false
@@ -20,34 +20,40 @@ jobTypes:
 date:
   all time: false
   month: false
-  week: false
+  week: true
   24 hours: true
 
 positions:
-  - Software engineer
+  - Computer Instructor
+  - Digital Literacy Trainer
+  - IT Support Specialist
+  - AI Automation
+  - Social Media Administrator
+  - Administrative Assistant
 
 locations:
-  - Germany
+  - Edmonton, Alberta, Canada
+  - Canada
+  - Remote
 
 apply_once_at_company: true
 
-distance: 100
+distance: 50
 
 company_blacklist:
-  - wayfair
   - Crossover
 
 title_blacklist:
-  - word1
-  - word2
+  - Senior Director
+  - VP
 
-location_blacklist:
-  - Brazil
+location_blacklist: []
 
 job_applicants_threshold:
   min_applicants: 0
-  max_applicants: 30
+  max_applicants: 150
+
+max_daily_applications: 5
 
 llm_model_type: openai
 llm_model: 'gpt-4o-mini'
-# llm_api_url: 'https://api.pawan.krd/cosmosrp/v1'
