@@ -109,15 +109,14 @@ class ConfigValidator:
     @staticmethod
     def validate_secrets(secrets_yaml_path: Path) -> str:
         secrets = ConfigValidator.validate_yaml_file(secrets_yaml_path)
-        mandatory_secrets = ['llm_api_key']
-
-        for secret in mandatory_secrets:
-            if secret not in secrets:
-                raise ConfigError(f"Missing secret '{secret}' in file {secrets_yaml_path}")
-
-        if not secrets['llm_api_key']:
+        api_key = secrets.get('llm_api_key', '')
+        if not api_key or 'YOUR_API_KEY' in str(api_key) or str(api_key).startswith('sk-11KRr4uu'):
+            env_key = os.getenv('OPENAI_API_KEY') or os.getenv('GEMINI_API_KEY')
+            if env_key:
+                return env_key
+        if not api_key:
             raise ConfigError(f"llm_api_key cannot be empty in secrets file {secrets_yaml_path}.")
-        return secrets['llm_api_key']
+        return api_key
 
 class FileManager:
     @staticmethod
@@ -153,7 +152,31 @@ def init_browser() -> webdriver.Chrome:
     try:
         options = chrome_browser_options()
         service = ChromeService(ChromeDriverManager().install())
-        return webdriver.Chrome(service=service, options=options)
+        driver = webdriver.Chrome(service=service, options=options)
+        try:
+            from selenium_stealth import stealth
+            stealth(
+                driver,
+                languages=["en-US", "en"],
+                vendor="Google Inc.",
+                platform="Win32",
+                webgl_vendor="Intel Inc.",
+                renderer="Intel Iris OpenGL Engine",
+                fix_hairline=True,
+            )
+        except Exception:
+            pass
+        driver.execute_cdp_cmd(
+            "Page.addScriptToEvaluateOnNewDocument",
+            {
+                "source": """
+                    Object.defineProperty(navigator, 'webdriver', {
+                        get: () => undefined
+                    });
+                """
+            },
+        )
+        return driver
     except Exception as e:
         raise RuntimeError(f"Failed to initialize browser: {str(e)}")
 
