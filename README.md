@@ -5,8 +5,8 @@
 ![Python](https://img.shields.io/badge/Python-3.11%20%7C%203.12-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![Flask](https://img.shields.io/badge/Flask-3.0.0-000000?style=for-the-badge&logo=flask&logoColor=white)
 ![AI Chatbot](https://img.shields.io/badge/AI%20Career%20Chatbot-Active-10B981?style=for-the-badge)
+[![Live Demo on Vercel](https://img.shields.io/badge/Live%20Portal-Vercel%20Active-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://auto-jobs-applier-aih-awk-live.vercel.app)
 ![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker&logoColor=white)
-![Vercel](https://img.shields.io/badge/Vercel-Deployable-000000?style=for-the-badge&logo=vercel&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 
 <br/>
