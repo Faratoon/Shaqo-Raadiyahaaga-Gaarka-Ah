@@ -1,0 +1,14 @@
+venv/
+.venv/
+chrome_profile/
+.git/
+.github/
+__pycache__/
+*.pyc
+tests/
+docs/
+*.bat
+Dockerfile
+docker-compose.yml
+requirements-bot.txt
+jobs_today.html

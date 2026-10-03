@@ -1,5 +1,4 @@
 flask>=3.0.0
-gunicorn>=21.2.0
 python-jobspy>=1.2.0
 openai>=1.30.0
 pandas>=2.0.0
