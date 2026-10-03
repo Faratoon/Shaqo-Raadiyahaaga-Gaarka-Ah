@@ -129,15 +129,15 @@ def is_spam_or_invalid(text: str) -> tuple[bool, str]:
 
     # 2. Character repetition spam (e.g. "aaaaaa", "!!!!!!", "zzzzzz")
     if re.search(r"(.)\1{6,}", text_clean):
-        return True, "⚠️ Fadlan soo qor su'aal ama codsi cad oo dhab ah, ka fogow xarfaha isku xiga ee spam-ka ah."
+        return True, "⚠️ Fadlan hadalka ha ku badin si uusan credit-ku u khasaarin. Haddii aad buugaag doonaysid, toos ugu biir: https://dhegeysobuug.substack.com/ (qof kasta oo subscribe gareeya buug ayaa loo dirayaa)."
 
     # 3. Gibberish / keyboard mash detection
     words = text_clean.split()
     for w in words:
         if len(w) > 35 and not w.startswith("http"):
-            return True, "⚠️ Qoraalkaaga waxaa ku jira ereyo aad u dhaadheer oo aan la fahmi karin. Fadlan soo qor hadal macno leh."
+            return True, "⚠️ Qoraalkaaga waxaa ku jira ereyo aan la fahmi karin. Haddii aad buugaag u baahan tahay, toos uga hel: https://dhegeysobuug.substack.com/"
         if len(w) >= 9 and not re.search(r"[aeiouy]", w, re.IGNORECASE) and not w.isdigit():
-            return True, "⚠️ Fadlan soo qor fariin macno leh oo la fahmi karo. Hadallada bilaa micnaha ah (spam) lama ogola."
+            return True, "⚠️ Fadlan soo qor fariin macno leh. Haddii aad buug doonayso, toos ugu biir warsidaha: https://dhegeysobuug.substack.com/ waxaana laguugu soo diri doonaa buugaagta."
 
     # 4. Profanity check
     vulgar = ["wasmo", "siil", "gus", "futada", "fck", "bitch", "shit"]
@@ -350,29 +350,41 @@ def get_career_ai_response(user_message: str) -> str:
 
     if client:
         system_instruction = """
-Waxaad tahay 'Kaaliyaha Rasmiga ah ee Shaqo Raadiyaha Dhalinyarada Soomaaliyeed' (Somali IT Youth Career & Academy AI).
+Waxaad tahay 'Kaaliyaha AI ee Shaqo Baahiye' (Somali IT Youth Career & Academy AI).
 Waxaad si gaar ah u caawisaa dhalinyarada iyo ardayda Soomaaliyeed ee bartay Culuumta IT-ga, Computer Science-ka, iyo AI Automation-ka.
 Goobaha aad taageerto: Soomaaliya (Muqdisho, Hargeysa, Garoowe, Kismaayo), Bariga Afrika (Kenya - Nairobi, Itoobiya - Jigjiga), Shaqooyinka Guriga (Remote Tech), iyo Kanada.
 
+Aasaasaha: Mohamed Yasin (Dynamic IT Educator, AI Automation Trainer).
+
 Waxaad haysataa aqoon buuxda oo ku saabsan:
-1. BUUGAAGTA CASRIGA AH EE ISBAR (Qore/Editor: Yahye Cabdirahmaan & Mohamed Faratoon):
+1. BUUGAAGTA CASRIGA AH EE ISBAR (Qore/Editor: Yahye Cabdirahmaan & Mohamed Yasin):
    - ISBAR COMPUTER: 89 pages, $5. (Computer Basics, Software/Hardware, Windows 11, Mac OS, MS Office, Photoshop, OBS Studio).
    - ISBAR PROGRAMMING: 177 pages, $5. (Basics of Programming, Web Dev Basics, Programming Languages, Database, Code Editor & IDE).
    - ISBAR AI (Artificial Intelligence) BASIC: 189 pages, $7. (Taariikhda AI, AI & Waxbarashada, AI & Shaqooyinka, AI & Graphic Design, AI & Ganacsiga).
    - ISBAR ChatGPT - Prompts Basic: 87 pages, FREE ($0!). (Waa maxay ChatGPT?, Sida loola xiriiro si hufan, Shaqooyinka, Waxbarashada, Ganacsiga).
-2. KOORSOOYINKA AUTOMATION-KA & MADALLADA CHATBOT-YADA:
-   - Madallada: Chatbase, Botfather Telegram, Chatfuel, Manychat, N8n, Botsail, Jotform, Botpress, Paal AI, Vibe Coding, Typebot.
-   - Waxaan dhisnaa custom AI chatbots, knowledge bases, flowcharts, iyo website automation.
-3. WARSIDAHA SUBSTACK EE SOMALILIBRARY:
-   - Ku dhiirigeli inay ku biiraan Somalilibrary Substack (somalilibrary.substack.com).
-4. KOORSOOYINKA LACAGTA & BILAASHKA:
-   - Paid: AI ChatGPT – Data Writing ($24 / Qiimo-dhimista Ardayda: $10, Duration: 4-5 days).
-   - Free: AI Video Editing, WhatsApp Business Bot, Telegram Business Bot, Messenger Business Bot, Instagram Business Bot, Web Design with AI Tools (all 4-5 days, Free for students).
+
+2. HELITAANKA BUUGAAGTA & BADBAADINTA CREDITS-KA:
+   - Haddii qofku buug weydiiyo, rabo in buug loo diro, ama hadalka baddiyo (si credit-ku uusan u khasaarin):
+     Toos ugu dir warsidaha Dhegeyso Buug: https://dhegeysobuug.substack.com/
+     Qof kasta oo ku biira (subscribe gareeya) waxaan si toos ah email-kiisa ugu diraynaa buugaagta!
+
+3. SIDEE LOO SAMEEYAY / OPEN SOURCE REPO:
+   - Haddii qofku weydiiyo 'sida loo sameeyay', 'repo', ama 'koodhka':
+     U sheeg in mashruucu yahay 100% Free / Open Source GitHub-ka (https://github.com/Faratoon/Shaqo-Raadiyahaaga-Gaarka-Ah).
+     Qofkii raba inuu barto sida nidaamkan oo kale loogu shubo loona dhiso iyadoo AI la isticmaalayo wuxuu dooran karaa 'Ballan Qabso' (Live 1-on-1 Mentorship oo toos ah oo uu la yeelanayo Mohamed Yasin).
+
+4. KOORSOOYINKA AUTOMATION-KA:
+   - Paid: AI ChatGPT – Data Writing ($24 / Ardayda: $10, 4-5 days).
+   - Free: AI Video Editing, WhatsApp Business Bot, Telegram Business Bot, Messenger & IG Bots, Web Design with AI Tools (Free for students).
+
 5. LIVE BOOKING & MENTORSHIP:
-   - Ardaydu waxay toos u qabsan karaan ballan 1-on-1 ah iyagoo adeegsanaya qeybta 'Live Booking' ama WhatsApp: +1 (587) 306-4137.
-6. SHAQOOYINKA IT-GA SOOMAALIDA & CV ATS:
-   - Hormuud, Dahabshiil, Premier Bank, Telesom, UN/IOM Somalia, Safaricom Kenya, Remote AI, iyo Canada.
-U jawaab si kooban oo faahfaahsan. Kaliya qoraal ayaa la ogol yahay.
+   - Ardaydu waxay toos u qabsan karaan ballan 1-on-1 ah iyagoo adeegsanaya qeybta 'Ballan Live ah' ama WhatsApp: +1 (587) 306-4137.
+
+6. XOGTA XIRIIRKA:
+   - YouTube: https://www.youtube.com/@Mfaratoon
+   - Substack: https://dhegeysobuug.substack.com/ & https://somalilibrary.substack.com
+
+U jawaab si kooban, xushmad leh, oo qoraal kaliya ah.
 """
         try:
             resp = client.chat.completions.create(
@@ -390,26 +402,28 @@ U jawaab si kooban oo faahfaahsan. Kaliya qoraal ayaa la ogol yahay.
             pass
 
     # Built-in Knowledge Base (Fast Local Fallback)
-    if any(k in user_lower for k in ["buug", "book", "isbar", "qiimaha", "pages", "bogag"]):
+    if any(k in user_lower for k in ["buug", "book", "isbar", "qiimaha", "pages", "bogag", "soo dir", "dhegeyso"]):
         return """📚 **Buugaagta Casriga ah ee 'Isbar' (Macallin La'aan):**
 
-1. 💻 **ISBAR COMPUTER** ($5 Kaliya | 89 Pages):
-   • Qore: Yahye Cabdirahmaan • Editor: Mohamed Faratoon
-   • Waxa ku jira: Computer Basics, Software & Hardware, Windows 11, Mac OS, MS Office, Adobe Photoshop, OBS Studio.
+1. 💻 **ISBAR COMPUTER** ($5 Kaliya | 89 Pages) • Qore: Yahye Cabdirahmaan • Editor: Mohamed Yasin
+2. 👨‍💻 **ISBAR PROGRAMMING** ($5 Kaliya | 177 Pages) • Qore: Yahye Abdirahmaan • Editor: Mohamed Yasin
+3. 🧠 **ISBAR AI BASIC** ($7 Kaliya | 189 Pages) • Qore: Yahye Abdirahmaan / Mohamed Yasin
+4. 🤖 **ISBAR ChatGPT Prompts** (🎁 FREE / 100% Bilaash! | 87 Pages) • Qore: Mohamed Yasin • Editor: Yahye Abdirahman
 
-2. 👨‍💻 **ISBAR PROGRAMMING** ($5 Kaliya | 177 Pages):
-   • Qore: Yahye Abdirahmaan • Editor: Mohamed Faratoon
-   • Waxa ku jira: Basics of Programming, Web Dev Basics, Programming Languages, Database, Code Editor & IDE.
+📬 **Sidee ku helaysaa Buugaagta?**
+Qof kasta oo ku biira (subscribe gareeya) warsidaha **Dhegeyso Buug** waxaan si toos ah email-kiisa ugu diraynaa buugaagta!
+👉 **Ku biir halkan:** [dhegeysobuug.substack.com](https://dhegeysobuug.substack.com/)"""
 
-3. 🧠 **ISBAR AI (Artificial Intelligence) BASIC** ($7 Kaliya | 189 Pages):
-   • Qore: Yahye Abdirahmaan / Mohamed Faratoon
-   • Waxa ku jira: Taariikhda AI, AI & Waxbarashada, AI & Shaqooyinka, AI & Graphic Design, AI & Ganacsiga.
+    elif any(k in user_lower for k in ["sida loo", "sidee loo", "sameeyaa", "repo", "source code", "shubo", "deploy", "dhis", "github"]):
+        return """⭐ **Madashan waa 100% Open Source (Bilaash):**
 
-4. 🤖 **ISBAR ChatGPT - Prompts Basic** (🎁 FREE / 100% Bilaash! | 87 Pages):
-   • Qore: Mohamed Faratoon • Editor: Yahya Abdirahman
-   • Waxa ku jira: Waa maxay ChatGPT?, Sida loola xiriiro si hufan, Shaqooyinka, Waxbarashada, Ganacsiga.
+Repository-ga rasmiga ah ee mashruucan waa bilaash qof kasta ayaana ka faa'iideysan kara:
+🔗 **GitHub:** [github.com/Faratoon/Shaqo-Raadiyahaaga-Gaarka-Ah](https://github.com/Faratoon/Shaqo-Raadiyahaaga-Gaarka-Ah)
 
-🎉 **Fursad Gaar ah:** Qof kasta oo buug iibsada wuxuu ku helayaa Mid ka mid ah Koorsooyinka Automation-ka oo **BILAASH** ah!"""
+🚀 **Ma rabtaa inaad barato sida nidaamkan oo kale loogu shubo loona dhiso iyadoo AI la adeegsanayo?**
+Qofkii raba inuu barto sida loo dhiso loona shubo (deploy) codsiyada casriga ah ee AI-ga:
+• Waxaad dooran kartaa **'Ballan Qabso'** (Live 1-on-1 Mentorship oo toos ah oo aad la yeelanayso **Mohamed Yasin**).
+• 📅 Qabso Ballan Live ah bogga ama toos WhatsApp: `+1 (587) 306-4137`."""
 
     elif any(k in user_lower for k in ["koorso", "course", "automation", "data writing", "video editing", "whatsapp", "telegram", "free", "bilaash"]):
         return """🎓 **Koorsooyinka AI Automation & Xirfadaha Casriga ah:**
@@ -430,48 +444,48 @@ U jawaab si kooban oo faahfaahsan. Kaliya qoraal ayaa la ogol yahay.
 📅 *Dooro koorsadaada oo ku dhufo 'Ballan Qabso' si aad toos ugu biirto!*"""
 
     elif any(k in user_lower for k in ["substack", "somalilibrary", "warside", "newsletter"]):
-        return """📬 **Warsidaha Rasmiga ah ee Somalilibrary (Substack):**
+        return """📬 **Warsidayaasha Rasmiga ah:**
 
-Ku soo biir warsidahayaga si aad u hesho:
-• Fursadaha shaqo ee IT-ga Soomaalida (Muqdisho, Hargeysa, Nairobi, Remote)
-• Casharro bilaash ah oo ku saabsan AI Automation & Programming
-• Buugaagta cusub ee Isbar iyo qiimo-dhimisyada ardayda
+1. 📚 **Dhegeyso Buug Substack (Helitaanka Buugaagta):**
+   Qof kasta oo subscribe gareeya waxaan toos ugu diraynaa buugaagta:
+   🔗 [dhegeysobuug.substack.com](https://dhegeysobuug.substack.com/)
 
-🔗 **Ku biir halkan:** [somalilibrary.substack.com](https://somalilibrary.substack.com)"""
+2. 📰 **Somalilibrary Substack (Fursadaha Shaqada & AI-ga):**
+   🔗 [somalilibrary.substack.com](https://somalilibrary.substack.com/)"""
 
     elif any(k in user_lower for k in ["shaqo", "it", "soomaaliya", "somalia", "muqdisho", "hargeysa", "kenya", "nairobi"]):
         return """💼 **Fursadaha Shaqo ee Dhalinyarada IT-ga Soomaaliyeed:**
 
 Nidaamku wuxuu si toos ah isku xiraa:
-1. 🇸🇴 **Soomaaliya:** IT Support, Network, & Web Dev (Hormuud, Dahabshiil, Premier Bank, Telesom, UN/IOM).
+1. 🇸🇴 **Soomaaliya:** IT Support, Network, & Web Dev (Hormuud, Dahabshiil, Premier Bank, Telesom).
 2. 🇰🇪 **East Africa:** Cloud, Data & Systems (Safaricom Nairobi, NGO projects Jigjiga & Addis).
 3. 🌐 **Remote Global:** AI Automation Specialists, Virtual IT Helpdesk.
 4. 🇨🇦 **Canada & Diaspora:** Computer Instruction, Technical Support Edmonton & Toronto.
 
 *Guji qeybta 'Shaqooyinka' si aad u hesho warqad codsi (Cover Letter) diyaarsan!*"""
 
-    elif any(k in user_lower for k in ["booking", "ballan", "xiriir", "contact", "la kulan", "faratoon", "caawin", "mentorship"]):
+    elif any(k in user_lower for k in ["booking", "ballan", "xiriir", "contact", "la kulan", "caawin", "mentorship"]):
         return """📅 **Ballan Live ah & Xiriir Toos ah (Live Booking):**
 
-Waxaad si toos ah ula xiriiri kartaa **Mohamed Yasin Mohamoud (Faratoon)**:
+Waxaad si toos ah ula xiriiri kartaa **Mohamed Yasin**:
 • 📅 **Live Booking Form:** Guji tab-ka **'Ballan Live ah'** ee bogga si aad u doorato taariikhda iyo waqtiga.
 • 📱 **WhatsApp:** `+1 (587) 306-4137`
 • 📧 **Email:** `Suxufi34@gmail.com`
 • 📍 **Goobta:** Edmonton, Alberta, Canada 🇨🇦 & Online Global
 • 🔗 **LinkedIn:** [linkedin.com/in/mfaratoon](https://www.linkedin.com/in/mfaratoon)
-• 📺 **YouTube:** [youtube.com/User/MrFaratoon](https://www.youtube.com/User/MrFaratoon)
+• 📺 **YouTube:** [youtube.com/@Mfaratoon](https://www.youtube.com/@Mfaratoon)
 
 *Haddii aad tahay arday u baahan caawinaad CV, tababar koorso, ama talo shaqo, xor ayaad u tahay inaad nala soo xiriirto!*"""
 
     else:
-        return """Salamaat walaal! 👋 Waxaan ahay **Kaaliyaha Rasmiga ah ee Dhalinyarada Soomaaliyeed ee IT-ga**.
+        return """Salamaat walaal! 👋 Waxaan ahay **Kaaliyaha AI ee Shaqo Baahiye**.
 
 Waxaan diyaar kuugu ahay inaan kaa caawiyo:
 1. 💻 **Shaqooyinka IT-ga ee Soomaaliya (Muqdisho, Hargeysa), East Africa & Remote**
-2. 📚 **Buugaagta Isbar (Computer $5, Programming $5, AI $7, ChatGPT FREE)**
+2. 📚 **Buugaagta Isbar** (Subscribe dheh [dhegeysobuug.substack.com](https://dhegeysobuug.substack.com/) si toos ah ayaan kuugu soo diraynaa buugaagta!)
 3. 🤖 **Koorsooyinka AI Automation & Chatbots (WhatsApp, Telegram, N8n, Typebot)**
-4. 📬 **Ku biirista Warsidaha Somalilibrary Substack**
-5. 📅 **Live Booking & Mentorship 1-on-1 ah**
+4. ⭐ **Open Source Repo** (Baro sida loo dhiso loona shubo iyadoo AI la adeegsanayo)
+5. 📅 **Live Booking & Mentorship 1-on-1 ah la yeelo Mohamed Yasin**
 
 *Ii soo qor su'aashaada gaarka ah! (Fadlan qoraal kaliya soo dir - sawirrada lama ogola)* 🚀"""
 
@@ -643,7 +657,7 @@ def chat_assistant():
     if not allowed:
         return jsonify({
             "status": "limit_reached",
-            "reply": "⚠️ Waxaad gaartay xadka 30-ka fariimood ee kulankan. Si aad u hesho caawin toos ah ama ballan gaar ah la yeelato Mohamed Faratoon, fadlan isticmaal qeybta 'Live Booking' ama toos ugala xiriir WhatsApp: +1 (587) 306-4137.",
+            "reply": "⚠️ Waxaad gaartay xadka 30-ka fariimood ee kulankan si loo ilaaliyo khayraadka nidaamka. Haddii aad buugaag doonayso, fadlan toos ugu biir warsidaha Dhegeyso Buug: https://dhegeysobuug.substack.com/ (qof kasta oo subscribe gareeya buug ayaa loo dirayaa). Haddii aad rabto ballan live ah ama caawin toos ah oo aad la yeelato Mohamed Yasin, isticmaal qeybta 'Ballan Live ah' ama WhatsApp: +1 (587) 306-4137.",
             "remaining": 0,
             "count": count
         }), 429

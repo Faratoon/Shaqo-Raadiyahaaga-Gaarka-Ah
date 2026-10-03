@@ -27,6 +27,8 @@ FALLBACK_DOMAIN = "https://auto-jobs-applier-aih-awk-live.vercel.app"
 WEB_APP_URL = PRIMARY_DOMAIN
 GITHUB_REPO_URL = "https://github.com/Faratoon/Shaqo-Raadiyahaaga-Gaarka-Ah"
 SUBSTACK_URL = "https://somalilibrary.substack.com"
+DHEGEYSO_BUUG_SUBSTACK = "https://dhegeysobuug.substack.com/"
+YOUTUBE_URL = "https://www.youtube.com/@Mfaratoon"
 SHARE_TEXT = urllib.parse.quote("🔥 Fursadaha Shaqo & Akadeemiyada Isbar (isbar-ai.com)! Ka faa'iideyso @Baahiyebot & Mini App-ka 🚀")
 
 def configure_bot_menu_button():
@@ -198,12 +200,17 @@ def handle_academy(chat_id):
 • 🧠 <b>ISBAR AI BASIC</b> ($7) — 189 Pages (Taariikhda AI, Shaqooyinka, Ganacsiga)
 • 🤖 <b>ISBAR ChatGPT Prompts</b> — 🎁 <b>Bilaash</b> (87 Pages)
 
+📬 <b>Sidee ku helaysaa Buugaagta?</b>
+Qof kasta oo ku biira (subscribe gareeya) warsidaha <b>Dhegeyso Buug</b> waxaan si toos ah emailkiisa ugu diraynaa buugaagta:
+👉 <a href="https://dhegeysobuug.substack.com/">dhegeysobuug.substack.com</a>
+
 🎓 <b>Koorsooyinka AI Automation (100% Bilaash):</b>
 • 🎥 AI Video Editing &bull; 📱 WhatsApp & Telegram Business Bots
 • 🌐 Web Design with AI Tools (HTML/CSS)"""
 
     markup = {
         "inline_keyboard": [
+            [{"text": "📬 Ku Biir Dhegeyso Buug (Hel Buug)", "url": DHEGEYSO_BUUG_SUBSTACK}],
             [{"text": "📱 Gal Akadeemiyada Isbar (Web App)", "web_app": {"url": f"{WEB_APP_URL}#coursesHubSection"}}],
             [
                 {"text": "💬 Dalbo Buug (WhatsApp)", "url": "https://wa.me/15873064137?text=Salamaat%20Mohamed,%20waxaan%20rabaa%20buug%20Isbar"},
@@ -238,27 +245,32 @@ def handle_contact(chat_id):
 
 Kala xidhiidh aasaasaha iyo kooxda nidaamka siyaabaha rasmiga ah:
 
+• 📬 <b>Dhegeyso Buug Substack (Helitaanka Buugaagta):</b>
+  <a href='https://dhegeysobuug.substack.com/'>dhegeysobuug.substack.com</a>
+
 • 📬 <b>Somalilibrary Substack (Warsidaha Rasmiga ah):</b>
   <a href='https://somalilibrary.substack.com'>somalilibrary.substack.com</a>
-  <i>(Ku biir kumanaan arday oo todobaad kasta emailkooda ugu hela shaqooyinka, buugaagta Isbar & AI-ga)</i>
 
 • 📱 <b>WhatsApp Toos ah:</b> <a href='https://wa.me/15873064137'>+1 (587) 306-4137</a>
 • 📧 <b>Email:</b> Suxufi34@gmail.com
 • 🔗 <b>LinkedIn:</b> <a href='https://www.linkedin.com/in/mfaratoon'>linkedin.com/in/mfaratoon</a>
-• 📺 <b>YouTube Portfolio:</b> <a href='https://www.youtube.com/User/MrFaratoon'>youtube.com/User/MrFaratoon</a>
+• 📺 <b>YouTube Portfolio:</b> <a href='https://www.youtube.com/@Mfaratoon'>youtube.com/@Mfaratoon</a>
 • 🌐 <b>Website:</b> <a href='https://isbar-ai.com'>https://isbar-ai.com</a>
 
 📍 <b>Mohamed Yasin</b> &bull; Edmonton, AB, Canada 🇨🇦"""
 
     markup = {
         "inline_keyboard": [
-            [{"text": "📬 Ku Biir Substack-ka (Bilaash)", "url": SUBSTACK_URL}],
+            [
+                {"text": "📬 Dhegeyso Buug (Substack)", "url": DHEGEYSO_BUUG_SUBSTACK},
+                {"text": "📬 Somalilibrary Substack", "url": SUBSTACK_URL}
+            ],
             [
                 {"text": "📱 WhatsApp Toos ah", "url": "https://wa.me/15873064137?text=Salamaat%20Mohamed,%20waxaan%20doonayaa%20macluumaad"},
                 {"text": "🔗 LinkedIn", "url": "https://www.linkedin.com/in/mfaratoon"}
             ],
             [
-                {"text": "📺 YouTube", "url": "https://www.youtube.com/User/MrFaratoon"},
+                {"text": "📺 YouTube (@Mfaratoon)", "url": YOUTUBE_URL},
                 {"text": "🌐 isbar-ai.com", "url": PRIMARY_DOMAIN}
             ],
             [{"text": "🔙 Ku noqo Menu-ga", "callback_data": "menu_main"}]
@@ -322,7 +334,7 @@ def process_message(message):
         handle_jobs(chat_id)
     elif text_lower in ["/cv", "resume", "wareysi"]:
         handle_cv(chat_id)
-    elif text_lower in ["/academy", "/books", "/courses", "buug", "koorso", "isbar"]:
+    elif text_lower in ["/academy", "/books", "/courses", "buug", "koorso", "isbar", "buugaag", "buugag", "soo dir"]:
         handle_academy(chat_id)
     elif text_lower in ["/booking", "ballan", "mentorship"]:
         handle_booking(chat_id)
@@ -330,10 +342,18 @@ def process_message(message):
         handle_contact(chat_id)
     elif text_lower in ["/broadcast", "/share", "baahin"]:
         handle_broadcast(chat_id)
-    elif text_lower in ["/github", "github", "opensource"]:
-        send_message(chat_id, f"⭐ <b>Mashruucan waa 100% Open Source:</b>\n\n🔗 {GITHUB_REPO_URL}", {
+    elif any(w in text_lower for w in ["sida loo", "sidee loo", "sameeyaa", "repo", "source code", "shubo", "deploy", "dhis", "github", "opensource"]):
+        reply_repo = f"""⭐ <b>Madashan waa 100% Open Source (Bilaash):</b>
+
+Repository-ga rasmiga ah waa bilaash oo qof kasta wuu ka faa'iideysan karaa:
+🔗 <a href='{GITHUB_REPO_URL}'>GitHub Repository</a>
+
+🚀 <b>Ma rabtaa inaad barato sida nidaamkan oo kale loogu shubo loona dhiso iyadoo AI la adeegsanayo?</b>
+Qofkii raba inuu barto sida loo dhiso loona shubo codsiyada casriga ah ee AI-ga, waxaad dooran kartaa <b>'Ballan Qabso'</b> (Live 1-on-1 Mentorship oo toos ah oo aad la yeelanayso <b>Mohamed Yasin</b>)."""
+        send_message(chat_id, reply_repo, {
             "inline_keyboard": [
-                [{"text": "⭐ Eeg GitHub Repository", "url": GITHUB_REPO_URL}],
+                [{"text": "📅 Qabso Ballan Live ah", "callback_data": "menu_booking"}],
+                [{"text": "⭐ Eeg GitHub Repo", "url": GITHUB_REPO_URL}],
                 [{"text": "🔙 Ku noqo Menu-ga", "callback_data": "menu_main"}]
             ]
         })
