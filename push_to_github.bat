@@ -1,17 +1,17 @@
 @echo off
-title Push Mohamed Job Portal to GitHub
+title Push Shaqo Raadiyahaaga Gaarka Ah to GitHub
 cd /d "%~dp0"
 echo ================================================================
-echo    Pushing Mohamed Career Portal & AIHawk Live to GitHub
+echo    Pushing Shaqo Raadiyahaaga Gaarka Ah to GitHub
 echo ================================================================
 echo.
 echo Your GitHub username: Faratoon
 echo.
 echo Make sure you have created the repository on GitHub first:
-echo 👉 https://github.com/new (Name: Auto_Jobs_Applier_AIHawk_Live)
+echo 👉 https://github.com/new (Name: Shaqo-Raadiyahaaga-Gaarka-Ah)
 echo.
-set /p REPO_URL="Enter your GitHub Repo URL (or press Enter for https://github.com/Faratoon/Auto_Jobs_Applier_AIHawk_Live.git): "
-if "%REPO_URL%"=="" set REPO_URL=https://github.com/Faratoon/Auto_Jobs_Applier_AIHawk_Live.git
+set /p REPO_URL="Enter your GitHub Repo URL (or press Enter for https://github.com/Faratoon/Shaqo-Raadiyahaaga-Gaarka-Ah.git): "
+if "%REPO_URL%"=="" set REPO_URL=https://github.com/Faratoon/Shaqo-Raadiyahaaga-Gaarka-Ah.git
 
 echo.
 echo Setting remote origin to: %REPO_URL%
