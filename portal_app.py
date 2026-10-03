@@ -708,15 +708,95 @@ def mark_applied():
         return jsonify({"status": "success"})
     return jsonify({"status": "error", "message": "No job_url provided"}), 400
 
+def generate_resume_pdf(output_path: Path):
+    """Generates a professional, complete 1-page ATS resume for Mohamed Yasin Mohamoud."""
+    from reportlab.lib.pagesizes import letter
+    from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, HRFlowable
+    from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+    from reportlab.lib import colors
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    doc = SimpleDocTemplate(str(output_path), pagesize=letter, leftMargin=36, rightMargin=36, topMargin=32, bottomMargin=32)
+    
+    title_style = ParagraphStyle('RTitle', fontName='Helvetica-Bold', fontSize=16, leading=19, textColor=colors.HexColor('#0b132b'), alignment=1)
+    sub_style = ParagraphStyle('RSub', fontName='Helvetica-Bold', fontSize=9.5, leading=12, textColor=colors.HexColor('#0284c7'), alignment=1)
+    contact_style = ParagraphStyle('RContact', fontName='Helvetica', fontSize=8.5, leading=11, textColor=colors.HexColor('#475569'), alignment=1)
+    sec_head = ParagraphStyle('RSecHead', fontName='Helvetica-Bold', fontSize=10.5, leading=13, textColor=colors.HexColor('#0b132b'), spaceBefore=5, spaceAfter=2)
+    body_style = ParagraphStyle('RBody', fontName='Helvetica', fontSize=8.5, leading=11.5, textColor=colors.HexColor('#1e293b'))
+    bullet_style = ParagraphStyle('RBullet', fontName='Helvetica', fontSize=8.2, leading=10.8, textColor=colors.HexColor('#334155'), leftIndent=12)
+    job_head = ParagraphStyle('RJobHead', fontName='Helvetica-Bold', fontSize=9, leading=11, textColor=colors.HexColor('#0f172a'))
+
+    elements = []
+    elements.append(Paragraph('MOHAMED YASIN MOHAMOUD (FARATOON)', title_style))
+    elements.append(Spacer(1, 2))
+    elements.append(Paragraph('Dynamic IT Educator &bull; Computer Systems Specialist &bull; AI Automation Trainer', sub_style))
+    elements.append(Spacer(1, 2))
+    elements.append(Paragraph('Edmonton, AB, Canada &bull; +1 (587) 306-4137 &bull; Suxufi34@gmail.com &bull; linkedin.com/in/mfaratoon', contact_style))
+    elements.append(Spacer(1, 4))
+    elements.append(HRFlowable(width='100%', thickness=1, color=colors.HexColor('#0284c7'), spaceAfter=5, spaceBefore=2))
+
+    elements.append(Paragraph('PROFESSIONAL SUMMARY', sec_head))
+    elements.append(Paragraph('Dedicated and results-driven IT Educator, Computer Support Specialist, and AI Automation Trainer with 5+ years of international teaching experience with the United Nations International Organization for Migration (UN/IOM). Proven track record in IT literacy instruction, technical troubleshooting, systems administration, and AI chatbot development. Recipient of an official UN/IOM Certificate of Commendation, with an online reach exceeding 100,000 Somali students.', body_style))
+    elements.append(Spacer(1, 4))
+
+    elements.append(Paragraph('CORE TECHNICAL EXPERTISE', sec_head))
+    skills_text = '<b>IT & Systems:</b> Hardware Diagnostics, Windows 11/10, MacOS, Linux, TCP/IP Networking, DNS/DHCP, IT Security Basics.<br/><b>AI & Automation:</b> Prompt Engineering, Custom Chatbots (Typebot, ManyChat, Botpress, Paal AI, N8n), Workflow Automation.<br/><b>Instruction & Productivity:</b> Microsoft Office 365, Google Workspace, Adobe Photoshop, OBS Studio, Bilingual Technical Training.'
+    elements.append(Paragraph(skills_text, body_style))
+    elements.append(Spacer(1, 4))
+
+    elements.append(Paragraph('PROFESSIONAL EXPERIENCE', sec_head))
+    elements.append(Paragraph('<b>Founder & AI Automation Lead</b> | <i>Somalibotmaster & Somali Library</i> &nbsp;&bull;&nbsp; 12/2023 &ndash; Present', job_head))
+    elements.append(Paragraph('&bull; Architected conversational AI chatbots and automated workflow pipelines for Somali educational and job matching platforms.', bullet_style))
+    elements.append(Paragraph('&bull; Author & Editor of modern tech publications including <i>Isbar Computer</i>, <i>Isbar Programming</i>, and <i>Isbar AI</i>.', bullet_style))
+    elements.append(Paragraph('&bull; Conducted live remote training cohorts in AI tools, video editing, and chatbot deployment for 500+ participants.', bullet_style))
+    elements.append(Spacer(1, 3))
+
+    elements.append(Paragraph('<b>Computer Teacher & Digital Literacy Instructor</b> | <i>UN Migration Agency (IOM)</i> &nbsp;&bull;&nbsp; 03/2017 &ndash; 01/2021', job_head))
+    elements.append(Paragraph('&bull; Delivered foundational and advanced IT training (Computer Basics, MS Office, photo/video editing) to multicultural refugee cohorts.', bullet_style))
+    elements.append(Paragraph('&bull; Developed hands-on technical curriculum enabling students to gain essential employment-ready digital competencies.', bullet_style))
+    elements.append(Paragraph('&bull; <b>Awarded Official Certificate of Commendation</b> by IOM leadership in recognition of 3+ years of exemplary educational service.', bullet_style))
+    elements.append(Spacer(1, 3))
+
+    elements.append(Paragraph('<b>Website Content & Digital Media Coordinator</b> | <i>Somalinfo.com</i> &nbsp;&bull;&nbsp; 11/2014 &ndash; 05/2015', job_head))
+    elements.append(Paragraph('&bull; Administered digital publishing workflows, site traffic analytics, and multimedia asset deployment.', bullet_style))
+    elements.append(Spacer(1, 4))
+
+    elements.append(Paragraph('EDUCATION & PROFESSIONAL CREDENTIALS', sec_head))
+    elements.append(Paragraph('&bull; <b>Google IT Support Professional Certificate</b> &ndash; Google / Coursera (Networking, Security, OS, System Admin)', bullet_style))
+    elements.append(Paragraph('&bull; <b>Bachelor of Arts in Media & Mass Communication</b> &ndash; African Virtual University (AVU), 2009', bullet_style))
+    elements.append(Paragraph('&bull; <b>Certificate of Commendation</b> &ndash; United Nations International Organization for Migration (UN/IOM)', bullet_style))
+
+    doc.build(elements)
+    return output_path
+
 @app.route("/download/resume")
 def download_resume():
-    if PDF_RESUME_PATH.exists():
+    try:
+        target_path = PDF_RESUME_PATH
+        # Also check assets backup
+        assets_backup = BASE_DIR / "assets" / "Mohamed_Yasin_Mohamoud_Resume.pdf"
+        
+        if not target_path.exists() or target_path.stat().st_size < 3500:
+            if assets_backup.exists() and assets_backup.stat().st_size >= 3500:
+                target_path = assets_backup
+            else:
+                generate_resume_pdf(target_path)
+                
         return send_file(
-            PDF_RESUME_PATH,
+            target_path,
             as_attachment=True,
-            download_name="Mohamed_Yasin_Mohamoud_Resume.pdf"
+            download_name="Mohamed_Yasin_Mohamoud_Resume.pdf",
+            mimetype="application/pdf"
         )
-    return "Resume PDF not found. Please generate it first.", 404
+    except Exception as e:
+        fallback_path = OUTPUT_FOLDER / "Mohamed_Yasin_Mohamoud_Resume.pdf"
+        generate_resume_pdf(fallback_path)
+        return send_file(
+            fallback_path,
+            as_attachment=True,
+            download_name="Mohamed_Yasin_Mohamoud_Resume.pdf",
+            mimetype="application/pdf"
+        )
 
 def start_server():
     port = int(os.environ.get("PORT", 5050))

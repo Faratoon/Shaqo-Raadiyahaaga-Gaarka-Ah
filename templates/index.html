@@ -210,6 +210,60 @@
         }
         .btn-telegram-nav:hover { transform: translateY(-1px); }
 
+        .btn-github-nav {
+            background: #24292f;
+            color: white;
+            text-decoration: none;
+            padding: 7px 13px;
+            border-radius: 10px;
+            font-size: 12.5px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+            transition: transform 0.2s;
+        }
+        .btn-github-nav:hover { transform: translateY(-1px); background: #0f172a; }
+
+        .opensource-showcase-card {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 36px;
+            position: relative;
+        }
+        .btn-github-action {
+            background: #24292f;
+            color: white;
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 10px;
+            font-size: 13.5px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+        .btn-github-action:hover { background: #0f172a; transform: translateY(-1px); }
+        .opensource-tags-row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .os-tag {
+            background: #f1f5f9;
+            color: #334155;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+
         .btn-chat-trigger-nav {
             background: linear-gradient(135deg, #0284c7, #38bdf8);
             color: white;
@@ -1660,19 +1714,17 @@
             </a>
 
             <nav class="nav-links">
-                <a href="#heroServices" class="nav-link" id="navLinkServices">💼 Adeegyada Shaqada</a>
-                <a href="#coursesHubSection" class="nav-link" id="navLinkCourses">📚 Koorsooyinka & Buugaagta</a>
+                <a href="#jobsSection" class="nav-link" id="navLinkJobs">🔍 Shaqooyinka IT-ga</a>
+                <a href="#assessSection" class="nav-link" id="navLinkAssess">⚡ Dhis CV (ATS)</a>
+                <a href="#openSourceSection" class="nav-link">⭐ Open Source</a>
+                <a href="#coursesHubSection" class="nav-link" id="navLinkCourses">📚 Koorsooyinka</a>
                 <a href="#bookingSection" class="nav-link" id="navLinkBooking">📅 Ballan Live ah</a>
-                <a href="#assessSection" class="nav-link" id="navLinkAssess">⚡ AI Assessment</a>
-                <a href="#jobsSection" class="nav-link" id="navLinkJobs">🔍 Shaqooyinka</a>
-                <a href="#substackSection" class="nav-link">📬 Substack</a>
                 <a href="#founderSection" class="nav-link" id="navLinkFounder">👨‍🏫 Aasaasaha</a>
             </nav>
 
             <div class="nav-actions">
-                <a href="https://t.me/Baahiyebot" target="_blank" class="btn-telegram-nav" title="Telegram Mini App & Bot">📱 Mini App & Bot</a>
-                <a href="#substackSection" class="btn-substack-nav">📬 Substack</a>
-                <a href="#bookingSection" class="btn-booking-nav" id="btnNavBooking">📅 Ballan Qabso</a>
+                <a href="https://github.com/Faratoon/Shaqo-Raadiyahaaga-Gaarka-Ah" target="_blank" class="btn-github-nav" title="GitHub Open Source Repository">⭐ GitHub</a>
+                <a href="https://t.me/Baahiyebot" target="_blank" class="btn-telegram-nav" title="Telegram Mini App & Bot">📱 Mini App</a>
                 <a href="/download/resume" class="btn-resume" target="_blank" id="btnDownloadResume">📄 CV (PDF)</a>
                 <button class="btn-chat-trigger-nav" onclick="toggleChat()" id="btnNavChat">💬 Kaaliyaha AI</button>
             </div>
@@ -1684,10 +1736,10 @@
         <!-- Hero Section -->
         <section class="hero-banner">
             <div class="badge-pill-row">
-                <span class="badge-pill green" id="badgeLive">🟢 Live AI Job Engine</span>
-                <span class="badge-pill gold" id="badgeSomali">🇸🇴 Soomaaliya & East Africa</span>
+                <a href="https://github.com/Faratoon/Shaqo-Raadiyahaaga-Gaarka-Ah" target="_blank" class="badge-pill gold" style="text-decoration:none;">⭐ 100% Open Source on GitHub</a>
+                <span class="badge-pill green" id="badgeLive">🟢 Live Job Search</span>
                 <span class="badge-pill" id="badgeIT">💻 Culuumta IT-ga & CS</span>
-                <span class="badge-pill" id="badgeRemote">🌐 Remote & Canada</span>
+                <a href="https://t.me/Baahiyebot" target="_blank" class="badge-pill" style="text-decoration:none; background:rgba(0,136,204,0.2); border-color:rgba(0,136,204,0.4); color:#38bdf8;">🤖 Telegram Bot: @Baahiyebot</a>
             </div>
 
             <h2 id="heroHeadline">
@@ -1695,21 +1747,21 @@
             </h2>
 
             <p id="heroSubtitle">
-                Madal casri ah oo u heellan dhalinyarada iyo ardayda Soomaaliyeed ee bartay Culuumta IT-ga, Computer Science-ka, iyo AI Automation-ka. Uma baahnid login; ka raadi fursadaha shaqo ee Soomaaliya (Muqdisho, Hargeysa), Bariga Afrika (Kenya, Itoobiya), Remote-ka caalamiga ah, iyo Kanada adigoo hal guji ku helaya CV ATS-friendly ah iyo warqadda codsiga (Cover Letter).
+                Madal furan (Open-Source) oo u heellan dhalinyarada iyo ardayda Soomaaliyeed ee bartay Culuumta IT-ga iyo Computer Science-ka. Ka raadi fursadaha shaqo ee Soomaaliya (Muqdisho, Hargeysa), Bariga Afrika (Kenya, Itoobiya), Remote-ka caalamiga ah, iyo Kanada adigoo hal guji ku helaya CV ATS-friendly ah iyo warqadda codsiga (Cover Letter).
             </p>
 
             <div class="hero-actions">
-                <a href="#assessSection" class="hero-btn-primary" id="btnHeroAssess">
-                    ⚡ Falanqee Xirfadahaaga IT-ga (60 Sec)
+                <a href="#jobsSection" class="hero-btn-primary" id="btnHeroJobs">
+                    🔍 Baadh Shaqooyinka IT-ga (Live)
                 </a>
-                <a href="#jobsSection" class="hero-btn-secondary" id="btnHeroJobs">
-                    🔍 Baadh Shaqooyinka IT-ga Soomaalida
+                <a href="#assessSection" class="hero-btn-secondary" id="btnHeroAssess">
+                    ⚡ Dhis CV ATS ah (60 Sec)
                 </a>
                 <a href="https://t.me/Baahiyebot" target="_blank" class="hero-btn-telegram" id="btnHeroTelegram">
-                    📱 Telegram Mini App & Bot (@Baahiyebot)
+                    📱 Telegram Mini App (@Baahiyebot)
                 </a>
-                <a href="#bookingSection" class="hero-btn-success" id="btnHeroBooking">
-                    📅 Qabso Ballan Live ah (1-on-1)
+                <a href="https://github.com/Faratoon/Shaqo-Raadiyahaaga-Gaarka-Ah" target="_blank" class="hero-btn-secondary" style="background:#24292f; border-color:#475569;">
+                    ⭐ GitHub Repo
                 </a>
             </div>
 
@@ -1851,7 +1903,215 @@
         </section>
 
         <!-- ========================================================
-             1. UNIFIED COURSES & BOOKS HUB (ISKU DAAQAD)
+             1. LIVE JOBS ENGINE (SOMALIA, EAST AFRICA, REMOTE, CANADA)
+             ======================================================== -->
+        <section id="jobsSection">
+            <div class="section-header">
+                <span class="section-badge">Shaqooyinka Tooska ah</span>
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+                    <h3 class="section-title">
+                        <span>🔍</span> <span id="jobsSectionTitle">Shaqooyinka IT-ga ee Soomaaliya, East Africa & Remote</span>
+                    </h3>
+                    <div style="font-size:12.5px; font-weight:700; background:#f1f5f9; padding:5px 12px; border-radius:14px; color:#0f766e;" id="quotaDisplay">
+                        Quota: 5 Codsi oo Diyaarsan Maalintii
+                    </div>
+                </div>
+                <p class="section-subtitle" id="jobsSectionSub">Shaqooyin tayo leh oo wata Cover Letter diyaarsan oo toos loogu codsan karo.</p>
+            </div>
+
+            <div class="search-panel">
+                <div class="quick-actions">
+                    <button class="btn-quick active" onclick="quickFilter(this, 'IT Support', 'Soomaaliya (Muqdisho & Hargeysa)', false)">🇸🇴 Muqdisho & Hargeysa (IT Support)</button>
+                    <button class="btn-quick" onclick="quickFilter(this, 'software developer', 'Soomaaliya', false)">💻 Soomaaliya (Software & Web)</button>
+                    <button class="btn-quick" onclick="quickFilter(this, 'AI automation', 'Remote', true)">🤖 Remote (AI Automation Specialist)</button>
+                    <button class="btn-quick" onclick="quickFilter(this, 'cloud engineer', 'Nairobi, Kenya', false)">🇰🇪 Kenya (Nairobi Tech Hub)</button>
+                    <button class="btn-quick" onclick="quickFilter(this, 'IT coordinator', 'Jigjiga, Ethiopia', false)">🇪🇹 Jigjiga & Addis (IT Coordinator)</button>
+                    <button class="btn-quick" onclick="quickFilter(this, 'computer instructor', 'Edmonton, AB', false)">🇨🇦 Canada (Edmonton, AB)</button>
+                </div>
+
+                <div class="search-inputs">
+                    <div class="input-group">
+                        <label>Ereyga Shaqada (IT Role / Keyword):</label>
+                        <input type="text" id="searchTerm" value="IT Support">
+                    </div>
+                    <div class="input-group">
+                        <label>Magaalada / Dalka (Location):</label>
+                        <input type="text" id="searchLocation" value="Soomaaliya (Muqdisho & Hargeysa)">
+                    </div>
+                    <div class="input-group" style="max-width: 140px;">
+                        <label>Tirada:</label>
+                        <select id="searchLimit">
+                            <option value="5" selected>5 Shaqo</option>
+                            <option value="10">10 Shaqo</option>
+                        </select>
+                    </div>
+                    <label style="display:flex; align-items:center; gap:6px; font-size:12.5px; font-weight:700; color:#334155; margin-bottom:10px;">
+                        <input type="checkbox" id="searchRemote"> Remote Only
+                    </label>
+                    <button class="btn-search" id="btnSearch" onclick="triggerSearch()">
+                        <span id="searchIcon">🔍</span>
+                        <span id="searchText">Baadh Shaqooyinka</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="jobs-container" id="jobsList">
+                <div style="text-align:center; padding:36px 20px; color:#64748b;">
+                    <div class="spinner" style="border-color:#cbd5e1; border-top-color:#0284c7; width:26px; height:26px; margin-bottom:10px;"></div>
+                    <h4>Shaqooyinka ayaa la soo shubayaa...</h4>
+                    <p style="font-size:13px;">Fadlan sug daqiiqad inta fursadaha ugu dambeeyay la keenayo.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================
+             2. AI CAREER ASSESSMENT & RESUME ANALYZER (WITH SUBSTACK GATE)
+             ======================================================== -->
+        <section class="assessment-card" id="assessSection">
+            <div style="margin-bottom:18px;">
+                <span class="section-badge">Somali IT Career Assessment</span>
+                <h3 class="section-title">
+                    <span>⚡</span> <span id="assessHeading">Falanqaynta Xirfadaha IT-ga & Diyaarinta CV ATS ah</span>
+                </h3>
+                <p class="section-subtitle" id="assessSubheading">Xulo xirfadahaaga ama soo gali CV si AI-gu xogtaada ugu barbardhigo shaqooyinka Soomaaliya, East Africa, iyo Remote-ka.</p>
+            </div>
+
+            <div class="assess-tabs">
+                <button class="assess-tab-btn active" id="tabBtnQuestions" onclick="switchAssessTab('questions')">
+                    📝 Xulashada Xirfadaha IT-ga
+                </button>
+                <button class="assess-tab-btn" id="tabBtnUpload" onclick="switchAssessTab('upload')">
+                    📄 Soo Geli Resume (PDF / Word)
+                </button>
+            </div>
+
+            <div class="assess-content-pane active" id="paneQuestions">
+                <div class="assess-grid">
+                    <div>
+                        <label style="font-size:12px; font-weight:700; color:#475569; display:block; margin-bottom:4px;">Takhasuska IT-ga aad Xiisaynayso:</label>
+                        <select class="assess-select" id="assessField">
+                            <option value="Computer Science & IT Support" selected>💻 Computer Science & IT Support</option>
+                            <option value="Software & Web Development">🌐 Software & Web Development</option>
+                            <option value="Network Administration & Systems">🛡️ Network Administration & Systems</option>
+                            <option value="AI Automation & Chatbot Engineering">🤖 AI Automation & Chatbots</option>
+                            <option value="Database & Data Analysis">📊 Database & Data Analysis</option>
+                            <option value="Computer Instruction & Digital Literacy">👨‍🏫 Macallinnimo IT & Tababar</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label style="font-size:12px; font-weight:700; color:#475569; display:block; margin-bottom:4px;">Heerkaaga Khibradeed:</label>
+                        <select class="assess-select" id="assessExperience">
+                            <option value="Arday / Qalin-jebiye Cusub" selected>Arday / Qalin-jebiye Cusub (0-2 sano)</option>
+                            <option value="Khibrad Dhexe">Khibrad Dhexe (3-5 sano)</option>
+                            <option value="Heer Sare">Heer Sare (5+ sano)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label style="font-size:12px; font-weight:700; color:#475569; display:block; margin-bottom:4px;">Goobta aad Shaqada ka Doonayso:</label>
+                        <select class="assess-select" id="assessLocation">
+                            <option value="Soomaaliya (Muqdisho & Hargeysa)" selected>🇸🇴 Soomaaliya (Muqdisho & Hargeysa)</option>
+                            <option value="Kenya (Nairobi & East Africa)">🇰🇪 Kenya (Nairobi & East Africa)</option>
+                            <option value="Itoobiya (Addis Ababa & Jigjiga)">🇪🇹 Itoobiya (Addis Ababa & Jigjiga)</option>
+                            <option value="Shaqooyinka Guriga (Global Remote)">🌐 Shaqooyinka Guriga (Global Remote)</option>
+                            <option value="Canada & Diaspora (Edmonton, AB)">🇨🇦 Canada & Diaspora (Edmonton, AB)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label style="font-size:12px; font-weight:700; color:#475569; display:block; margin-bottom:4px;">Magacaaga (Cover Letter):</label>
+                        <input type="text" class="assess-input" id="assessName" placeholder="Tusaale: Mohamed Cali">
+                    </div>
+                </div>
+
+                <div>
+                    <label style="font-size:12px; font-weight:700; color:#334155; display:block; margin-bottom:6px;">Taabo Xirfadaha IT-ga ee aad Leedahay:</label>
+                    <div class="skills-tag-cloud" id="skillsCloud">
+                        <span class="skill-toggle-pill selected" onclick="toggleSkillPill(this)">Hardware & Troubleshooting</span>
+                        <span class="skill-toggle-pill selected" onclick="toggleSkillPill(this)">Network Setup (LAN/WAN)</span>
+                        <span class="skill-toggle-pill selected" onclick="toggleSkillPill(this)">Google IT Support</span>
+                        <span class="skill-toggle-pill" onclick="toggleSkillPill(this)">Python / JavaScript</span>
+                        <span class="skill-toggle-pill" onclick="toggleSkillPill(this)">SQL & Database</span>
+                        <span class="skill-toggle-pill" onclick="toggleSkillPill(this)">AI & Chatbot Automation</span>
+                        <span class="skill-toggle-pill" onclick="toggleSkillPill(this)">System Admin (Windows/Linux)</span>
+                        <span class="skill-toggle-pill" onclick="toggleSkillPill(this)">IT Security Fundamentals</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="assess-content-pane" id="paneUpload">
+                <textarea class="form-control" id="resumePasteText" rows="4" placeholder="Halkan ku dhaji qoraalka CV-gaaga, xirfadahaaga, iyo jaamacaddii aad ka baxday..."></textarea>
+            </div>
+
+            <button class="btn-run-assess" onclick="triggerGatedAssessment()">
+                <span id="assessBtnIcon">✨</span>
+                <span id="assessBtnText">Falanqee Xogtayda & Ii Hel Shaqooyinka</span>
+            </button>
+
+            <div class="assess-result-box" id="assessResultBox">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; flex-wrap:wrap;">
+                    <h4 style="font-size:15px; font-weight:800; color:#15803d;">🎉 Falanqayntii AI-ga Waa Diyaar!</h4>
+                    <span style="background:#bbf7d0; color:#166534; font-weight:800; font-size:12px; padding:3px 10px; border-radius:12px;" id="resScoreBadge">Match: 96%</span>
+                </div>
+                <p style="font-size:13px; color:#14532d;" id="resAdviceText"></p>
+                <div style="margin-top:10px;">
+                    <a href="#jobsSection" style="color:#0284c7; font-weight:700; font-size:12.5px; text-decoration:none;">&darr; Eeg shaqooyinka hadda kuugu soo baxay qeybta hoose</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================
+             3. OPEN SOURCE GITHUB SHOWCASE & COMMUNITY HUB
+             ======================================================== -->
+        <section id="openSourceSection" class="opensource-showcase-card">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:16px; margin-bottom:18px;">
+                <div>
+                    <span class="section-badge" style="background:#f1f5f9; color:#0f172a; border-color:#cbd5e1;">⭐ Open Source Project</span>
+                    <h3 class="section-title" style="margin-top:6px;">
+                        <span>💻</span> <span>Showcase: Shaqo-Raadiyaha Dhalinyarada Soomaaliyeed</span>
+                    </h3>
+                    <p class="section-subtitle" style="margin-bottom:0;">
+                        Mashruuc furan (100% Free & Open-Source) oo loogu talagalay in dhalinyarada iyo bahda IT-ga Soomaaliyeed wax ku darsadaan, bartaan, una adeegsadaan shaqo helista.
+                    </p>
+                </div>
+                <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                    <a href="https://github.com/Faratoon/Shaqo-Raadiyahaaga-Gaarka-Ah" target="_blank" class="btn-github-action">
+                        <svg height="18" width="18" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+                        Eeg Koodhka GitHub Repo &rarr;
+                    </a>
+                    <a href="https://t.me/Baahiyebot" target="_blank" class="btn-telegram-nav" style="padding:10px 18px; font-size:13.5px;">
+                        📱 Fur @Baahiyebot
+                    </a>
+                </div>
+            </div>
+
+            <div class="opensource-tags-row" style="margin-bottom:20px;">
+                <span class="os-tag">🐍 Python 3.11</span>
+                <span class="os-tag">🌐 Flask & Vercel Serverless</span>
+                <span class="os-tag">🤖 Telegram Bot API (@Baahiyebot)</span>
+                <span class="os-tag">📄 ReportLab PDF ATS Generator</span>
+                <span class="os-tag">⚡ AI Prompt Engineering</span>
+                <span class="os-tag">🇸🇴 Somali Tech Community</span>
+            </div>
+
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; padding:18px;">
+                <div style="font-size:13px; font-weight:800; color:#334155; margin-bottom:8px;">
+                    🚀 Sida Aad Koodhka Ugu Isticmaali Karto Kombiyuutarkaaga (Local Setup):
+                </div>
+                <pre style="background:#0f172a; color:#38bdf8; padding:12px 16px; border-radius:8px; font-size:12.5px; overflow-x:auto; margin:0 0 12px 0;"><code>git clone https://github.com/Faratoon/Shaqo-Raadiyahaaga-Gaarka-Ah.git
+cd Shaqo-Raadiyahaaga-Gaarka-Ah
+pip install -r requirements.txt
+python portal_app.py</code></pre>
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; font-size:12.5px; color:#64748b;">
+                    <span>💡 Waa opensource: ku dar fikirkaaga, u fur Pull Request ama ka qayb qaado kobcinta dhalinta IT-ga!</span>
+                    <a href="https://github.com/Faratoon/Shaqo-Raadiyahaaga-Gaarka-Ah/stargazers" target="_blank" style="color:#0284c7; font-weight:700; text-decoration:none;">⭐ Star GitHub-ka</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================
+             4. UNIFIED COURSES & BOOKS HUB (ISKU DAAQAD)
              ======================================================== -->
         <section id="coursesHubSection">
             <div class="section-header">
@@ -2239,166 +2499,7 @@
         </section>
 
         <!-- ========================================================
-             3. AI CAREER ASSESSMENT & RESUME ANALYZER (WITH SUBSTACK GATE)
-             ======================================================== -->
-        <section class="assessment-card" id="assessSection">
-            <div style="margin-bottom:18px;">
-                <span class="section-badge">Somali IT Career Assessment</span>
-                <h3 class="section-title">
-                    <span>⚡</span> <span id="assessHeading">Falanqaynta Xirfadaha IT-ga & Diyaarinta CV ATS ah</span>
-                </h3>
-                <p class="section-subtitle" id="assessSubheading">Xulo xirfadahaaga ama soo gali CV si AI-gu xogtaada ugu barbardhigo shaqooyinka Soomaaliya, East Africa, iyo Remote-ka.</p>
-            </div>
-
-            <div class="assess-tabs">
-                <button class="assess-tab-btn active" id="tabBtnQuestions" onclick="switchAssessTab('questions')">
-                    📝 Xulashada Xirfadaha IT-ga
-                </button>
-                <button class="assess-tab-btn" id="tabBtnUpload" onclick="switchAssessTab('upload')">
-                    📄 Soo Geli Resume (PDF / Word)
-                </button>
-            </div>
-
-            <div class="assess-content-pane active" id="paneQuestions">
-                <div class="assess-grid">
-                    <div>
-                        <label style="font-size:12px; font-weight:700; color:#475569; display:block; margin-bottom:4px;">Takhasuska IT-ga aad Xiisaynayso:</label>
-                        <select class="assess-select" id="assessField">
-                            <option value="Computer Science & IT Support" selected>💻 Computer Science & IT Support</option>
-                            <option value="Software & Web Development">🌐 Software & Web Development</option>
-                            <option value="Network Administration & Systems">🛡️ Network Administration & Systems</option>
-                            <option value="AI Automation & Chatbot Engineering">🤖 AI Automation & Chatbots</option>
-                            <option value="Database & Data Analysis">📊 Database & Data Analysis</option>
-                            <option value="Computer Instruction & Digital Literacy">👨‍🏫 Macallinnimo IT & Tababar</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label style="font-size:12px; font-weight:700; color:#475569; display:block; margin-bottom:4px;">Heerkaaga Khibradeed:</label>
-                        <select class="assess-select" id="assessExperience">
-                            <option value="Arday / Qalin-jebiye Cusub" selected>Arday / Qalin-jebiye Cusub (0-2 sano)</option>
-                            <option value="Khibrad Dhexe">Khibrad Dhexe (3-5 sano)</option>
-                            <option value="Heer Sare">Heer Sare (5+ sano)</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label style="font-size:12px; font-weight:700; color:#475569; display:block; margin-bottom:4px;">Goobta aad Shaqada ka Doonayso:</label>
-                        <select class="assess-select" id="assessLocation">
-                            <option value="Soomaaliya (Muqdisho & Hargeysa)" selected>🇸🇴 Soomaaliya (Muqdisho & Hargeysa)</option>
-                            <option value="Kenya (Nairobi & East Africa)">🇰🇪 Kenya (Nairobi & East Africa)</option>
-                            <option value="Itoobiya (Addis Ababa & Jigjiga)">🇪🇹 Itoobiya (Addis Ababa & Jigjiga)</option>
-                            <option value="Shaqooyinka Guriga (Global Remote)">🌐 Shaqooyinka Guriga (Global Remote)</option>
-                            <option value="Canada & Diaspora (Edmonton, AB)">🇨🇦 Canada & Diaspora (Edmonton, AB)</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label style="font-size:12px; font-weight:700; color:#475569; display:block; margin-bottom:4px;">Magacaaga (Cover Letter):</label>
-                        <input type="text" class="assess-input" id="assessName" placeholder="Tusaale: Mohamed Cali">
-                    </div>
-                </div>
-
-                <div>
-                    <label style="font-size:12px; font-weight:700; color:#334155; display:block; margin-bottom:6px;">Taabo Xirfadaha IT-ga ee aad Leedahay:</label>
-                    <div class="skills-tag-cloud" id="skillsCloud">
-                        <span class="skill-toggle-pill selected" onclick="toggleSkillPill(this)">Hardware & Troubleshooting</span>
-                        <span class="skill-toggle-pill selected" onclick="toggleSkillPill(this)">Network Setup (LAN/WAN)</span>
-                        <span class="skill-toggle-pill selected" onclick="toggleSkillPill(this)">Google IT Support</span>
-                        <span class="skill-toggle-pill" onclick="toggleSkillPill(this)">Python / JavaScript</span>
-                        <span class="skill-toggle-pill" onclick="toggleSkillPill(this)">SQL & Database</span>
-                        <span class="skill-toggle-pill" onclick="toggleSkillPill(this)">AI & Chatbot Automation</span>
-                        <span class="skill-toggle-pill" onclick="toggleSkillPill(this)">System Admin (Windows/Linux)</span>
-                        <span class="skill-toggle-pill" onclick="toggleSkillPill(this)">IT Security Fundamentals</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="assess-content-pane" id="paneUpload">
-                <textarea class="form-control" id="resumePasteText" rows="4" placeholder="Halkan ku dhaji qoraalka CV-gaaga, xirfadahaaga, iyo jaamacaddii aad ka baxday..."></textarea>
-            </div>
-
-            <button class="btn-run-assess" onclick="triggerGatedAssessment()">
-                <span id="assessBtnIcon">✨</span>
-                <span id="assessBtnText">Falanqee Xogtayda & Ii Hel Shaqooyinka</span>
-            </button>
-
-            <div class="assess-result-box" id="assessResultBox">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; flex-wrap:wrap;">
-                    <h4 style="font-size:15px; font-weight:800; color:#15803d;">🎉 Falanqayntii AI-ga Waa Diyaar!</h4>
-                    <span style="background:#bbf7d0; color:#166534; font-weight:800; font-size:12px; padding:3px 10px; border-radius:12px;" id="resScoreBadge">Match: 96%</span>
-                </div>
-                <p style="font-size:13px; color:#14532d;" id="resAdviceText"></p>
-                <div style="margin-top:10px;">
-                    <a href="#jobsSection" style="color:#0284c7; font-weight:700; font-size:12.5px; text-decoration:none;">&darr; Eeg shaqooyinka hadda kuugu soo baxay qeybta hoose</a>
-                </div>
-            </div>
-        </section>
-
-        <!-- ========================================================
-             4. LIVE JOBS ENGINE (SOMALIA, EAST AFRICA, REMOTE, CANADA)
-             ======================================================== -->
-        <section id="jobsSection">
-            <div class="section-header">
-                <span class="section-badge">Shaqooyinka Tooska ah</span>
-                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
-                    <h3 class="section-title">
-                        <span>🔍</span> <span id="jobsSectionTitle">Shaqooyinka IT-ga ee Soomaaliya, East Africa & Remote</span>
-                    </h3>
-                    <div style="font-size:12.5px; font-weight:700; background:#f1f5f9; padding:5px 12px; border-radius:14px; color:#0f766e;" id="quotaDisplay">
-                        Quota: 5 Codsi oo Diyaarsan Maalintii
-                    </div>
-                </div>
-                <p class="section-subtitle" id="jobsSectionSub">Shaqooyin tayo leh oo wata Cover Letter diyaarsan oo toos loogu codsan karo.</p>
-            </div>
-
-            <div class="search-panel">
-                <div class="quick-actions">
-                    <button class="btn-quick active" onclick="quickFilter(this, 'IT Support', 'Soomaaliya (Muqdisho & Hargeysa)', false)">🇸🇴 Muqdisho & Hargeysa (IT Support)</button>
-                    <button class="btn-quick" onclick="quickFilter(this, 'software developer', 'Soomaaliya', false)">💻 Soomaaliya (Software & Web)</button>
-                    <button class="btn-quick" onclick="quickFilter(this, 'AI automation', 'Remote', true)">🤖 Remote (AI Automation Specialist)</button>
-                    <button class="btn-quick" onclick="quickFilter(this, 'cloud engineer', 'Nairobi, Kenya', false)">🇰🇪 Kenya (Nairobi Tech Hub)</button>
-                    <button class="btn-quick" onclick="quickFilter(this, 'IT coordinator', 'Jigjiga, Ethiopia', false)">🇪🇹 Jigjiga & Addis (IT Coordinator)</button>
-                    <button class="btn-quick" onclick="quickFilter(this, 'computer instructor', 'Edmonton, AB', false)">🇨🇦 Canada (Edmonton, AB)</button>
-                </div>
-
-                <div class="search-inputs">
-                    <div class="input-group">
-                        <label>Ereyga Shaqada (IT Role / Keyword):</label>
-                        <input type="text" id="searchTerm" value="IT Support">
-                    </div>
-                    <div class="input-group">
-                        <label>Magaalada / Dalka (Location):</label>
-                        <input type="text" id="searchLocation" value="Soomaaliya (Muqdisho & Hargeysa)">
-                    </div>
-                    <div class="input-group" style="max-width: 140px;">
-                        <label>Tirada:</label>
-                        <select id="searchLimit">
-                            <option value="5" selected>5 Shaqo</option>
-                            <option value="10">10 Shaqo</option>
-                        </select>
-                    </div>
-                    <label style="display:flex; align-items:center; gap:6px; font-size:12.5px; font-weight:700; color:#334155; margin-bottom:10px;">
-                        <input type="checkbox" id="searchRemote"> Remote Only
-                    </label>
-                    <button class="btn-search" id="btnSearch" onclick="triggerSearch()">
-                        <span id="searchIcon">🔍</span>
-                        <span id="searchText">Baadh Shaqooyinka</span>
-                    </button>
-                </div>
-            </div>
-
-            <div class="jobs-container" id="jobsList">
-                <div style="text-align:center; padding:36px 20px; color:#64748b;">
-                    <div class="spinner" style="border-color:#cbd5e1; border-top-color:#0284c7; width:26px; height:26px; margin-bottom:10px;"></div>
-                    <h4>Shaqooyinka ayaa la soo shubayaa...</h4>
-                    <p style="font-size:13px;">Fadlan sug daqiiqad inta fursadaha ugu dambeeyay la keenayo.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- ========================================================
-             5. PERMANENT SUBSTACK NEWSLETTER SECTION
+             6. PERMANENT SUBSTACK NEWSLETTER SECTION
              ======================================================== -->
         <section class="substack-section" id="substackSection">
             <span class="section-badge" style="background:#ffedd5; color:#c2410c;">Official Newsletter</span>
