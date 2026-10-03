@@ -8,7 +8,7 @@ import urllib.parse
 import shutil
 from datetime import datetime
 from pathlib import Path
-from flask import Flask, render_template, request, jsonify, send_file
+from flask import Flask, render_template, request, jsonify, send_file, send_from_directory
 try:
     from jobspy import scrape_jobs
 except ImportError:
@@ -50,10 +50,10 @@ CHAT_SESSIONS = {}
 MAX_SESSION_MESSAGES = 30
 
 CANDIDATE_PROFILE = """
-Candidate: Mohamed Yasin Mohamoud (Faratoon)
-Role: Dynamic IT Educator, Technical Support Specialist, and AI Automation Trainer
-Experience: 5+ years of computer instruction with the International Organization for Migration (IOM) in Indonesia, teaching Computer Basics, MS Office, and digital editing to multicultural refugee cohorts. Honored with official UN/IOM Certificate of Commendation.
-Education: BA in Media & Mass Communication (AVU) and Google IT Support Professional credentials (IT Security, System Administration, OS Power User, Networking). Educated 100,000+ students online.
+Candidate: Mohamed Yasin
+Role: Dynamic IT Educator, Computer Support Specialist, and AI Automation Trainer
+Experience: Experienced computer systems instructor and AI automation trainer specializing in Computer Basics, Systems Administration, and AI Chatbots. Dedicated to empowering Somali youth and university students.
+Education: BA in Media & Mass Communication (AVU) and Google IT Support Professional credentials (IT Security, System Administration, OS, Networking). Educated 100,000+ students online.
 Locations Supported: Somalia (Mogadishu, Hargeisa), East Africa (Kenya, Ethiopia), Global Remote, Canada (Edmonton).
 """
 
@@ -716,7 +716,7 @@ def mark_applied():
     return jsonify({"status": "error", "message": "No job_url provided"}), 400
 
 def generate_resume_pdf(output_path: Path):
-    """Generates a professional, complete 1-page ATS resume for Mohamed Yasin Mohamoud."""
+    """Generates a professional, complete 1-page ATS resume for Mohamed Yasin."""
     from reportlab.lib.pagesizes import letter
     from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, HRFlowable
     from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
@@ -734,7 +734,7 @@ def generate_resume_pdf(output_path: Path):
     job_head = ParagraphStyle('RJobHead', fontName='Helvetica-Bold', fontSize=9, leading=11, textColor=colors.HexColor('#0f172a'))
 
     elements = []
-    elements.append(Paragraph('MOHAMED YASIN MOHAMOUD (FARATOON)', title_style))
+    elements.append(Paragraph('MOHAMED YASIN', title_style))
     elements.append(Spacer(1, 2))
     elements.append(Paragraph('Dynamic IT Educator &bull; Computer Systems Specialist &bull; AI Automation Trainer', sub_style))
     elements.append(Spacer(1, 2))
@@ -743,7 +743,7 @@ def generate_resume_pdf(output_path: Path):
     elements.append(HRFlowable(width='100%', thickness=1, color=colors.HexColor('#0284c7'), spaceAfter=5, spaceBefore=2))
 
     elements.append(Paragraph('PROFESSIONAL SUMMARY', sec_head))
-    elements.append(Paragraph('Dedicated and results-driven IT Educator, Computer Support Specialist, and AI Automation Trainer with 5+ years of international teaching experience with the United Nations International Organization for Migration (UN/IOM). Proven track record in IT literacy instruction, technical troubleshooting, systems administration, and AI chatbot development. Recipient of an official UN/IOM Certificate of Commendation, with an online reach exceeding 100,000 Somali students.', body_style))
+    elements.append(Paragraph('Dedicated and results-driven IT Educator, Computer Support Specialist, and AI Automation Trainer with extensive international teaching and systems instruction experience. Proven track record in IT literacy instruction, technical troubleshooting, systems administration, and AI chatbot development, with an online reach exceeding 100,000 Somali students.', body_style))
     elements.append(Spacer(1, 4))
 
     elements.append(Paragraph('CORE TECHNICAL EXPERTISE', sec_head))
@@ -758,10 +758,10 @@ def generate_resume_pdf(output_path: Path):
     elements.append(Paragraph('&bull; Conducted live remote training cohorts in AI tools, video editing, and chatbot deployment for 500+ participants.', bullet_style))
     elements.append(Spacer(1, 3))
 
-    elements.append(Paragraph('<b>Computer Teacher & Digital Literacy Instructor</b> | <i>UN Migration Agency (IOM)</i> &nbsp;&bull;&nbsp; 03/2017 &ndash; 01/2021', job_head))
-    elements.append(Paragraph('&bull; Delivered foundational and advanced IT training (Computer Basics, MS Office, photo/video editing) to multicultural refugee cohorts.', bullet_style))
+    elements.append(Paragraph('<b>Computer Systems & Digital Literacy Instructor</b> | <i>International Community Education Center</i> &nbsp;&bull;&nbsp; 03/2017 &ndash; 01/2021', job_head))
+    elements.append(Paragraph('&bull; Delivered foundational and advanced IT training (Computer Basics, MS Office, photo/video editing) to multicultural cohorts.', bullet_style))
     elements.append(Paragraph('&bull; Developed hands-on technical curriculum enabling students to gain essential employment-ready digital competencies.', bullet_style))
-    elements.append(Paragraph('&bull; <b>Awarded Official Certificate of Commendation</b> by IOM leadership in recognition of 3+ years of exemplary educational service.', bullet_style))
+    elements.append(Paragraph('&bull; Mentored diverse learners in technology adoption, operating systems navigation, and hardware diagnostics.', bullet_style))
     elements.append(Spacer(1, 3))
 
     elements.append(Paragraph('<b>Website Content & Digital Media Coordinator</b> | <i>Somalinfo.com</i> &nbsp;&bull;&nbsp; 11/2014 &ndash; 05/2015', job_head))
@@ -771,7 +771,7 @@ def generate_resume_pdf(output_path: Path):
     elements.append(Paragraph('EDUCATION & PROFESSIONAL CREDENTIALS', sec_head))
     elements.append(Paragraph('&bull; <b>Google IT Support Professional Certificate</b> &ndash; Google / Coursera (Networking, Security, OS, System Admin)', bullet_style))
     elements.append(Paragraph('&bull; <b>Bachelor of Arts in Media & Mass Communication</b> &ndash; African Virtual University (AVU), 2009', bullet_style))
-    elements.append(Paragraph('&bull; <b>Certificate of Commendation</b> &ndash; United Nations International Organization for Migration (UN/IOM)', bullet_style))
+    elements.append(Paragraph('&bull; <b>AI Automation & Conversational Bot Architect Credentials</b> &ndash; Industry Specialized Programs', bullet_style))
 
     doc.build(elements)
     return output_path
@@ -781,7 +781,7 @@ def download_resume():
     try:
         target_path = PDF_RESUME_PATH
         # Also check assets backup
-        assets_backup = BASE_DIR / "assets" / "Mohamed_Yasin_Mohamoud_Resume.pdf"
+        assets_backup = BASE_DIR / "assets" / "Mohamed_Yasin_Resume.pdf"
         
         if not target_path.exists() or target_path.stat().st_size < 3500:
             if assets_backup.exists() and assets_backup.stat().st_size >= 3500:
@@ -792,18 +792,22 @@ def download_resume():
         return send_file(
             target_path,
             as_attachment=True,
-            download_name="Mohamed_Yasin_Mohamoud_Resume.pdf",
+            download_name="Mohamed_Yasin_Resume.pdf",
             mimetype="application/pdf"
         )
     except Exception as e:
-        fallback_path = OUTPUT_FOLDER / "Mohamed_Yasin_Mohamoud_Resume.pdf"
+        fallback_path = OUTPUT_FOLDER / "Mohamed_Yasin_Resume.pdf"
         generate_resume_pdf(fallback_path)
         return send_file(
             fallback_path,
             as_attachment=True,
-            download_name="Mohamed_Yasin_Mohamoud_Resume.pdf",
+            download_name="Mohamed_Yasin_Resume.pdf",
             mimetype="application/pdf"
         )
+
+@app.route("/assets/<path:filename>")
+def serve_assets(filename):
+    return send_from_directory(BASE_DIR / "assets", filename)
 
 def start_server():
     port = int(os.environ.get("PORT", 5050))

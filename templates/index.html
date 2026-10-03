@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Shaqo Raadiyaha Dhalinyarada Soomaaliyeed ee IT-ga | AI Career & Job Discovery</title>
+    <title>Shaqo Baahiye | Madasha Culuumta IT-ga, Koorsooyinka & Fursadaha Shaqada</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Telegram Mini App WebApp SDK -->
@@ -701,6 +701,24 @@
             border-color: var(--azure);
             box-shadow: var(--shadow-md);
         }
+        .book-svg-visual {
+            width: 100%;
+            height: 105px;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 14px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #0f172a;
+        }
+        .book-svg-visual svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
         .book-badge-top {
             display: flex;
             justify-content: space-between;
@@ -1284,30 +1302,96 @@
             background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
             border: 1.5px solid #fed7aa;
             border-radius: var(--radius-lg);
-            padding: 32px;
+            padding: 28px 20px;
             margin-bottom: 36px;
             text-align: center;
             box-shadow: var(--shadow-sm);
         }
         .substack-section h3 {
-            font-size: 22px;
+            font-size: 21px;
             font-weight: 800;
             color: #9a3412;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
         .substack-section p {
-            font-size: 14px;
+            font-size: 13.5px;
             color: #7c2d12;
-            max-width: 650px;
+            max-width: 620px;
             margin: 0 auto 16px;
+            line-height: 1.5;
         }
         .substack-embed-box {
             display: flex;
             justify-content: center;
-            margin: 12px auto;
-            max-width: 100%;
+            margin: 8px auto 16px;
+            max-width: 360px;
+            height: 145px;
             overflow: hidden;
             border-radius: 12px;
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px dashed #fdba74;
+            padding: 4px;
+        }
+        .substack-embed-box iframe {
+            width: 100% !important;
+            max-width: 350px !important;
+            height: 135px !important;
+            border: 0 !important;
+            overflow: hidden !important;
+        }
+        .substack-action-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            margin-top: 10px;
+        }
+        .btn-substack-prominent {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+            color: #ffffff !important;
+            font-size: 15px;
+            font-weight: 800;
+            padding: 14px 28px;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 4px 14px rgba(234, 88, 12, 0.35);
+            transition: all 0.25s ease;
+            max-width: 100%;
+        }
+        .btn-substack-prominent:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(234, 88, 12, 0.45);
+            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+        }
+        .btn-substack-sticker {
+            font-size: 24px;
+            display: inline-block;
+            animation: bounceSlow 2s infinite ease-in-out;
+        }
+        @keyframes bounceSlow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+        .substack-stickers-row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 4px;
+        }
+        .sub-sticker-pill {
+            background: #ffffff;
+            color: #9a3412;
+            border: 1px solid #fed7aa;
+            font-size: 11.5px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
         }
 
         /* Founder Showcase */
@@ -1932,7 +2016,7 @@
     <div class="top-announcement">
         <div class="top-announcement-content">
             <div class="announcement-text">
-                <span id="txtAnnouncement">✨ Shaqo Raadiyaha Dhalinyarada Soomaaliyeed ee Bartay IT-ga • Soomaaliya, East Africa, Remote & Canada • 100% Free</span>
+                <span id="txtAnnouncement">✨ Shaqo Baahiye • Madasha Culuumta IT-ga, Buugaagta Isbar & Fursadaha Shaqada • 100% Free</span>
             </div>
             <div class="lang-switch-group">
                 <button class="lang-btn active" id="btnLangSo" onclick="setLanguage('so')">🇸🇴 Soomaali</button>
@@ -1948,7 +2032,7 @@
             <a href="#" class="brand-box">
                 <div class="brand-icon">🦅</div>
                 <div class="brand-title">
-                    <h1 id="txtBrandTitle">Shaqo Raadiyaha Dhalinyarada Soomaaliyeed</h1>
+                    <h1 id="txtBrandTitle">Shaqo Baahiye</h1>
                     <p id="txtBrandSub">Culuumta IT-ga, AI Automation & Shaqooyinka Soomaaliya, East Africa & Remote</p>
                 </div>
             </a>
@@ -1982,7 +2066,7 @@
             </div>
 
             <h2 id="heroHeadline">
-                Dhalinyarada Soomaaliyeed ee Bartay IT-ga: <span>Shaqadaada Ku Habboon</span> Ku Hel Awoodda AI-ga
+                Shaqo Baahiye: <span>Dhalinyarada Soomaaliyeed ee IT-ga</span> & Awoodda Casriga ah ee AI-ga
             </h2>
 
             <p id="heroSubtitle">
@@ -2109,7 +2193,7 @@
                                 </div>
                             </div>
                             <p class="hero-service-desc">
-                                Kulan toos ah oo Google Meet ama Zoom ah oo aad la yeelanayso Mohamed Faratoon si laguu siiyo hagid gaar ah oo ku saabsan shaqadaada iyo koorsooyinkaaga.
+                                Kulan toos ah oo Google Meet ama Zoom ah oo aad la yeelanayso Mohamed Yasin si laguu siiyo hagid gaar ah oo ku saabsan shaqadaada iyo koorsooyinkaaga.
                             </p>
                         </div>
                         <div class="hero-service-action-row">
@@ -2398,6 +2482,68 @@ python portal_app.py</code></pre>
                                     <span class="book-price-tag">Kaliya: $5</span>
                                     <span class="book-pages-tag">📄 89 Pages</span>
                                 </div>
+
+                                <!-- Modern SVG Visual: ISBAR COMPUTER -->
+                                <div class="book-svg-visual">
+                                    <svg viewBox="0 0 320 105" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <defs>
+                                            <linearGradient id="bgComp" x1="0" y1="0" x2="320" y2="105" gradientUnits="userSpaceOnUse">
+                                                <stop offset="0%" stop-color="#0b132b" />
+                                                <stop offset="100%" stop-color="#1e293b" />
+                                            </linearGradient>
+                                            <linearGradient id="screenComp" x1="30" y1="15" x2="140" y2="75" gradientUnits="userSpaceOnUse">
+                                                <stop offset="0%" stop-color="#0284c7" />
+                                                <stop offset="100%" stop-color="#0369a1" />
+                                            </linearGradient>
+                                        </defs>
+                                        <rect width="320" height="105" rx="10" fill="url(#bgComp)" />
+                                        <circle cx="280" cy="15" r="50" fill="#0284c7" fill-opacity="0.12" />
+                                        
+                                        <!-- Laptop Mockup -->
+                                        <rect x="22" y="16" width="105" height="60" rx="5" fill="#1e293b" stroke="#475569" stroke-width="1.2" />
+                                        <rect x="26" y="20" width="97" height="52" rx="3" fill="url(#screenComp)" />
+                                        <circle cx="32" cy="25" r="2" fill="#ef4444" />
+                                        <circle cx="38" cy="25" r="2" fill="#f59e0b" />
+                                        <circle cx="44" cy="25" r="2" fill="#10b981" />
+                                        
+                                        <!-- Dual OS Badge -->
+                                        <g transform="translate(36, 35)">
+                                            <rect x="0" y="0" width="6" height="6" fill="#f87171" rx="1"/>
+                                            <rect x="8" y="0" width="6" height="6" fill="#60a5fa" rx="1"/>
+                                            <rect x="0" y="8" width="6" height="6" fill="#34d399" rx="1"/>
+                                            <rect x="8" y="8" width="6" height="6" fill="#fbbf24" rx="1"/>
+                                        </g>
+                                        <text x="56" y="44" fill="#ffffff" font-size="8.5" font-weight="bold" font-family="sans-serif">Windows 11 &amp; Mac</text>
+                                        <text x="56" y="55" fill="#bae6fd" font-size="7.5" font-family="sans-serif">Office &bull; Photoshop</text>
+                                        
+                                        <!-- Laptop Base -->
+                                        <path d="M14 76 L135 76 L128 83 L21 83 Z" fill="#334155" stroke="#64748b" stroke-width="0.8" />
+
+                                        <!-- Right Badges -->
+                                        <g transform="translate(145, 16)">
+                                            <rect width="60" height="24" rx="5" fill="#001e36" stroke="#00a8ff" stroke-width="0.8" />
+                                            <rect x="3" y="3" width="18" height="18" rx="3" fill="#001829" />
+                                            <text x="6" y="15" fill="#00c8ff" font-size="9.5" font-weight="900" font-family="sans-serif">Ps</text>
+                                            <text x="24" y="15" fill="#ffffff" font-size="8" font-weight="bold" font-family="sans-serif">Photoshop</text>
+                                        </g>
+
+                                        <g transform="translate(215, 16)">
+                                            <rect width="90" height="24" rx="5" fill="#1e1b4b" stroke="#818cf8" stroke-width="0.8" />
+                                            <text x="8" y="15" fill="#c7d2fe" font-size="8" font-weight="bold" font-family="sans-serif">⚙️ Hardware / OS</text>
+                                        </g>
+
+                                        <g transform="translate(145, 46)">
+                                            <rect width="160" height="24" rx="5" fill="#0f172a" stroke="#38bdf8" stroke-width="0.8" />
+                                            <text x="8" y="15" fill="#38bdf8" font-size="8.5" font-weight="bold" font-family="sans-serif">📹 OBS Studio &bull; MS Office</text>
+                                        </g>
+
+                                        <g transform="translate(145, 76)">
+                                            <rect width="160" height="18" rx="4" fill="#1e293b" />
+                                            <text x="10" y="12" fill="#94a3b8" font-size="7.5" font-weight="600" font-family="sans-serif">ISBAR COMPUTER &bull; 89 PAGES &bull; $5</text>
+                                        </g>
+                                    </svg>
+                                </div>
+
                                 <h4>1. ISBAR COMPUTER</h4>
                                 <div class="book-subtitle">Waa buug itus oo taabsii ah sawiro qoraal afkaaga hooyo!</div>
                                 <ul class="book-topics">
@@ -2412,7 +2558,7 @@ python portal_app.py</code></pre>
                             <div>
                                 <div class="book-meta-footer">
                                     Qore: <b>Yahye Cabdirahmaan</b><br>
-                                    Editor: <b>Mohamed Faratoon</b>
+                                    Editor: <b>Mohamed Yasin</b>
                                 </div>
                                 <div class="book-btn-row">
                                     <button class="btn-book-action" onclick="quickBookService('ISBAR COMPUTER ($5)')">📖 Dalbo Buugga ($5)</button>
@@ -2428,6 +2574,50 @@ python portal_app.py</code></pre>
                                     <span class="book-price-tag">Kaliya: $5</span>
                                     <span class="book-pages-tag">📄 177 Pages</span>
                                 </div>
+
+                                <!-- Modern SVG Visual: ISBAR PROGRAMMING -->
+                                <div class="book-svg-visual">
+                                    <svg viewBox="0 0 320 105" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <defs>
+                                            <linearGradient id="bgProg" x1="0" y1="0" x2="320" y2="105" gradientUnits="userSpaceOnUse">
+                                                <stop offset="0%" stop-color="#0a0f1d" />
+                                                <stop offset="100%" stop-color="#1e1b4b" />
+                                            </linearGradient>
+                                        </defs>
+                                        <rect width="320" height="105" rx="10" fill="url(#bgProg)" />
+                                        <circle cx="280" cy="20" r="45" fill="#6366f1" fill-opacity="0.12" />
+
+                                        <!-- IDE Window Mockup -->
+                                        <rect x="20" y="14" width="145" height="78" rx="6" fill="#0f172a" stroke="#4338ca" stroke-width="1.2" />
+                                        <rect x="20" y="14" width="145" height="16" rx="6" fill="#111827" />
+                                        <circle cx="27" cy="22" r="2" fill="#ef4444" />
+                                        <circle cx="33" cy="22" r="2" fill="#f59e0b" />
+                                        <circle cx="39" cy="22" r="2" fill="#10b981" />
+                                        <text x="50" y="24" fill="#9ca3af" font-size="7" font-family="monospace">main.py - VS Code</text>
+
+                                        <text x="27" y="42" fill="#a78bfa" font-size="8" font-family="monospace">def <tspan fill="#38bdf8">bilow_coding</tspan>():</text>
+                                        <text x="35" y="53" fill="#cbd5e1" font-size="7.5" font-family="monospace">stack = [<tspan fill="#34d399">"Web"</tspan>, <tspan fill="#34d399">"SQL"</tspan>]</text>
+                                        <text x="35" y="64" fill="#f59e0b" font-size="7.5" font-family="monospace">return <tspan fill="#38bdf8">Guul_2026</tspan></text>
+                                        <text x="27" y="78" fill="#10b981" font-size="7.5" font-family="monospace">&gt; 177 Pages Ready</text>
+
+                                        <!-- Right Side: DB & Web badges -->
+                                        <g transform="translate(178, 14)">
+                                            <rect width="125" height="34" rx="5" fill="#0f172a" stroke="#06b6d4" stroke-width="0.8" />
+                                            <ellipse cx="18" cy="12" rx="7" ry="3" fill="#0891b2" />
+                                            <path d="M11 12 v8 a7 3 0 0 0 14 0 v-8 Z" fill="#06b6d4" opacity="0.8" />
+                                            <ellipse cx="18" cy="20" rx="7" ry="3" fill="#22d3ee" />
+                                            <text x="32" y="17" fill="#ffffff" font-size="8" font-weight="bold" font-family="sans-serif">Database &amp; SQL</text>
+                                            <text x="32" y="27" fill="#67e8f9" font-size="7" font-family="sans-serif">Relational &bull; Queries</text>
+                                        </g>
+
+                                        <g transform="translate(178, 54)">
+                                            <rect width="125" height="38" rx="5" fill="#1e1b4b" stroke="#818cf8" stroke-width="0.8" />
+                                            <text x="8" y="16" fill="#a5b4fc" font-size="7.5" font-weight="bold" font-family="sans-serif">🌍 HTML &bull; CSS &bull; JS</text>
+                                            <text x="8" y="29" fill="#38bdf8" font-size="7.5" font-weight="bold" font-family="sans-serif">🧰 VS Code IDE &bull; Git</text>
+                                        </g>
+                                    </svg>
+                                </div>
+
                                 <h4>2. ISBAR PROGRAMMING</h4>
                                 <div class="book-subtitle">Bilow Coding safarkaaga maanta!</div>
                                 <ul class="book-topics">
@@ -2441,7 +2631,7 @@ python portal_app.py</code></pre>
                             <div>
                                 <div class="book-meta-footer">
                                     Qore: <b>Yahye Abdirahmaan</b><br>
-                                    Editor: <b>Mohamed Faratoon</b>
+                                    Editor: <b>Mohamed Yasin</b>
                                 </div>
                                 <div class="book-btn-row">
                                     <button class="btn-book-action" onclick="quickBookService('ISBAR PROGRAMMING ($5)')">📖 Dalbo Buugga ($5)</button>
@@ -2457,6 +2647,63 @@ python portal_app.py</code></pre>
                                     <span class="book-price-tag">Kaliya: $7</span>
                                     <span class="book-pages-tag">📄 189 Pages</span>
                                 </div>
+
+                                <!-- Modern SVG Visual: ISBAR AI BASIC -->
+                                <div class="book-svg-visual">
+                                    <svg viewBox="0 0 320 105" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <defs>
+                                            <linearGradient id="bgAi" x1="0" y1="0" x2="320" y2="105" gradientUnits="userSpaceOnUse">
+                                                <stop offset="0%" stop-color="#140628" />
+                                                <stop offset="100%" stop-color="#2e1065" />
+                                            </linearGradient>
+                                            <linearGradient id="neonPulse" x1="0" y1="0" x2="1" y2="1">
+                                                <stop offset="0%" stop-color="#c084fc" />
+                                                <stop offset="100%" stop-color="#ec4899" />
+                                            </linearGradient>
+                                        </defs>
+                                        <rect width="320" height="105" rx="10" fill="url(#bgAi)" />
+                                        <circle cx="280" cy="20" r="45" fill="#ec4899" fill-opacity="0.1" />
+
+                                        <!-- Neural Network Graphic -->
+                                        <g transform="translate(20, 16)">
+                                            <line x1="12" y1="18" x2="38" y2="10" stroke="#a855f7" stroke-width="1.2" stroke-opacity="0.6"/>
+                                            <line x1="12" y1="18" x2="38" y2="35" stroke="#ec4899" stroke-width="1.2" stroke-opacity="0.6"/>
+                                            <line x1="12" y1="52" x2="38" y2="35" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.6"/>
+                                            <line x1="12" y1="52" x2="38" y2="60" stroke="#a855f7" stroke-width="1.2" stroke-opacity="0.6"/>
+                                            <line x1="38" y1="10" x2="68" y2="22" stroke="#c084fc" stroke-width="1.2" stroke-opacity="0.8"/>
+                                            <line x1="38" y1="35" x2="68" y2="22" stroke="#f472b6" stroke-width="1.2" stroke-opacity="0.8"/>
+                                            <line x1="38" y1="35" x2="68" y2="48" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.8"/>
+                                            <line x1="38" y1="60" x2="68" y2="48" stroke="#c084fc" stroke-width="1.2" stroke-opacity="0.8"/>
+                                            <line x1="68" y1="22" x2="98" y2="35" stroke="#38bdf8" stroke-width="1.8" />
+                                            <line x1="68" y1="48" x2="98" y2="35" stroke="#ec4899" stroke-width="1.8" />
+
+                                            <circle cx="12" cy="18" r="4" fill="#38bdf8" />
+                                            <circle cx="12" cy="52" r="4" fill="#c084fc" />
+                                            <circle cx="38" cy="10" r="3.5" fill="#a855f7" />
+                                            <circle cx="38" cy="35" r="4" fill="#ec4899" />
+                                            <circle cx="38" cy="60" r="3.5" fill="#38bdf8" />
+                                            <circle cx="68" cy="22" r="4" fill="#f472b6" />
+                                            <circle cx="68" cy="48" r="4" fill="#a855f7" />
+                                            <circle cx="98" cy="35" r="6.5" fill="url(#neonPulse)" stroke="#ffffff" stroke-width="1.2" />
+                                            <text x="95" y="38" fill="#ffffff" font-size="7.5" font-weight="bold">AI</text>
+                                        </g>
+
+                                        <!-- Right Side: AI Pillars -->
+                                        <g transform="translate(150, 14)">
+                                            <rect width="150" height="24" rx="5" fill="#1e1035" stroke="#c084fc" stroke-width="0.8" />
+                                            <text x="8" y="16" fill="#f5d0fe" font-size="8" font-weight="bold" font-family="sans-serif">🧠 Taariikhda &amp; Awoodda AI</text>
+                                        </g>
+                                        <g transform="translate(150, 43)">
+                                            <rect width="150" height="24" rx="5" fill="#1e1035" stroke="#ec4899" stroke-width="0.8" />
+                                            <text x="8" y="16" fill="#fbcfe8" font-size="8" font-weight="bold" font-family="sans-serif">🎨 Graphic Design &amp; Ganacsiga</text>
+                                        </g>
+                                        <g transform="translate(150, 72)">
+                                            <rect width="150" height="20" rx="4" fill="#0f172a" />
+                                            <text x="8" y="14" fill="#a855f7" font-size="7.5" font-weight="bold" font-family="sans-serif">ISBAR AI BASIC &bull; 189 PAGES &bull; $7</text>
+                                        </g>
+                                    </svg>
+                                </div>
+
                                 <h4>3. ISBAR AI (Artificial Intelligence) BASIC</h4>
                                 <div class="book-subtitle">Barashada Adeegyada Mustaqbalka hadda bilow!</div>
                                 <ul class="book-topics">
@@ -2469,7 +2716,7 @@ python portal_app.py</code></pre>
                             </div>
                             <div>
                                 <div class="book-meta-footer">
-                                    Qore: <b>Yahye Abdirahmaan / Mohamed Faratoon</b><br>
+                                    Qore: <b>Yahye Abdirahmaan / Mohamed Yasin</b><br>
                                     Taxanaha: <b>Mustaqbalka AI</b>
                                 </div>
                                 <div class="book-btn-row">
@@ -2486,6 +2733,57 @@ python portal_app.py</code></pre>
                                     <span class="book-price-tag free">🎁 100% FREE</span>
                                     <span class="book-pages-tag">📄 87 Pages</span>
                                 </div>
+
+                                <!-- Modern SVG Visual: ISBAR CHATGPT PROMPTS -->
+                                <div class="book-svg-visual">
+                                    <svg viewBox="0 0 320 105" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <defs>
+                                            <linearGradient id="bgPrompt" x1="0" y1="0" x2="320" y2="105" gradientUnits="userSpaceOnUse">
+                                                <stop offset="0%" stop-color="#042f2e" />
+                                                <stop offset="100%" stop-color="#0f172a" />
+                                            </linearGradient>
+                                            <linearGradient id="gptGrad" x1="0" y1="0" x2="1" y2="1">
+                                                <stop offset="0%" stop-color="#10b981" />
+                                                <stop offset="100%" stop-color="#059669" />
+                                            </linearGradient>
+                                        </defs>
+                                        <rect width="320" height="105" rx="10" fill="url(#bgPrompt)" />
+                                        <circle cx="280" cy="20" r="45" fill="#10b981" fill-opacity="0.12" />
+
+                                        <!-- Chat Interface Mockup -->
+                                        <g transform="translate(18, 14)">
+                                            <rect width="138" height="30" rx="6" fill="#134e4a" stroke="#2dd4bf" stroke-width="0.8" />
+                                            <text x="6" y="13" fill="#99f6e4" font-size="7" font-weight="bold" font-family="sans-serif">👤 You:</text>
+                                            <text x="6" y="24" fill="#ffffff" font-size="7" font-family="sans-serif">&ldquo;Sidee shaqo IT ah loogu helaa AI?&rdquo;</text>
+                                            
+                                            <g transform="translate(0, 36)">
+                                                <rect width="138" height="38" rx="6" fill="url(#gptGrad)" />
+                                                <circle cx="12" cy="12" r="5" fill="#ffffff" />
+                                                <text x="10" y="15" fill="#047857" font-size="7" font-weight="bold">🤖</text>
+                                                <text x="21" y="13" fill="#ffffff" font-size="7" font-weight="bold" font-family="sans-serif">ChatGPT Response:</text>
+                                                <text x="6" y="24" fill="#ecfdf5" font-size="6.8" font-family="sans-serif">1. Dhis ATS CV &bull; 2. STAR Prompts</text>
+                                                <text x="6" y="33" fill="#fef08a" font-size="6.8" font-weight="bold" font-family="sans-serif">✨ Baro Prompts (87 Pages)</text>
+                                            </g>
+                                        </g>
+
+                                        <!-- Right Side Badges -->
+                                        <g transform="translate(172, 14)">
+                                            <rect width="132" height="26" rx="13" fill="#065f46" stroke="#34d399" stroke-width="1.2" />
+                                            <text x="12" y="17" fill="#6ee7b7" font-size="8.5" font-weight="900" font-family="sans-serif">🎁 100% BILAASH (FREE)</text>
+                                        </g>
+
+                                        <g transform="translate(172, 46)">
+                                            <rect width="132" height="24" rx="5" fill="#134e4a" stroke="#2dd4bf" stroke-width="0.8" />
+                                            <text x="8" y="15" fill="#ccfbf1" font-size="7.5" font-weight="bold" font-family="sans-serif">⚡ Prompt Engineering</text>
+                                        </g>
+
+                                        <g transform="translate(172, 75)">
+                                            <rect width="132" height="18" rx="4" fill="#0f172a" />
+                                            <text x="8" y="12" fill="#38bdf8" font-size="7" font-weight="bold" font-family="sans-serif">PAGE 87 &bull; Qore: Mohamed Yasin</text>
+                                        </g>
+                                    </svg>
+                                </div>
+
                                 <h4>4. ISBAR ChatGPT - Prompts Basic</h4>
                                 <div class="book-subtitle">Macallin La’aan, Xirfadaha Qarniga 21aad!</div>
                                 <ul class="book-topics">
@@ -2498,8 +2796,8 @@ python portal_app.py</code></pre>
                             </div>
                             <div>
                                 <div class="book-meta-footer">
-                                    Qore: <b>Mohamed Faratoon</b><br>
-                                    Editor: <b>Yahya Abdirahman</b>
+                                    Qore: <b>Mohamed Yasin</b><br>
+                                    Editor: <b>Yahye Abdirahman</b>
                                 </div>
                                 <div class="book-btn-row">
                                     <button class="btn-book-action" style="background:#0284c7;" onclick="quickBookService('ISBAR ChatGPT Prompts (BILAASH)')">🎁 Ka Degso Bilaash ($0)</button>
@@ -2658,7 +2956,7 @@ python portal_app.py</code></pre>
                     <span class="section-badge" style="background:#d1fae5; color:#065f46;">Direct Mentorship</span>
                     <h3>📅 Ballan Live ah & Caawinaad Toos ah</h3>
                     <p>
-                        Waxaa loogu talagalay ardayda jaamacadaha, dhalinyarada shaqo doonka ah ee bartay IT-ga, iyo qof kasta oo raba inuu bilaabo koorso, buug dalbado, ama la-talin 1-on-1 ah la yeesho <b>Mohamed Yasin Mohamoud (Faratoon)</b>.
+                        Waxaa loogu talagalay ardayda jaamacadaha, dhalinyarada shaqo doonka ah ee bartay IT-ga, iyo qof kasta oo raba inuu bilaabo koorso, buug dalbado, ama la-talin 1-on-1 ah la yeesho <b>Mohamed Yasin</b>.
                     </p>
                     <ul class="booking-perks">
                         <li>✅ Caawinaad qorista CV ATS-friendly ah</li>
@@ -2730,7 +3028,7 @@ python portal_app.py</code></pre>
                         <h4>🎉 Ballantaada Waa La Diiwaangeliyey!</h4>
                         <p id="bookingSuccessMsg"></p>
                         <a href="#" target="_blank" class="hero-btn-success" id="btnWaConfirmLink" style="display:inline-flex; padding:8px 16px; font-size:13px;">
-                            💬 Xaqiiji WhatsApp Toos ah Mohamed Faratoon &rarr;
+                            💬 Xaqiiji WhatsApp Toos ah Mohamed Yasin &rarr;
                         </a>
                     </div>
                 </div>
@@ -2746,8 +3044,28 @@ python portal_app.py</code></pre>
             <p>
                 Ku biir kumanaan arday iyo dhalinyaro Soomaaliyeed ah oo todobaad walba toos email-kooda ugu hela fursadaha shaqo ee IT-ga, buugaagta casriga ah ee Isbar, iyo casharrada AI-ga ee bilaashka ah!
             </p>
+            
+            <!-- Compact Substack Embed Box (Fixed Mobile/Desktop Size) -->
             <div class="substack-embed-box">
-                <iframe src="https://somalilibrary.substack.com/embed?transparent=1" width="480" height="320" style="border: 0; background: transparent; max-width: 100%; border-radius: 12px;" frameborder="0" scrolling="no"></iframe>
+                <iframe src="https://somalilibrary.substack.com/embed?transparent=1" frameborder="0" scrolling="no"></iframe>
+            </div>
+
+            <!-- Prominent Large Action Button with Stickers -->
+            <div class="substack-action-wrap">
+                <a href="https://somalilibrary.substack.com" target="_blank" class="btn-substack-prominent">
+                    <span class="btn-substack-sticker">📮</span>
+                    <div style="text-align:left;">
+                        <div style="font-size:16px; font-weight:800; line-height:1.2;">Ku Biir Warsidaha Substack (Bilaash)</div>
+                        <div style="font-size:12px; font-weight:500; opacity:0.95; margin-top:2px;">Fursadaha IT-ga, Buugaagta Isbar & Casharrada AI-ga Toos Email-kaaga</div>
+                    </div>
+                    <span style="font-size:20px; font-weight:800; margin-left:8px;">&rarr;</span>
+                </a>
+                <div class="substack-stickers-row">
+                    <span class="sub-sticker-pill">✨ 100% Bilaash ah</span>
+                    <span class="sub-sticker-pill">💌 Fariin Todobaadle ah</span>
+                    <span class="sub-sticker-pill">🔒 Spam La'aan & Xog Dhowran</span>
+                    <span class="sub-sticker-pill">🚀 1,000+ Dhalinyaro</span>
+                </div>
             </div>
         </section>
 
@@ -2757,17 +3075,16 @@ python portal_app.py</code></pre>
         <section class="founder-section" id="founderSection">
             <div class="founder-avatar">👨‍🏫</div>
             <div class="founder-info">
-                <h3>Mohamed Yasin Mohamoud (Faratoon)</h3>
+                <h3>Mohamed Yasin</h3>
                 <p class="role">Dynamic IT Educator &bull; AI Automation Trainer &bull; Edmonton, AB, Canada 🇨🇦</p>
                 <p class="bio">
-                    Macallin iyo tababare khibrad dheer u leh baridda kombiyuutarka iyo tiknoolajiyadda. Wuxuu 5+ sano tababarro u qabtay Hay'adda Socdaalka Caalamiga ah ee Qaramada Midoobay (UN/IOM) ee dalka Indonesia, isagoo ku muteystay Certificate of Commendation rasmi ah. Wuxuu haystaa shahaadada BA ee Media & Mass Communication (AVU) iyo shahaadooyinka Google IT Support Professional. Wuxuu online-ka wax ku baray in ka badan 100,000 oo arday Soomaaliyeed ah.
+                    Macallin iyo tababare khibrad dheer u leh baridda kombiyuutarka iyo nidaamyada AI Automation-ka. Wuxuu u heellan yahay tayeynta iyo garab-istaagga dhalinyarada Soomaaliyeed ee baranaya tiknoolajiyadda casriga ah si ay u gaaraan guulo xirfadeed oo heer caalami ah.
                 </p>
                 <div class="founder-creds">
-                    <span class="cred-pill">🏅 UN/IOM Commendation</span>
                     <span class="cred-pill">🎓 BA Degree (AVU)</span>
                     <span class="cred-pill">🛡️ Google IT Support Professional</span>
                     <span class="cred-pill">🤖 AI Automation & Chatbots</span>
-                    <span class="cred-pill">🇸🇴 Dedicated to Somali Youth Growth</span>
+                    <span class="cred-pill">🇸🇴 Somali Youth Tech Mentor</span>
                 </div>
             </div>
         </section>
@@ -2786,8 +3103,19 @@ python portal_app.py</code></pre>
                 Walaal, maadaama aad nidaamka ka faa'iideysatay mar labaad, fadlan ku biir warsidahayaga Substack si aad toos email-kaaga ugu hesho fursadaha shaqo ee ugu dambeeya ee IT-ga Soomaalida, buugaagta casriga ah ee Isbar, iyo koorsooyinka bilaashka ah!
             </p>
 
-            <div style="display:flex; justify-content:center; margin:12px auto; max-width:100%; overflow:hidden;">
-                <iframe src="https://somalilibrary.substack.com/embed?transparent=1" width="480" height="320" style="border: 0; background: transparent; max-width: 100%; border-radius: 12px;" frameborder="0" scrolling="no"></iframe>
+            <div class="substack-embed-box" style="margin: 8px auto 14px;">
+                <iframe src="https://somalilibrary.substack.com/embed?transparent=1" frameborder="0" scrolling="no"></iframe>
+            </div>
+
+            <div class="substack-action-wrap" style="margin-bottom:14px;">
+                <a href="https://somalilibrary.substack.com" target="_blank" class="btn-substack-prominent" style="padding:10px 22px; font-size:14px;">
+                    <span class="btn-substack-sticker" style="font-size:20px;">📮</span>
+                    <span style="font-weight:800;">Ku Biir Substack-ka (Bilaash) &rarr;</span>
+                </a>
+                <div class="substack-stickers-row">
+                    <span class="sub-sticker-pill">✨ 100% Free</span>
+                    <span class="sub-sticker-pill">🔒 Spam Free</span>
+                </div>
             </div>
 
             <div class="modal-actions">
@@ -2860,14 +3188,14 @@ python portal_app.py</code></pre>
 
         <div class="chat-body" id="chatBody">
             <div class="chat-msg bot">
-                Salamaat! 👋 Waxaan ahay **Kaaliyaha Rasmiga ah ee Dhalinyarada Soomaaliyeed ee IT-ga**.
+                Salamaat! 👋 Waxaan ahay **Kaaliyaha AI ee Shaqo Baahiye**.
                 <br><br>
                 Waxaan diyaar kuugu ahay:
                 <br>• 💻 Shaqooyinka IT-ga ee Soomaaliya, Kenya, Itoobiya & Remote
                 <br>• 📚 Buugaagta Isbar ($5 - $7 & ChatGPT Free)
                 <br>• 🤖 Koorsooyinka AI Automation & Chatbots
                 <br>• 📬 Warsidaha Somalilibrary Substack
-                <br>• 📅 Ballan Live ah la yeelashada Mohamed Faratoon
+                <br>• 📅 Ballan Live ah la yeelashada Mohamed Yasin
             </div>
 
             <div class="chat-quick-chips">
@@ -2899,7 +3227,7 @@ python portal_app.py</code></pre>
     <footer class="site-footer">
         <div class="footer-content">
             <div class="footer-col">
-                <h4 style="color:#38bdf8;">🦅 Shaqo Raadiyaha & Isbar</h4>
+                <h4 style="color:#38bdf8;">🦅 Shaqo Baahiye & Isbar</h4>
                 <p style="font-size:12.5px; line-height:1.6; margin-bottom:12px;">
                     Madal casri ah oo u heellan dhalinyarada iyo ardayda Soomaaliyeed ee bartay Culuumta IT-ga iyo Teknoolajiyadda. Waxaan isku xirnaa fursadaha shaqo ee Soomaaliya, Bariga Afrika, Remote-ka, iyo caalamka.
                 </p>
@@ -2948,7 +3276,7 @@ python portal_app.py</code></pre>
 
         <div class="footer-bottom">
             <div>
-                &copy; 2026 <b>Mohamed Yasin Mohamoud</b>. Xuquuqda oo dhan way dhowran tahay.
+                &copy; 2026 <b>Mohamed Yasin</b>. Xuquuqda oo dhan way dhowran tahay.
             </div>
             <div style="display:flex; gap:16px;">
                 <span style="color:#64748b;">Dhalinyarada Soomaaliyeed ee IT-ga</span>
@@ -2961,8 +3289,8 @@ python portal_app.py</code></pre>
     <script>
         const TRANSLATIONS = {
             so: {
-                announcement: "✨ Shaqo Raadiyaha Dhalinyarada Soomaaliyeed ee Bartay IT-ga • Soomaaliya, East Africa, Remote & Canada • 100% Free",
-                brandTitle: "Shaqo Raadiyaha Dhalinyarada Soomaaliyeed",
+                announcement: "✨ Shaqo Baahiye • Madasha Culuumta IT-ga, Buugaagta Isbar & Fursadaha Shaqada • 100% Free",
+                brandTitle: "Shaqo Baahiye",
                 brandSub: "Culuumta IT-ga, AI Automation & Shaqooyinka Soomaaliya, East Africa & Remote",
                 navServices: "💼 Adeegyada Shaqada",
                 navCourses: "📚 Koorsooyinka & Buugaagta",
@@ -2974,8 +3302,8 @@ python portal_app.py</code></pre>
                 btnChat: "💬 Kaaliyaha AI"
             },
             en: {
-                announcement: "✨ Somali Youth IT Career Discovery & Academy • Somalia, East Africa, Remote & Canada • 100% Free",
-                brandTitle: "Somali Youth IT Career Portal",
+                announcement: "✨ Shaqo Baahiye • Somali Youth IT Career Portal & Academy • 100% Free",
+                brandTitle: "Shaqo Baahiye (Career Portal)",
                 brandSub: "Computer Science, AI Automation & Tech Jobs in Somalia, East Africa & Remote",
                 navServices: "💼 Career Services",
                 navCourses: "📚 Courses & Books",
@@ -2987,8 +3315,8 @@ python portal_app.py</code></pre>
                 btnChat: "💬 AI Advisor"
             },
             ar: {
-                announcement: "✨ بوابة الوظائف التقنية للشباب الصومالي • الصومال، شرق إفريقيا وعن بُعد • مجاني 100%",
-                brandTitle: "محرك الوظائف التقنية للشباب الصومالي",
+                announcement: "✨ بوابة شاغلي التقنية (Shaqo Baahiye) • وظائف الصومال والشرق الإفريقي • مجاني 100%",
+                brandTitle: "بوابة شاغلي التقنية (Shaqo Baahiye)",
                 brandSub: "علوم الحاسوب، الذكاء الاصطناعي ووظائف الصومال وشرق إفريقيا",
                 navServices: "💼 خدمات التوظيف",
                 navCourses: "📚 الدورات والكتب",

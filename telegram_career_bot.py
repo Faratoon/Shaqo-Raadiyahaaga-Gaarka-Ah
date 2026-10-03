@@ -46,6 +46,30 @@ def configure_bot_menu_button():
     except Exception as e:
         print(f"[!] Error setting menu button: {e}", flush=True)
 
+def send_photo(chat_id, photo_path, caption=None, reply_markup=None, parse_mode="HTML"):
+    url = f"{API_URL}/sendPhoto"
+    data = {"chat_id": chat_id}
+    if caption:
+        data["caption"] = caption
+        data["parse_mode"] = parse_mode
+    if reply_markup:
+        data["reply_markup"] = json.dumps(reply_markup)
+    try:
+        p = Path(photo_path)
+        if p.exists():
+            with open(p, "rb") as f:
+                res = requests.post(url, data=data, files={"photo": f}, timeout=25)
+                data_res = res.json()
+                if data_res.get("ok"):
+                    print(f"[*] Photo banner sent to {chat_id}", flush=True)
+                    return data_res
+                print(f"[!] sendPhoto failed: {data_res}", flush=True)
+    except Exception as e:
+        print(f"[!] Error sending photo: {e}", flush=True)
+    if caption:
+        return send_message(chat_id, caption, reply_markup, parse_mode=parse_mode)
+    return None
+
 def send_message(chat_id, text, reply_markup=None, parse_mode="HTML"):
     url = f"{API_URL}/sendMessage"
     payload = {
@@ -109,12 +133,17 @@ def get_main_keyboard():
     }
 
 def handle_start(chat_id, first_name):
-    welcome_text = f"""🦅 <b>Shaqo Raadiyaha & Isbar Academy (@Baahiyebot)</b>
+    welcome_text = f"""🦅 <b>Shaqo Baahiye (@Baahiyebot)</b>
 
-Ku soo dhowow <b>{first_name}</b>! Madal u heellan shaqooyinka oo dhan (Customer Support, Management, Administration, Tech & Sales), iyadoo ahmiyad gaar ah iyo showcase siinaysa fursadaha farsamada & IT-ga, dhisidda CV ATS ah, iyo buugaagta casriga ah ee Isbar.
+Ku soo dhowow <b>{first_name}</b>! Madal u heellan fursadaha shaqada oo dhan, iyadoo ahmiyad gaar ah iyo showcase siinaysa dhalinyarada bartay IT-ga & CS-ka, diyaarinta CV ATS ah, iyo buugaagta casriga ah ee Isbar.
 
 <i>Dooro adeegga aad u baahan tahay hoos:</i>"""
-    send_message(chat_id, welcome_text, get_main_keyboard())
+
+    banner_path = BASE_DIR / "assets" / "shaqo_baahiye_banner.png"
+    if banner_path.exists():
+        send_photo(chat_id, banner_path, caption=welcome_text, reply_markup=get_main_keyboard())
+    else:
+        send_message(chat_id, welcome_text, get_main_keyboard())
 
 def handle_jobs(chat_id):
     jobs = get_curated_somali_it_jobs()
@@ -188,7 +217,7 @@ def handle_academy(chat_id):
 def handle_booking(chat_id):
     text = """📅 <b>Ballan Live ah & Mentorship (1-on-1):</b>
 
-Kulan toos ah oo online ah (Google Meet / Zoom) oo aad la yeelanayso <b>Mohamed Faratoon</b>:
+Kulan toos ah oo online ah (Google Meet / Zoom) oo aad la yeelanayso <b>Mohamed Yasin</b>:
 • ✅ La-talin ku saabsan jihadaada shaqo iyo xirfadeed
 • ✅ Dib-u-eegista CV-gaaga & Tababarka Wareysiga
 • ✅ Hagidda helitaanka shaqooyinka & Koorsooyinka AI Automation
@@ -219,7 +248,7 @@ Kala xidhiidh aasaasaha iyo kooxda nidaamka siyaabaha rasmiga ah:
 • 📺 <b>YouTube Portfolio:</b> <a href='https://www.youtube.com/User/MrFaratoon'>youtube.com/User/MrFaratoon</a>
 • 🌐 <b>Website:</b> <a href='https://isbar-ai.com'>https://isbar-ai.com</a>
 
-📍 <b>Mohamed Yasin Mohamoud (Faratoon)</b> &bull; Edmonton, AB, Canada 🇨🇦"""
+📍 <b>Mohamed Yasin</b> &bull; Edmonton, AB, Canada 🇨🇦"""
 
     markup = {
         "inline_keyboard": [
@@ -339,7 +368,7 @@ def process_message(message):
 
 def run_bot_polling():
     print("\n=======================================================", flush=True)
-    print("   Shaqo Raadiyaha Dhalinyarada Soomaaliyeed Telegram Bot", flush=True)
+    print("   Shaqo Baahiye Telegram Bot (@Baahiyebot)", flush=True)
     print("   Bot: @Baahiyebot (Clean & Modernized)", flush=True)
     print(f"   Domain: {PRIMARY_DOMAIN}", flush=True)
     print("=======================================================\n", flush=True)
