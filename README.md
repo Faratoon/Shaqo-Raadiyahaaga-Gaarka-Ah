@@ -1,144 +1,157 @@
-# 🦅 Shaqo Raadiyahaaga Gaarka Ah (AI Career Portal)
+# 🇸🇴 Shaqo-Raadiyahaaga Gaarka Ah (Somali Youth IT Career Engine & Hub)
 
 <div align="center">
 
+[![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/Faratoon/Shaqo-Raadiyahaaga-Gaarka-Ah)
 ![Python](https://img.shields.io/badge/Python-3.11%20%7C%203.12-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![Flask](https://img.shields.io/badge/Flask-3.0.0-000000?style=for-the-badge&logo=flask&logoColor=white)
-![AI Chatbot](https://img.shields.io/badge/AI%20Career%20Chatbot-Active-10B981?style=for-the-badge)
-[![Live Demo on Vercel](https://img.shields.io/badge/Live%20Portal-Vercel%20Active-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://auto-jobs-applier-aih-awk-live.vercel.app)
-![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker&logoColor=white)
-![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
+[![Telegram Bot](https://img.shields.io/badge/Telegram_Bot-@Baahiyebot-0088cc?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/Baahiyebot)
+[![Live Demo on Vercel](https://img.shields.io/badge/Live%20Portal-Vercel%20Active-10B981?style=for-the-badge&logo=vercel&logoColor=white)](https://auto-jobs-applier-aih-awk-live.vercel.app)
+![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)
 
 <br/>
 
-### 🎯 Nidaamka Casriga ah ee Shaqo Raadinta Dhalinyarada, Ardayda Jaamacadaha & Xirfadlayaasha:
-# **Shaqo Raadiyahaaga Gaarka Ah**
-### Dhisay: **Mohamed Yasin Mohamoud**
-**Dynamic IT Educator • Technical Support Specialist • AI Automation Trainer**
-*Empowering 100,000+ Students Worldwide & Dedicated to Edmonton Community Growth*
+### 🌟 Madal Furan (100% Free & Open-Source) oo loogu talagalay Dhalinyarada iyo Ardayda Soomaaliyeed ee Bartay Culuumta IT-ga, Computer Science-ka, iyo AI Automation-ka
+
+**Dhisay & Aasaasay:** [Mohamed Yasin Mohamoud (Faratoon)](https://www.linkedin.com/in/mfaratoon)  
+*Dynamic IT Educator • Technical Support Specialist • AI Automation Trainer*  
+*Edmonton, Alberta, Canada 🇨🇦 &bull; U heellan Kobcinta Dhalinyarada Soomaaliyeed ee IT-ga*
 
 <p align="center">
-  <a href="https://www.linkedin.com/in/mfaratoon">
-    <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/>
-  </a>
-  <a href="https://www.youtube.com/User/MrFaratoon">
-    <img src="https://img.shields.io/badge/YouTube_Portfolio-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="YouTube"/>
-  </a>
-  <a href="mailto:Suxufi34@gmail.com">
-    <img src="https://img.shields.io/badge/Email_Me-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Email"/>
-  </a>
+  <a href="https://auto-jobs-applier-aih-awk-live.vercel.app">🌐 Web Portal Toos Ah</a> &bull;
+  <a href="https://t.me/Baahiyebot">📱 Telegram Mini App & Bot</a> &bull;
+  <a href="https://somalilibrary.substack.com">📬 Somalilibrary Substack</a> &bull;
+  <a href="https://www.linkedin.com/in/mfaratoon">🔗 LinkedIn</a> &bull;
+  <a href="https://www.youtube.com/User/MrFaratoon">📺 YouTube Portfolio</a>
 </p>
 
 ---
 
 </div>
 
-## 📌 Qoraal Guud (Project Overview)
+## 📌 Hordhac (Project Overview)
 
-**Shaqo Raadiyahaaga Gaarka Ah** waa nidaam casri ah oo loogu talagalay in dhalinyarada Soomaaliyeed, gaar ahaan ardayda dugsiyada sare iyo jaamacadaha ka qalin-jebiyey, ku hago sidii ay u heli lahaayeen shaqooyin tayo leh. Nidaamku wuxuu isku xidhayaa:
-1. 🔍 **Raadinta Tooska ah ee Shaqooyinka Kanada** (Indeed Canada, Glassdoor, ZipRecruiter).
-2. 🤖 **Kaaliyaha Shaqada ee AI-ga (AI Career Chatbot)** oo toos ugu dhex jira bogga si uu qofka uga caawiyo qorista CV-ga, diyaarinta wareysiga shaqada, iyo barashada xirfadaha IT/AI.
-3. 📝 **Curinta Waraaqaha Codsiga ee Canadian-ka (Cover Letters)** oo 1-guji ku diyaarsan.
-4. 📄 **Isku-xirka Resume-ga Rasmiga ah (PDF)**.
-5. ⏱️ **Xakameynta Codsiyada Maalinlaha ah (Max 5 Jobs/Day)** si looga fogaado codsiyada aan tayada lahayn.
+**Shaqo-Raadiyahaaga Gaarka Ah** waa madal furan (Open-Source Ecosystem) oo loo qaabeeyey in dhalinyarada Soomaaliyeed ee ku nool **Soomaaliya** (Muqdisho, Hargeysa), **Bariga Afrika** (Kenya, Itoobiya), **Shaqooyinka Guriga (Global Remote)**, iyo **Qurba-joogta (Kanada)** ay si hufan ugu helaan shaqooyin IT oo tayo leh, iyagoo aan u baahnayn lacag bixin ama login adag.
 
----
-
-## 👨‍💼 Xogta Guud & Xirfadda Aasaasaha (Founder Profile)
-
-<table align="center" width="100%">
-  <tr>
-    <td width="50%">
-      <h3>👤 Xogta Xidhiidhka (Public Contact)</h3>
-      <ul>
-        <li><b>Magaca:</b> Mohamed Yasin Mohamoud</li>
-        <li><b>Goobta:</b> Edmonton, Alberta, Canada 🇨🇦</li>
-        <li><b>Telefoon:</b> <code>(587) 306-4137</code></li>
-        <li><b>Email:</b> <a href="mailto:Suxufi34@gmail.com">Suxufi34@gmail.com</a></li>
-        <li><b>LinkedIn:</b> <a href="https://www.linkedin.com/in/mfaratoon">linkedin.com/in/mfaratoon</a></li>
-        <li><b>YouTube:</b> <a href="https://www.youtube.com/User/MrFaratoon">youtube.com/User/MrFaratoon</a></li>
-        <li><b>Websites:</b> <code>somalibotmaster.com</code> | <code>alaable.com</code></li>
-        <li><b>U Oggolaanshaha Shaqada:</b> Sharci ahaan u oggol inuu ka shaqeeyo Kanada (Canadian Work Authorization: Yes)</li>
-      </ul>
-    </td>
-    <td width="50%">
-      <h3>🎓 Aqoonta & Shahaadooyinka (Education & Certs)</h3>
-      <ul>
-        <li><b>Heerka Waxbarasho:</b> Bachelor of Degree in Media & Mass Communication (AVU - African Virtual University)</li>
-        <li><b>Shahaado Sharaf Qaramada Midoobay:</b> <b>UN / IOM Certificate of Commendation</b> (5+ Sano oo Macallinnimo IT & Tabaruc Qaxootiga Caalamiga ah ee Medan, Indonesia)</li>
-        <li><b>Google IT Support Professional:</b>
-          <ul>
-            <li>🛡️ IT Security: Defense against the Digital Dark Arts</li>
-            <li>🖥️ System Administration & IT Infrastructure Services</li>
-            <li>⚙️ Operating Systems and You: Becoming a Power User</li>
-            <li>🌐 The Bits and Bytes of Computer Networking</li>
-            <li>🔧 Technical Support Fundamentals</li>
-          </ul>
-        </li>
-      </ul>
-    </td>
-  </tr>
-</table>
+Mashruucan waxaa lagu dhex dhisay nidaamyo casri ah oo isugu jira:
+1. 🔍 **Live IT Job Search Engine**: Raadinta shaqooyinka IT-ga ee shirkadaha maxalliga ah (Hormuud, Dahabshiil, Telesom) iyo kuwa caalamiga ah ee Remote-ka.
+2. ⚡ **Somali IT Career Assessment & ATS CV Engine**: Falanqaynta xirfadaha iyo soo saarista CV heer caalami ah oo 1-page ATS ah oo PDF ah.
+3. 🤖 **Telegram Bot & Mini App (@Baahiyebot)**: Bot fudud, xawaare sare leh, lehna menu nadiif ah oo dhalinta u fududaynaya inay taleefankooda toos uga helaan shaqooyinka iyo buugaagta.
+4. 📚 **Akadeemiyada Buugaagta Isbar & AI Automation**: Buugaagta taxanaha Isbar (Isbar Computer, Isbar Programming, Isbar AI Basic, Isbar ChatGPT) iyo koorsooyinka automation-ka ganacsiga (WhatsApp, Telegram, Web Design).
+5. 📅 **Ballan Live ah (1-on-1 Mentorship)**: Kulan toos ah oo lala yeelan karo macallin Mohamed Faratoon.
 
 ---
 
-## ✨ Tilmaamaha Nidaamka (Key Features)
+## 🏛️ Qaab-dhismeedka Nidaamka (Architecture & Tech Stack)
 
-* 🤖 **Kaaliyaha Shaqada ee AI-ga (Built-in Career Chatbot):**  
-  Chatbot toos ah oo bogga ku lifaaqan, ku hadlaya af-Soomaali iyo Ingiriis, kaaga jawaabaya su'aalaha ardayda, diyaarinta CV-ga ATS-friendly ah, iyo u diyaar-garowga wareysiga (STAR method).
-* 🎓 **Qeybta Ardayda & Qalin-jebiyayaasha (Youth Career Hub):**  
-  Kaarar gaar ah oo hagaya dhalinyarada cusub ee aan khibradda badan lahayn sida ay mashaariicda iyo volunteering-ka ugu adeegsan lahaayeen helitaanka shaqadooda koowaad.
-* 🌐 **Local Web Portal UI (`portal_app.py`):**  
-  Interface aad u qurux badan oo ku shaqaynaya Flask kana furmaya `http://localhost:5050` iyo telefoonka gacanta (`http://192.168.1.73:5050`).
-* 📝 **Custom Canadian Cover Letter Generator:**  
-  Wuxuu shaqo kasta u diyaariyaa warqad codsi oo rasmi ah oo 3 faqrood ka kooban oo toos loogu lifaaqi karo shaqada.
-* 📄 **1-Click PDF Resume Download:**  
-  Wuxuu toos ugu xidhan yahay Resume-ga rasmiga ah ee Mohamed Yasin Mohamoud PDF ahaan.
-* 🛡️ **Anti-Bot Multi-Platform Scraper (JobSpy):**  
-  Wuxuu si toos ah shaqooyinka uga soo saaraa Indeed Canada, ZipRecruiter, iyo Glassdoor.
-* 📊 **Daily Quota & Tracking (`applied_jobs.json`):**  
-  Wuxuu xafidaa shaqooyinka la codsaday, wuxuuna xaddidaa maalintii 5 codsi si taxadir leh loo diro.
-* ☁️ **Vercel & Docker Container Ready:**  
-  Diyaar u ah in lagu dhex kiciyo Docker (`docker-compose.yml`) ama server-ka Vercel Serverless.
-
----
-
-## 🚀 Tilmaamaha Isticmaalka (Quick Start Guide)
-
-### 1️⃣ Sida Loo Kiciyo Portal-ka Shaqada (Local Web UI)
-Galka mashruuca dhexdiisa ku dhufo:
-```bash
-start_portal.bat
 ```
-* Tani waxay si toos ah kuugu furaysaa bogga: **`http://localhost:5050`**
-* Waxaad sidoo kale taleefankaaga kaga geli kartaa: **`http://192.168.1.73:5050`** (Wi-Fi-ga guriga).
-
-### 2️⃣ Sida Loogu Shubayo Koontadaada GitHub (`Faratoon`) 🐙
-1. Tag: [https://github.com/new](https://github.com/new) -> magaca repo-ga ka dhig: **`Shaqo-Raadiyahaaga-Gaarka-Ah`** (Public).
-2. Ku dhufo:
-```bash
-push_to_github.bat
+Shaqo-Raadiyahaaga-Gaarka-Ah/
+├── portal_app.py               # Flask Web Server & API Handlers (REST endpoints)
+├── telegram_career_bot.py      # Telegram Bot Daemon (@Baahiyebot) with Mini App support
+├── templates/
+│   └── index.html              # Sleek, Modern, Mobile-First UI (Jobs, ATS, Academy)
+├── assets/
+│   └── Mohamed_Yasin_Mohamoud_Resume.pdf  # ATS Resume Source File
+├── requirements.txt            # Python Dependencies
+├── vercel.json                 # Vercel Serverless Deployment Config
+└── README.md                   # Documentation & Community Guide
 ```
-* Isla markiiba koodhkaaga oo dhan wuxuu tagayaa GitHub-kaaga shakhsiga ah!
 
-### 3️⃣ Sida Loogu Dhiibo Vercel (Live Cloud URL) ☁️
-Haddii aad doonaysid inaad internet-ka oo dhan ka gasho telefoonka adigoo guriga ka maqan:
+* **Backend:** Python 3.11, Flask, ReportLab (ATS PDF generation), Requests.
+* **Frontend:** HTML5, CSS3 Custom Properties (Modern Slate Theme), Vanilla JS (No bulky frameworks), Mobile-First Responsive.
+* **Bot & Mini App:** Telegram Bot API (Custom long-polling daemon + Telegram WebApp native launch).
+* **Deployment:** Vercel Serverless (Cloud) & Local Daemon (`http://localhost:5050`).
+
+---
+
+## ✨ Astaamaha Muhiimka ah (Key Features)
+
+### 1. 🔍 Shaqooyinka IT-ga oo Toos ah (Live Jobs Engine)
+* Shaqooyin diyaarsan oo la kala shaandheeyey (IT Support, Software Developer, Cloud Engineer, Network Admin, AI Automation Specialist).
+* Goobo kala duwan: Soomaaliya (Muqdisho & Hargeysa), Kenya (Nairobi), Itoobiya (Jigjiga & Addis Ababa), Global Remote, iyo Canada.
+* Shaqo kasta waxay wadataa **Warqad Codsi (Cover Letter)** oo toos loogu codsan karo.
+
+### 2. ⚡ Falanqaynta Xirfadaha & Dhisidda CV ATS ah
+* Ardaydu waxay taaban karaan xirfadahooda IT-ga si AI-gu u falanqeeyo.
+* Soo degsashada CV ATS-friendly ah oo ReportLab ku diyaarsan (`/download/resume`).
+
+### 3. 🤖 Telegram Bot & Mini App (@Baahiyebot)
+* Token-ka rasmiga ah ee firfircoon: `@Baahiyebot`.
+* Nadiif, kooban, oo aan lahayn qoraalo dhaadheer ama menus jahwareer ah.
+* Menu kasta wuxuu leeyahay badhan dib u noqosho ah (`🔙 Ku noqo Menu-ga`).
+* Mini App si toos ah uga furmaya gudaha Telegram-ka (`setChatMenuButton`).
+
+### 4. 📚 Buugaagta Casriga ah ee Isbar & Koorsooyinka
+* **ISBAR COMPUTER** ($5) - 89 Pages (Windows 11, Mac OS, Office, Photoshop).
+* **ISBAR PROGRAMMING** ($5) - 177 Pages (Web basics, Database, IDEs).
+* **ISBAR AI BASIC** ($7) - 189 Pages (Taariikhda AI, Shaqooyinka, Ganacsiga).
+* **ISBAR ChatGPT Prompts** (Free) - 87 Pages (Prompt Engineering).
+* **Koorsooyinka Bilaashka ah:** AI Video Editing, WhatsApp Business Bot, Telegram Bot, Web Design with AI.
+
+---
+
+## 🚀 Sida Loogu Kiciyo Kombiyuutarkaaga (Local Installation)
+
+### 1️⃣ Soo Rog Koodhka (Clone Repository):
 ```bash
-deploy_to_vercel.bat
+git clone https://github.com/Faratoon/Shaqo-Raadiyahaaga-Gaarka-Ah.git
+cd Shaqo-Raadiyahaaga-Gaarka-Ah
+```
+
+### 2️⃣ Abuur Virtual Environment & Ku Shub Kutubaha:
+```bash
+python -m venv venv
+# Windows:
+.\venv\Scripts\activate
+# Mac/Linux:
+source venv/bin/activate
+
+pip install -r requirements.txt
+```
+
+### 3️⃣ Kici Web Portal-ka:
+```bash
+python portal_app.py
+```
+* Ka fur browser-kaaga: **`http://localhost:5050`**
+* Waxaad sidoo kale taleefankaaga kaga geli kartaa isla Wi-Fi-ga: `http://<IP-GAAGA>:5050`.
+
+### 4️⃣ Kici Telegram Bot-ka (@Baahiyebot):
+```bash
+python telegram_career_bot.py
 ```
 
 ---
 
-## 📬 Xidhiidhka & Xuquuqda (Contact & Author)
+## 🤝 Ka Qayb-qaadashada Mashruuca (Contributing to Open Source)
 
-Mashruucan waxaa iska leh oo hormariyay:  
-**Mohamed Yasin Mohamoud**  
-*Edmonton, Alberta, Canada*  
-📧 Email: [Suxufi34@gmail.com](mailto:Suxufi34@gmail.com)  
-🔗 LinkedIn: [linkedin.com/in/mfaratoon](https://www.linkedin.com/in/mfaratoon)  
-📺 YouTube: [youtube.com/User/MrFaratoon](https://www.youtube.com/User/MrFaratoon)  
+Mashruucan waxaa loogu talagalay in dhalinyarada Soomaaliyeed ee ku xeeldheer barnaamijyada (developers) ay wax ku darsadaan:
+1. **Fork** dheh mashruuca GitHub-ka.
+2. Abuur branch cusub (`git checkout -b feature/shaqo-cusub`).
+3. Samee isbeddelkaaga oo xaqiiji inuu si wanaagsan u shaqaynayo.
+4. Soo dir **Pull Request (PR)** faahfaahsan.
+
+Waxyaabaha hadda furan ee la soo dhoweynayo:
+- Ku darista xog-raadinta shaqooyinka maxalliga ah ee Soomaaliya (API Scrapers).
+- Horumarinta luqadda Af-Soomaaliga ee talooyinka AI-ga.
+- Telegram Mini App UI features dheeri ah.
 
 ---
+
+## 👨‍💼 Aasaasaha Mashruuca (Founder & Author)
+
+**Mohamed Yasin Mohamoud (Faratoon)**  
+*Dynamic IT Educator • AI Automation Specialist • Community Builder*  
+*Edmonton, Alberta, Canada 🇨🇦*
+
+- 📧 **Email:** [Suxufi34@gmail.com](mailto:Suxufi34@gmail.com)
+- 📱 **WhatsApp:** [+1 (587) 306-4137](https://wa.me/15873064137)
+- 🔗 **LinkedIn:** [/in/mfaratoon](https://www.linkedin.com/in/mfaratoon)
+- 📺 **YouTube:** [/User/MrFaratoon](https://www.youtube.com/User/MrFaratoon)
+- 📬 **Substack:** [somalilibrary.substack.com](https://somalilibrary.substack.com)
+
+---
+
 <div align="center">
-  <sub>Qurxiyey oo dhisay Mohamed Yasin Mohamoud & Antigravity AI Assistant &bull; 2026</sub>
+  <sub>Waxaa loo dhisay dhalinyarada iyo ardayda Soomaaliyeed &bull; 100% Free & Open-Source &bull; 2026</sub>
 </div>
