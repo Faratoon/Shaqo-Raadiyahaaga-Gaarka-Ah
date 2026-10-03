@@ -11,17 +11,25 @@ from openai import OpenAI
 app = Flask(__name__)
 
 BASE_DIR = Path(__file__).resolve().parent
+import shutil
+
 IS_VERCEL = bool(os.environ.get("VERCEL"))
 if IS_VERCEL:
     OUTPUT_FOLDER = Path("/tmp/output")
+    OUTPUT_FOLDER.mkdir(parents=True, exist_ok=True)
+    seed_cache = BASE_DIR / "data_folder" / "output" / "cached_jobs.json"
+    seed_applied = BASE_DIR / "data_folder" / "output" / "applied_jobs.json"
+    if seed_cache.exists() and not (OUTPUT_FOLDER / "cached_jobs.json").exists():
+        shutil.copy(seed_cache, OUTPUT_FOLDER / "cached_jobs.json")
+    if seed_applied.exists() and not (OUTPUT_FOLDER / "applied_jobs.json").exists():
+        shutil.copy(seed_applied, OUTPUT_FOLDER / "applied_jobs.json")
 else:
     OUTPUT_FOLDER = BASE_DIR / "data_folder" / "output"
+    OUTPUT_FOLDER.mkdir(parents=True, exist_ok=True)
 
 CACHE_FILE = OUTPUT_FOLDER / "cached_jobs.json"
 APPLIED_FILE = OUTPUT_FOLDER / "applied_jobs.json"
 PDF_RESUME_PATH = BASE_DIR / "data_folder" / "output" / "Mohamed_Yasin_Mohamoud_Resume_Latest.pdf"
-
-OUTPUT_FOLDER.mkdir(parents=True, exist_ok=True)
 
 CANDIDATE_PROFILE = """
 Candidate: Mohamed Yasin Mohamoud
