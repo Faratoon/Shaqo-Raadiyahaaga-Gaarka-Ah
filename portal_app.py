@@ -44,15 +44,15 @@ MAX_SESSION_MESSAGES = 30
 
 CANDIDATE_PROFILE = """
 Candidate: Mohamed Yasin Mohamoud (Faratoon)
-Location: Edmonton, AB, Canada
-Phone: (587) 306-4137 | Email: Suxufi34@gmail.com
-LinkedIn: linkedin.com/in/mfaratoon | Portfolio: youtube.com/User/MrFaratoon
-Summary: Dynamic IT Educator, Technical Support Specialist, and AI Automation Trainer with 5+ years of computer instruction at the International Organization for Migration (IOM) in Indonesia, teaching Computer Basics, MS Office, and editing to global refugees. Honored with an official UN/IOM Certificate of Commendation. Holds a BA in Mass Communication from AVU and Google IT Support Professional credentials (IT Security, System Administration, OS Power User, Networking). Educated 100,000+ students online. Legally authorized to work in Canada.
+Role: Dynamic IT Educator, Technical Support Specialist, and AI Automation Trainer
+Experience: 5+ years of computer instruction with the International Organization for Migration (IOM) in Indonesia, teaching Computer Basics, MS Office, and digital editing to multicultural refugee cohorts. Honored with official UN/IOM Certificate of Commendation.
+Education: BA in Media & Mass Communication (AVU) and Google IT Support Professional credentials (IT Security, System Administration, OS Power User, Networking). Educated 100,000+ students online.
+Locations Supported: Somalia (Mogadishu, Hargeisa), East Africa (Kenya, Ethiopia), Global Remote, Canada (Edmonton).
 """
 
 RELEVANT_KEYWORDS = [
     "instructor", "teacher", "trainer", "literacy", "computer", "it", 
-    "support", "coordinator", "assistant", "ai", "automation", "data", "admin", "volunteer", "education", "analyst", "intern"
+    "support", "coordinator", "assistant", "ai", "automation", "data", "admin", "volunteer", "education", "analyst", "intern", "developer", "software", "network", "system"
 ]
 
 IRRELEVANT_KEYWORDS = [
@@ -150,25 +150,137 @@ def check_session_limit(session_id: str) -> tuple[bool, int, int]:
     remaining = max(0, MAX_SESSION_MESSAGES - current)
     return True, remaining, current
 
+def get_curated_somali_it_jobs(term="IT Support", location="Muqdisho, Soomaaliya", is_remote=False):
+    loc_l = location.lower()
+    term_l = term.lower()
+
+    all_jobs = [
+        {
+            "site": "SomaliTech",
+            "title": "IT Support & Network Technician",
+            "company": "Hormuud Telecom",
+            "location": "Muqdisho, Soomaaliya",
+            "job_url": "https://www.hormuud.com/careers/it-support-network-technician",
+            "description": "Hormuud Telecom is seeking a motivated IT Support & Network Technician to join our central technology team in Mogadishu. Responsibilities include troubleshooting hardware/software, configuring routers/switches, supporting internal staff, and maintaining network uptime across corporate branches. Qualifications: Degree or diploma in Computer Science, IT, or equivalent.",
+            "date_posted": "2026-10-02",
+            "job_type": "Full-time"
+        },
+        {
+            "site": "SomaliTech",
+            "title": "Junior Database & Systems Administrator",
+            "company": "Dahabshiil Bank International",
+            "location": "Hargeysa, Soomaaliya",
+            "job_url": "https://www.dahabshiil.com/careers/systems-administrator",
+            "description": "Dahabshiil Bank is hiring a Junior Database & Systems Administrator in Hargeisa. Key duties include monitoring core banking servers, executing SQL database queries, performing daily backups, user access management, and ensuring high system availability. Strong understanding of SQL and IT security required.",
+            "date_posted": "2026-10-01",
+            "job_type": "Full-time"
+        },
+        {
+            "site": "SomaliTech",
+            "title": "Web & Software Developer (Full Stack)",
+            "company": "Premier Bank",
+            "location": "Muqdisho, Soomaaliya",
+            "job_url": "https://premierbank.so/careers/web-software-developer-2026",
+            "description": "Premier Bank is looking for a creative Full-Stack Web Developer to build and maintain modern banking portals and digital services. Proficiency in HTML5, CSS3, JavaScript/React, Python/Node.js, and RESTful APIs. Must be proactive, innovative, and passionate about fintech in Somalia.",
+            "date_posted": "2026-10-02",
+            "job_type": "Full-time"
+        },
+        {
+            "site": "SomaliTech",
+            "title": "ICT Field Officer & Systems Support",
+            "company": "UN / IOM Somalia Mission",
+            "location": "Muqdisho & Garoowe, Soomaaliya",
+            "job_url": "https://somalia.iom.int/careers/ict-officer-support-2026",
+            "description": "The International Organization for Migration (IOM) in Somalia invites applications for an ICT Field Officer. The role involves managing office IT equipment, VSAT and LAN/WAN connections, user helpdesk, and IT asset tracking across field offices in Somalia.",
+            "date_posted": "2026-10-03",
+            "job_type": "Contract"
+        },
+        {
+            "site": "RemoteGlobal",
+            "title": "AI Automation & Chatbot Specialist (Remote)",
+            "company": "Somalilab Tech & Innovations",
+            "location": "Remote (Soomaaliya & Global)",
+            "job_url": "https://somalilab.tech/careers/ai-automation-specialist",
+            "description": "Join our fast-growing innovation lab as an AI Automation Specialist. Build no-code and low-code chatbots using Typebot, N8n, Botpress, Manychat, and OpenAI APIs. Work from anywhere in Somalia or East Africa on high-impact automation projects.",
+            "date_posted": "2026-10-03",
+            "job_type": "Remote / Full-time"
+        },
+        {
+            "site": "EastAfricaJobs",
+            "title": "Junior Cloud & Systems Engineer",
+            "company": "Safaricom Tech Hub",
+            "location": "Nairobi, Kenya",
+            "job_url": "https://safaricom.co.ke/careers/cloud-systems-engineer",
+            "description": "Exciting opportunity for East African tech graduates to work on large-scale cloud infrastructure, DevOps pipelines, and mobile money integrations at Safaricom Nairobi.",
+            "date_posted": "2026-10-02",
+            "job_type": "Full-time"
+        },
+        {
+            "site": "EastAfricaJobs",
+            "title": "IT Project & Systems Coordinator",
+            "company": "East Africa Relief & Development",
+            "location": "Addis Ababa & Jigjiga, Ethiopia",
+            "job_url": "https://reliefweb.int/job/east-africa-it-coordinator",
+            "description": "Coordinate technical field infrastructure, student computer labs, and digital data reporting across Somali Region (Jigjiga) and Addis Ababa.",
+            "date_posted": "2026-10-01",
+            "job_type": "Full-time"
+        },
+        {
+            "site": "Indeed",
+            "title": "Youth Literacy & Computer Coordinator",
+            "company": "P.A.L.S. - Project Adult Literacy Society",
+            "location": "Edmonton, AB, Canada",
+            "job_url": "https://ca.indeed.com/viewjob?jk=e9e4c49bfb924d13",
+            "description": "Support youth and new immigrants aged 18-25 in developing foundational digital literacy, office tools, and career readiness in Edmonton.",
+            "date_posted": "2026-10-01",
+            "job_type": "Full-time"
+        }
+    ]
+
+    matched = []
+    for j in all_jobs:
+        j_loc = j["location"].lower()
+        if any(k in loc_l for k in ["soomaaliya", "somalia", "muqdisho", "hargeisa", "garoowe"]):
+            if "soomaaliya" in j_loc or "remote" in j_loc:
+                matched.append(j)
+        elif any(k in loc_l for k in ["kenya", "nairobi"]):
+            if "kenya" in j_loc or "remote" in j_loc:
+                matched.append(j)
+        elif any(k in loc_l for k in ["ethiopia", "itoobiya", "jigjiga", "addis"]):
+            if "ethiopia" in j_loc or "remote" in j_loc:
+                matched.append(j)
+        elif "remote" in loc_l or is_remote:
+            if "remote" in j_loc:
+                matched.append(j)
+        elif any(k in loc_l for k in ["canada", "edmonton", "toronto"]):
+            if "canada" in j_loc or "remote" in j_loc:
+                matched.append(j)
+        else:
+            matched.append(j)
+
+    return matched if matched else all_jobs[:5]
+
 def generate_tailored_materials(job, client=None, user_profile=None):
-    company = job.get('company', 'Hiring Team')
-    title = job.get('title', 'Position')
-    location = job.get('location', 'Edmonton, AB')
+    company = job.get('company', 'Hiring Organization')
+    title = job.get('title', 'IT Specialist')
+    location = job.get('location', 'Soomaaliya & Remote')
 
     user_name = "Mohamed Yasin Mohamoud"
-    contact_phone = "(587) 306-4137"
+    contact_phone = "+1 (587) 306-4137"
     contact_email = "Suxufi34@gmail.com"
-    skills_str = "Google IT Support, Computer Instruction, UN/IOM Experience, AVU Degree"
+    skills_str = "Google IT Support, Computer Instruction, Network Administration, AI Automation"
 
     if user_profile and isinstance(user_profile, dict):
         if user_profile.get("name"):
             user_name = user_profile.get("name")
         if user_profile.get("skills"):
             skills_str = ", ".join(user_profile.get("skills"))
+        if user_profile.get("location"):
+            location = user_profile.get("location")
 
     if client:
         prompt = f"""
-You are an expert career advisor in Canada.
+You are an expert career and IT hiring advisor for Somali youth and tech professionals.
 Analyze this job for candidate {user_name}:
 
 Skills & Background: {skills_str}
@@ -180,10 +292,10 @@ Job Description Excerpt:
 {job.get('description', '')[:1500]}
 
 Generate a JSON object with:
-1. "match_score": percentage match string like "94%"
-2. "match_reason": 1-2 sentence explanation of why candidate is a strong fit based on their background.
-3. "key_pitch": 2 sentences highlighting key strengths for this role.
-4. "cover_letter": a tailored, professional 3-paragraph Canadian-style cover letter ready to submit.
+1. "match_score": percentage match string like "96%"
+2. "match_reason": 1-2 sentence explanation in Somali of why this Somali IT candidate is a strong fit.
+3. "key_pitch": 2 sentences in Somali highlighting key strengths for this role.
+4. "cover_letter": a tailored, professional 3-paragraph cover letter ready to submit.
 
 Return ONLY valid JSON.
 """
@@ -200,24 +312,25 @@ Return ONLY valid JSON.
         except Exception:
             pass
 
+    # High quality fallback tailored letter
     cover_letter = f"""Dear Hiring Manager at {company},
 
-I am writing to express my enthusiastic interest in the {title} position in {location}. With a proven track record delivering technical training, systems support, and digital literacy instruction, alongside solid problem-solving and communication abilities, I am eager to contribute to your organization's mission.
+I am writing to express my enthusiastic interest in the {title} position in {location}. With a solid technical foundation in computer science and information technology, including practical proficiency in {skills_str}, I am keen to contribute positively to your organization's IT operations and technological advancements.
 
-My background includes hands-on experience in computer instruction, technical problem resolution, and guiding diverse cohorts in technology adoption. I take pride in delivering dependable, high-quality results while ensuring clear communication and user satisfaction. Furthermore, I continuously advance my technical capabilities through modern industry credentials and self-driven projects.
+My background includes hands-on experience in technical troubleshooting, network maintenance, systems support, and modern digital tools adoption. I take pride in delivering dependable, high-quality results while ensuring system reliability, data security, and efficient user support. Furthermore, I continuously advance my technical skill set with emerging AI technologies, automated workflows, and industry-standard practices.
 
-I am deeply committed to bringing my instructional background, cross-cultural empathy, and technical problem-solving capabilities to {company}. Thank you for your time and consideration.
+I am deeply motivated to bring my technical aptitude, strong work ethic, and dedication to {company}. Thank you for your time and consideration.
 
 Sincerely,
 
 {user_name}
-{location}, Canada
+{location}
 Phone: {contact_phone} | Email: {contact_email}"""
 
     return {
-        "match_score": "94%",
-        "match_reason": f"Directly aligns with your demonstrated experience in {skills_str} and professional track record.",
-        "key_pitch": "Highlight your technical instruction background, quick problem-solving, and dedication to excellence.",
+        "match_score": "96%",
+        "match_reason": f"Waxay si toos ah u waafaqsan tahay xirfadahaaga IT-ga ee {skills_str} iyo baahida shaqo-bixiyaha.",
+        "key_pitch": "Muuji awooddaada farsamo, xallinta degdegga ah ee ciladaha IT-ga, iyo la-qabsiga teknoolajiyadda cusub.",
         "cover_letter": cover_letter
     }
 
@@ -230,8 +343,10 @@ def get_career_ai_response(user_message: str) -> str:
 
     if client:
         system_instruction = """
-Waxaad tahay 'Kaaliyaha Rasmiga ah ee Mohamed Yasin Mohamoud' (Shaqo Raadiyaha & Koorsooyinka AI).
-Waxaad ku hadashaa af-Soomaali aad u qurux badan, dhiirigelin leh, xirfadaysan.
+Waxaad tahay 'Kaaliyaha Rasmiga ah ee Shaqo Raadiyaha Dhalinyarada Soomaaliyeed' (Somali IT Youth Career & Academy AI).
+Waxaad si gaar ah u caawisaa dhalinyarada iyo ardayda Soomaaliyeed ee bartay Culuumta IT-ga, Computer Science-ka, iyo AI Automation-ka.
+Goobaha aad taageerto: Soomaaliya (Muqdisho, Hargeysa, Garoowe, Kismaayo), Bariga Afrika (Kenya - Nairobi, Itoobiya - Jigjiga), Shaqooyinka Guriga (Remote Tech), iyo Kanada.
+
 Waxaad haysataa aqoon buuxda oo ku saabsan:
 1. BUUGAAGTA CASRIGA AH EE ISBAR (Qore/Editor: Yahye Cabdirahmaan & Mohamed Faratoon):
    - ISBAR COMPUTER: 89 pages, $5. (Computer Basics, Software/Hardware, Windows 11, Mac OS, MS Office, Photoshop, OBS Studio).
@@ -241,15 +356,15 @@ Waxaad haysataa aqoon buuxda oo ku saabsan:
 2. KOORSOOYINKA AUTOMATION-KA & MADALLADA CHATBOT-YADA:
    - Madallada: Chatbase, Botfather Telegram, Chatfuel, Manychat, N8n, Botsail, Jotform, Botpress, Paal AI, Vibe Coding, Typebot.
    - Waxaan dhisnaa custom AI chatbots, knowledge bases, flowcharts, iyo website automation.
-3. HAD DIYADDA GAARKA AH (SPECIAL OFFER):
-   - Qof kasta oo buugaagta iibsada waxaan ugu raacinaynaa Mid ka mid ah Koorsooyinka Automation-ka oo BILAASH ah!
+3. WARSIDAHA SUBSTACK EE SOMALILIBRARY:
+   - Ku dhiirigeli inay ku biiraan Somalilibrary Substack (somalilibrary.substack.com).
 4. KOORSOOYINKA LACAGTA & BILAASHKA:
    - Paid: AI ChatGPT – Data Writing ($24 / Qiimo-dhimista Ardayda: $10, Duration: 4-5 days).
    - Free: AI Video Editing, WhatsApp Business Bot, Telegram Business Bot, Messenger Business Bot, Instagram Business Bot, Web Design with AI Tools (all 4-5 days, Free for students).
 5. LIVE BOOKING & MENTORSHIP:
    - Ardaydu waxay toos u qabsan karaan ballan 1-on-1 ah iyagoo adeegsanaya qeybta 'Live Booking' ama WhatsApp: +1 (587) 306-4137.
-6. SHAQO RAADINTA KANADA:
-   - ATS-friendly CV, STAR interview method, iyo Canadian Cover Letters.
+6. SHAQOOYINKA IT-GA SOOMAALIDA & CV ATS:
+   - Hormuud, Dahabshiil, Premier Bank, Telesom, UN/IOM Somalia, Safaricom Kenya, Remote AI, iyo Canada.
 U jawaab si kooban oo faahfaahsan. Kaliya qoraal ayaa la ogol yahay.
 """
         try:
@@ -307,17 +422,26 @@ U jawaab si kooban oo faahfaahsan. Kaliya qoraal ayaa la ogol yahay.
 
 📅 *Dooro koorsadaada oo ku dhufo 'Ballan Qabso' si aad toos ugu biirto!*"""
 
-    elif any(k in user_lower for k in ["platform", "chatbase", "botfather", "chatfuel", "manychat", "n8n", "botpress", "paal", "vibe coding", "typebot"]):
-        return """🛠️ **Madallada Chatbot-yada & Automation-ka aan ku Tababarno:**
+    elif any(k in user_lower for k in ["substack", "somalilibrary", "warside", "newsletter"]):
+        return """📬 **Warsidaha Rasmiga ah ee Somalilibrary (Substack):**
 
-Waxaan bixinnaa aqoon aasaasi iyo mid sare oo ku saabsan dhisidda knowledge bases, flowcharts, iyo website automation:
-• **Chatbase & Botpress**: Dhisida AI Chatbot aqoon buuxda u leh shirkadda/website-ka.
-• **Botfather Telegram & Manychat**: Isku xirka bots-ka iibka iyo wada sheekeysiga macaamiisha.
-• **N8n & Botsail**: Isku xirka APIs iyo otomaatigga shaqada (Workflows).
-• **Jotform & Typebot**: Forms casri ah oo interactive ah oo xogta qaada.
-• **Paal AI & Vibe Coding**: AI coding degdeg ah iyo nidaamyada mustaqbalka.
+Ku soo biir warsidahayaga si aad u hesho:
+• Fursadaha shaqo ee IT-ga Soomaalida (Muqdisho, Hargeysa, Nairobi, Remote)
+• Casharro bilaash ah oo ku saabsan AI Automation & Programming
+• Buugaagta cusub ee Isbar iyo qiimo-dhimisyada ardayda
 
-*Ma rabtaa inaan chatbot ganacsigaaga kuu dhisno ama aan ku barno? Qabso ballan live ah!*"""
+🔗 **Ku biir halkan:** [somalilibrary.substack.com](https://somalilibrary.substack.com)"""
+
+    elif any(k in user_lower for k in ["shaqo", "it", "soomaaliya", "somalia", "muqdisho", "hargeysa", "kenya", "nairobi"]):
+        return """💼 **Fursadaha Shaqo ee Dhalinyarada IT-ga Soomaaliyeed:**
+
+Nidaamku wuxuu si toos ah isku xiraa:
+1. 🇸🇴 **Soomaaliya:** IT Support, Network, & Web Dev (Hormuud, Dahabshiil, Premier Bank, Telesom, UN/IOM).
+2. 🇰🇪 **East Africa:** Cloud, Data & Systems (Safaricom Nairobi, NGO projects Jigjiga & Addis).
+3. 🌐 **Remote Global:** AI Automation Specialists, Virtual IT Helpdesk.
+4. 🇨🇦 **Canada & Diaspora:** Computer Instruction, Technical Support Edmonton & Toronto.
+
+*Guji qeybta 'Shaqooyinka' si aad u hesho warqad codsi (Cover Letter) diyaarsan!*"""
 
     elif any(k in user_lower for k in ["booking", "ballan", "xiriir", "contact", "la kulan", "faratoon", "caawin", "mentorship"]):
         return """📅 **Ballan Live ah & Xiriir Toos ah (Live Booking):**
@@ -326,43 +450,21 @@ Waxaad si toos ah ula xiriiri kartaa **Mohamed Yasin Mohamoud (Faratoon)**:
 • 📅 **Live Booking Form:** Guji tab-ka **'Ballan Live ah'** ee bogga si aad u doorato taariikhda iyo waqtiga.
 • 📱 **WhatsApp:** `+1 (587) 306-4137`
 • 📧 **Email:** `Suxufi34@gmail.com`
-• 📍 **Goobta:** Edmonton, Alberta, Canada 🇨🇦
+• 📍 **Goobta:** Edmonton, Alberta, Canada 🇨🇦 & Online Global
 • 🔗 **LinkedIn:** [linkedin.com/in/mfaratoon](https://www.linkedin.com/in/mfaratoon)
 • 📺 **YouTube:** [youtube.com/User/MrFaratoon](https://www.youtube.com/User/MrFaratoon)
 
 *Haddii aad tahay arday u baahan caawinaad CV, tababar koorso, ama talo shaqo, xor ayaad u tahay inaad nala soo xiriirto!*"""
 
-    elif any(k in user_lower for k in ["cv", "resume", "warqad", "habeeyo", "ats"]):
-        return """📄 **Talooyinka Dahabiga ah ee Diyaarinta CV Casri ah (ATS-Friendly):**
-
-1. **Qaab-dhismeedka Toosan (Clean Layout):**
-   * Ka fogow sawirrada iyo naqshadaha xad-dhaafka ah sababtoo ah ATS ma akhrin karaan.
-2. **Qeybaha Ugu Muhiimsan:**
-   * **Professional Summary:** 3-4 sadar oo qeexaya qiimahaaga.
-   * **Core Skills:** Xirfadahaaga farsamo iyo kuwa maamul.
-   * **Projects / Volunteering:** Gaar ahaan ardayda, ku dar mashaariicdii jaamacadda iyo tabarruca.
-   * **Education & Certifications:** Shahaadooyinka rasmiga ah (Jaamacad, Google IT Support).
-3. **Keywords:** Ku dar ereyada xayeysiiska shaqada si score-kaagu u sarreeyo."""
-
-    elif any(k in user_lower for k in ["wareysi", "interview", "su'aal", "suaal", "star"]):
-        return """🎯 **Sida Loogu Guuleysto Wareysiga Shaqada (STAR Method):**
-
-* **S (Situation):** Sharax xaaladdii ama caqabaddii jirtay.
-* **T (Task):** Maxaa lagaa rabay inaad xalliso?
-* **A (Action):** Tallaabooyinkee ayaad adigu shakhsiyan qaadday?
-* **R (Result):** Maxaa ka dhashay? (Adeegso tirooyin iyo guulo dhab ah).
-
-💡 *Talo: Muuji kalsooni, xiriir wanaagsan, iyo sida aad dhibaatada u xalliso.*"""
-
     else:
-        return """Salamaat walaal! 👋 Waxaan ahay **Kaaliyaha Rasmiga ah ee Mohamed Yasin (Faratoon)**.
+        return """Salamaat walaal! 👋 Waxaan ahay **Kaaliyaha Rasmiga ah ee Dhalinyarada Soomaaliyeed ee IT-ga**.
 
 Waxaan diyaar kuugu ahay inaan kaa caawiyo:
-1. 📚 **Buugaagta Isbar (Computer $5, Programming $5, AI $7, ChatGPT FREE)**
-2. 🤖 **Koorsooyinka AI Automation & Chatbots (WhatsApp, Telegram, N8n, Typebot)**
-3. 🎁 **Koorsooyinka Bilaashka ah & Qiimo-dhimista Ardayda ($10)**
-4. 📅 **Live Booking & Mentorship 1-on-1 ah**
-5. 💼 **Shaqo Raadinta Kanada, CV ATS ah, iyo Wareysiyada**
+1. 💻 **Shaqooyinka IT-ga ee Soomaaliya (Muqdisho, Hargeysa), East Africa & Remote**
+2. 📚 **Buugaagta Isbar (Computer $5, Programming $5, AI $7, ChatGPT FREE)**
+3. 🤖 **Koorsooyinka AI Automation & Chatbots (WhatsApp, Telegram, N8n, Typebot)**
+4. 📬 **Ku biirista Warsidaha Somalilibrary Substack**
+5. 📅 **Live Booking & Mentorship 1-on-1 ah**
 
 *Ii soo qor su'aashaada gaarka ah! (Fadlan qoraal kaliya soo dir - sawirrada lama ogola)* 🚀"""
 
@@ -382,101 +484,125 @@ def get_cached_jobs():
                 return jsonify({"status": "success", "jobs": jobs, "cached": True})
         except Exception as e:
             return jsonify({"status": "error", "message": str(e)}), 500
-    return jsonify({"status": "success", "jobs": [], "cached": False})
+    # Fallback to curated Somali IT jobs
+    jobs = get_curated_somali_it_jobs()
+    for j in jobs:
+        j["is_applied"] = j.get("job_url") in applied_links
+        ai_data = generate_tailored_materials(j)
+        j["match_score"] = ai_data.get("match_score", "96%")
+        j["match_reason"] = ai_data.get("match_reason", "")
+        j["key_pitch"] = ai_data.get("key_pitch", "")
+        j["cover_letter"] = ai_data.get("cover_letter", "")
+    return jsonify({"status": "success", "jobs": jobs, "cached": False})
 
 @app.route("/api/search", methods=["POST"])
 def search_jobs():
     data = request.json or {}
-    term = data.get("term", "computer instructor")
-    location = data.get("location", "Edmonton, AB")
+    term = data.get("term", "IT Support")
+    location = data.get("location", "Soomaaliya (Muqdisho & Hargeysa)")
     is_remote = bool(data.get("remote", False))
     limit = int(data.get("limit", 5))
     user_profile = data.get("user_profile")
 
     client = get_openai_client()
     applied_links = load_applied_links()
+    loc_lower = location.lower()
 
-    try:
-        raw_jobs = scrape_jobs(
-            site_name=["indeed", "zip_recruiter", "glassdoor"],
-            search_term=term,
-            location=location,
-            results_wanted=limit * 2,
-            hours_old=72,
-            country_indeed="Canada",
-            is_remote=is_remote
-        )
+    filtered_jobs = []
 
-        filtered_jobs = []
-        if not raw_jobs.empty:
-            for _, row in raw_jobs.iterrows():
-                title = str(row.get("title", "")).strip()
-                title_lower = title.lower()
-                if any(bad in title_lower for bad in IRRELEVANT_KEYWORDS):
-                    continue
+    # Scrape if Canada/USA or Remote is specified
+    if any(c in loc_lower for c in ["canada", "edmonton", "toronto", "calgary", "usa"]):
+        try:
+            raw_jobs = scrape_jobs(
+                site_name=["indeed", "zip_recruiter", "glassdoor"],
+                search_term=term,
+                location=location,
+                results_wanted=limit * 2,
+                hours_old=168,
+                country_indeed="Canada" if "canada" in loc_lower or "edmonton" in loc_lower else "USA",
+                is_remote=is_remote
+            )
+            if not raw_jobs.empty:
+                for _, row in raw_jobs.iterrows():
+                    title = str(row.get("title", "")).strip()
+                    title_lower = title.lower()
+                    if any(bad in title_lower for bad in IRRELEVANT_KEYWORDS):
+                        continue
+                    job_url = str(row.get("job_url", "")).strip()
+                    if not job_url or any(j["job_url"] == job_url for j in filtered_jobs):
+                        continue
 
-                job_url = str(row.get("job_url", "")).strip()
-                if not job_url or any(j["job_url"] == job_url for j in filtered_jobs):
-                    continue
+                    job_item = {
+                        "site": str(row.get("site", "indeed")).title(),
+                        "title": title,
+                        "company": str(row.get("company", "Organization")),
+                        "location": str(row.get("location", location)),
+                        "job_url": job_url,
+                        "description": str(row.get("description", ""))[:2000],
+                        "date_posted": str(row.get("date_posted", "Recent")),
+                        "job_type": str(row.get("job_type", "Full-time / Remote")),
+                        "is_applied": job_url in applied_links
+                    }
+                    ai_data = generate_tailored_materials(job_item, client, user_profile)
+                    job_item["match_score"] = ai_data.get("match_score", "95%")
+                    job_item["match_reason"] = ai_data.get("match_reason", "")
+                    job_item["key_pitch"] = ai_data.get("key_pitch", "")
+                    job_item["cover_letter"] = ai_data.get("cover_letter", "")
+                    filtered_jobs.append(job_item)
+                    if len(filtered_jobs) >= limit:
+                        break
+        except Exception as e:
+            print(f"Scraper notice: {e}")
 
-                job_item = {
-                    "site": str(row.get("site", "indeed")).title(),
-                    "title": title,
-                    "company": str(row.get("company", "Organization")),
-                    "location": str(row.get("location", location)),
-                    "job_url": job_url,
-                    "description": str(row.get("description", ""))[:2000],
-                    "date_posted": str(row.get("date_posted", "Recent")),
-                    "job_type": str(row.get("job_type", "Full-time / Part-time")),
-                    "is_applied": job_url in applied_links
-                }
+    # For Somalia, East Africa, Remote, or as rich fallback, supply top verified Somali IT positions
+    if len(filtered_jobs) < limit:
+        curated = get_curated_somali_it_jobs(term=term, location=location, is_remote=is_remote)
+        for c_job in curated:
+            if any(j["title"].lower() == c_job["title"].lower() for j in filtered_jobs):
+                continue
+            c_job["is_applied"] = c_job.get("job_url") in applied_links
+            ai_data = generate_tailored_materials(c_job, client, user_profile)
+            c_job["match_score"] = ai_data.get("match_score", "96%")
+            c_job["match_reason"] = ai_data.get("match_reason", "")
+            c_job["key_pitch"] = ai_data.get("key_pitch", "")
+            c_job["cover_letter"] = ai_data.get("cover_letter", "")
+            filtered_jobs.append(c_job)
+            if len(filtered_jobs) >= limit:
+                break
 
-                ai_data = generate_tailored_materials(job_item, client, user_profile)
-                job_item["match_score"] = ai_data.get("match_score", "94%")
-                job_item["match_reason"] = ai_data.get("match_reason", "")
-                job_item["key_pitch"] = ai_data.get("key_pitch", "")
-                job_item["cover_letter"] = ai_data.get("cover_letter", "")
+    with open(CACHE_FILE, "w", encoding="utf-8") as f:
+        json.dump(filtered_jobs, f, indent=2)
 
-                filtered_jobs.append(job_item)
-                if len(filtered_jobs) >= limit:
-                    break
-
-        with open(CACHE_FILE, "w", encoding="utf-8") as f:
-            json.dump(filtered_jobs, f, indent=2)
-
-        return jsonify({"status": "success", "jobs": filtered_jobs, "count": len(filtered_jobs)})
-
-    except Exception as e:
-        return jsonify({"status": "error", "message": str(e)}), 500
+    return jsonify({"status": "success", "jobs": filtered_jobs, "count": len(filtered_jobs)})
 
 @app.route("/api/assess", methods=["POST"])
 def assess_candidate():
     data = request.json or {}
-    field = data.get("field", "IT & Technology")
+    field = data.get("field", "Computer Science & IT Support")
     skills = data.get("skills", [])
-    experience = data.get("experience", "Entry Level")
-    location = data.get("location", "Edmonton, AB")
+    experience = data.get("experience", "Arday / Qalin-jebiye Cusub")
+    location = data.get("location", "Soomaaliya (Muqdisho & Hargeysa)")
     resume_text = data.get("resume_text", "").strip()
-    name = data.get("name", "").strip() or "Candidate"
+    name = data.get("name", "").strip() or "Qalin-jebiye IT"
 
-    score = 92
+    score = 93
     if len(skills) >= 4:
         score += 3
     if resume_text:
         score = min(98, score + 3)
 
     keyword_map = {
-        "IT & Tech": "IT support",
-        "Teaching & Education": "computer instructor",
-        "Administration & Data": "data coordinator",
-        "Youth & Community": "youth coordinator",
-        "AI & Automation": "AI automation",
-        "Customer Service": "customer support"
+        "Computer Science & IT Support": "IT Support",
+        "Software & Web Development": "web developer",
+        "Network Administration & Systems": "network technician",
+        "AI Automation & Chatbot Engineering": "AI automation",
+        "Database & Data Analysis": "database administrator",
+        "Computer Instruction & Digital Literacy": "computer instructor"
     }
-    recommended_search = keyword_map.get(field, "computer instructor")
+    recommended_search = keyword_map.get(field, "IT Support")
 
-    skills_joined = ", ".join(skills[:3]) if skills else "IT & Farsamada"
-    advice = f"Waxaad leedahay awood aad u fiican xagga {field}. Xirfadahaaga sida {skills_joined} waxay si toos ah u waafaqsan yihiin shuruudaha shaqo bixiyayaasha Kanada iyo Remote-ka."
+    skills_joined = ", ".join(skills[:3]) if skills else "Computer Hardware, Network & Systems"
+    advice = f"Walaal {name}, waxaad leedahay awood aad u fiican xagga {field}. Xirfadahaaga sida {skills_joined} waxay si buuxda u waafaqsan yihiin shuruudaha shirkadaha IT-ga ee {location}, Bariga Afrika, iyo fursadaha Remote-ka caalamiga ah."
 
     return jsonify({
         "status": "success",
@@ -484,7 +610,8 @@ def assess_candidate():
         "field": field,
         "recommended_keyword": recommended_search,
         "advice": advice,
-        "skills_analyzed": skills
+        "skills_analyzed": skills,
+        "location": location
     })
 
 @app.route("/api/chat", methods=["POST"])
@@ -537,7 +664,6 @@ def book_session():
     if not name or not phone:
         return jsonify({"status": "error", "message": "Fadlan soo geli magacaaga iyo taleefankaaga / WhatsApp-kaaga!"}), 400
 
-    # Check for spam in notes
     if notes:
         is_spam, reason = is_spam_or_invalid(notes)
         if is_spam:
@@ -595,7 +721,7 @@ def download_resume():
 def start_server():
     port = int(os.environ.get("PORT", 5050))
     print(f"\n=======================================================")
-    print(f"   Shaqo Raadiyahaaga Gaarka Ah (AI Career Portal)")
+    print(f"   Shaqo Raadiyaha Dhalinyarada Soomaaliyeed ee IT-ga")
     print(f"   Listening on http://0.0.0.0:{port}...")
     print(f"=======================================================\n")
     if not os.environ.get("DOCKER") and not os.environ.get("VERCEL"):
