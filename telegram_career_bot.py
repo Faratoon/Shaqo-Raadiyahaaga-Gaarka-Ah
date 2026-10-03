@@ -15,14 +15,32 @@ try:
 except ImportError:
     # Standalone fallbacks if needed
     def get_career_ai_response(msg):
-        return "Salamaat! Waxaan ahay Kaaliyaha Shaqo Raadiyaha Dhalinyarada Soomaaliyeed ee IT-ga. Waxaan kaa caawin karaa buugaagta Isbar, shaqooyinka, iyo koorsooyinka."
+        return "Salamaat! Waxaan ahay Kaaliyaha Somali Books & Shaqo Raadiyaha Dhalinyarada Soomaaliyeed ee IT-ga. Waxaan kaa caawin karaa buugaagta Isbar, shaqooyinka, iyo koorsooyinka."
     def get_curated_somali_it_jobs():
         return []
     def is_spam_or_invalid(msg):
         return False, ""
 
-BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN") or "8584246460:AAGvFcN5DAwOrHX0ChCAJxCmlrWcbvppvoI"
+BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN") or "6265456404:AAFjTFnJzBRb1xDvCNoT-EBLbmFl1JGw8yU"
 API_URL = f"https://api.telegram.org/bot{BOT_TOKEN}"
+WEB_APP_URL = "https://auto-jobs-applier-aih-awk-live.vercel.app"
+
+def configure_bot_menu_button():
+    """Sets the Telegram Chat Menu Button to open the Mini App natively."""
+    url = f"{API_URL}/setChatMenuButton"
+    payload = {
+        "menu_button": {
+            "type": "web_app",
+            "text": "📱 Mini App",
+            "web_app": {"url": WEB_APP_URL}
+        }
+    }
+    try:
+        res = requests.post(url, json=payload, timeout=10)
+        data = res.json()
+        print(f"[*] Telegram Chat Menu Button set to Mini App: {data.get('ok')}")
+    except Exception as e:
+        print(f"[!] Error setting chat menu button: {e}")
 
 def send_message(chat_id, text, reply_markup=None, parse_mode="HTML"):
     url = f"{API_URL}/sendMessage"
@@ -61,6 +79,9 @@ def get_main_keyboard():
     return {
         "inline_keyboard": [
             [
+                {"text": "🚀 Fur Mini App (Shaqooyinka & Buugaagta)", "web_app": {"url": WEB_APP_URL}}
+            ],
+            [
                 {"text": "💼 Shaqooyinka IT-ga Soomaalida", "callback_data": "menu_jobs"},
                 {"text": "📚 Buugaagta Isbar ($5 - $7)", "callback_data": "menu_books"}
             ],
@@ -71,9 +92,6 @@ def get_main_keyboard():
             [
                 {"text": "📄 Talooyinka CV ATS ah & STAR", "callback_data": "menu_cv"},
                 {"text": "📬 Warsidaha Substack", "url": "https://somalilibrary.substack.com"}
-            ],
-            [
-                {"text": "🌐 Booqo Bogga Rasmiga ah (Web Portal)", "url": "https://auto-jobs-applier-aih-awk-live.vercel.app"}
             ]
         ]
     }
@@ -81,18 +99,19 @@ def get_main_keyboard():
 def handle_start(chat_id, first_name):
     welcome_text = f"""<b>Salamaat {first_name}! 👋</b>
 
-Ku soo dhowow <b>Shaqo Raadiyaha Dhalinyarada Soomaaliyeed & Somalilibrary Bot</b>! 🦅
+Ku soo dhowow <b>Somali Books & Shaqo Raadiyaha Dhalinyarada Soomaaliyeed (@Somalibooksbot)</b>! 🦅
 
-Nidaamkan waxaa loogu talagalay in lagu caawiyo dhalinyarada iyo ardayda Soomaaliyeed ee bartay <b>Culuumta IT-ga, Computer Science-ka, iyo AI Automation-ka</b> si ay u helaan shaqooyin tayo leh iyo xirfado heer caalami ah.
+Waxaad hadda toos Telegram-ka dhexdiisa uga furi kartaa <b>Telegram Mini App-ka Casriga ah</b> adigoo gujinaya badhanka hoose ama midka Menu-ga!
 
 <b>Adeegyada aad ka helayso Bot-kan:</b>
+• 📱 <b>Telegram Mini App:</b> Bogga oo dhan oo toos Telegram ugu furmaya.
 • 💼 <b>Shaqooyinka IT-ga:</b> Soomaaliya (Muqdisho, Hargeysa), Bariga Afrika, Remote, iyo Kanada.
 • 📚 <b>Buugaagta Casriga ah ee Isbar:</b> Computer ($5), Programming ($5), AI ($7), iyo ChatGPT (Bilaash!).
 • 🎓 <b>Koorsooyinka Bilaashka ah:</b> AI Video Editing, WhatsApp/Telegram Bots, Web Design.
 • 📅 <b>Ballan Live ah:</b> 1-on-1 Mentorship la yeelashada <b>Mohamed Faratoon</b>.
-• 🤖 <b>AI Career Advisor:</b> Ii soo qor su'aal kasta oo ku saabsan CV-gaaga, wareysiyada (STAR method), ama teknoolajiyadda!
+• 🤖 <b>AI Career Advisor:</b> Ii soo qor su'aal kasta oo ku saabsan CV-gaaga ama teknoolajiyadda!
 
-<i>Dooro mid ka mid ah badhamada hoose si aad u bilowdo:</i>"""
+<i>Guji badhanka hoose si aad u furto Mini App-ka ama u dhex gasho adeegyada:</i>"""
     send_message(chat_id, welcome_text, get_main_keyboard())
 
 def handle_jobs(chat_id):
@@ -105,11 +124,11 @@ def handle_jobs(chat_id):
         text += f"📍 Goobta: <i>{j['location']}</i>\n"
         text += f"🔗 <a href='{j['job_url']}'>Guji halkan si aad u codsato</a>\n\n"
 
-    text += "💡 <i>Talo: Bogga rasmiga ah waxaad ka helaysaa Canadian & International Cover Letter diyaarsan oo hal guji lagu koobiyeeyo!</i>"
+    text += "💡 <i>Talo: Mini App-ka dhexdiisa waxaad ka helaysaa Canadian & International Cover Letter diyaarsan oo hal guji lagu koobiyeeyo!</i>"
     
     markup = {
         "inline_keyboard": [
-            [{"text": "🌐 Eeg Bogga Shaqooyinka & Cover Letters", "url": "https://auto-jobs-applier-aih-awk-live.vercel.app#jobsSection"}],
+            [{"text": "📱 Ka Fur Mini App-ka Shaqooyinka", "web_app": {"url": f"{WEB_APP_URL}#jobsSection"}}],
             [{"text": "🔙 Ku noqo Menu-ga", "callback_data": "menu_main"}]
         ]
     }
@@ -138,8 +157,8 @@ def handle_books(chat_id):
 
     markup = {
         "inline_keyboard": [
+            [{"text": "📱 Ka Fur Mini App-ka Buugaagta", "web_app": {"url": f"{WEB_APP_URL}#coursesHubSection"}}],
             [{"text": "📱 Ku Dalbo WhatsApp (+1 587-306-4137)", "url": "https://wa.me/15873064137?text=Salamaat%20Mohamed,%20waxaan%20rabaa%20in%20aan%20iibsado%20buug%20Isbar"}],
-            [{"text": "🎁 Ka Degso Isbar ChatGPT Bilaash", "url": "https://auto-jobs-applier-aih-awk-live.vercel.app#coursesHubSection"}],
             [{"text": "🔙 Ku noqo Menu-ga", "callback_data": "menu_main"}]
         ]
     }
@@ -164,7 +183,8 @@ def handle_courses(chat_id):
 
     markup = {
         "inline_keyboard": [
-            [{"text": "📅 Is-Diiwaangeli Hadda", "url": "https://auto-jobs-applier-aih-awk-live.vercel.app#bookingSection"}],
+            [{"text": "📱 Ka Fur Mini App-ka Koorsooyinka", "web_app": {"url": f"{WEB_APP_URL}#coursesHubSection"}}],
+            [{"text": "📅 Is-Diiwaangeli Hadda", "url": f"{WEB_APP_URL}#bookingSection"}],
             [{"text": "🔙 Ku noqo Menu-ga", "callback_data": "menu_main"}]
         ]
     }
@@ -186,8 +206,8 @@ Waxaad toos ballan la-talin ah ula yeelan kartaa <b>Mohamed Yasin Mohamoud (Fara
 
     markup = {
         "inline_keyboard": [
+            [{"text": "📱 Ka Qabso Ballan Mini App-ka", "web_app": {"url": f"{WEB_APP_URL}#bookingSection"}}],
             [{"text": "💬 WhatsApp Toos ah Mohamed Faratoon", "url": "https://wa.me/15873064137?text=Salamaat%20Mohamed,%20waxaan%20rabaa%20in%20aan%20ballan%20live%20ah%20qabsado"}],
-            [{"text": "📅 Foomka Ballanta ee Bogga", "url": "https://auto-jobs-applier-aih-awk-live.vercel.app#bookingSection"}],
             [{"text": "🔙 Ku noqo Menu-ga", "callback_data": "menu_main"}]
         ]
     }
@@ -206,12 +226,12 @@ def handle_cv(chat_id):
    • <b>A (Action):</b> Tallaabooyinkee ayaad qaadday?
    • <b>R (Result):</b> Maxaa ka dhashay (Natiijo dhab ah oo tiro wadata)?
 
-<i>Guji link-ga hoose si aad u soo degsato Resume-ga Mohamed Faratoon ama aad AI-ga ugu falanqeyso CV-gaaga!</i>"""
+<i>Guji link-ga hoose si aad Mini App-ka dhexdiisa ugu falanqeyso CV-gaaga!</i>"""
 
     markup = {
         "inline_keyboard": [
-            [{"text": "⚡ Falanqee CV-gaaga Bogga", "url": "https://auto-jobs-applier-aih-awk-live.vercel.app#assessSection"}],
-            [{"text": "📄 Soo Degso Resume Template (PDF)", "url": "https://auto-jobs-applier-aih-awk-live.vercel.app/download/resume"}],
+            [{"text": "📱 Ka Falanqee CV-gaaga Mini App-ka", "web_app": {"url": f"{WEB_APP_URL}#assessSection"}}],
+            [{"text": "📄 Soo Degso Resume Template (PDF)", "url": f"{WEB_APP_URL}/download/resume"}],
             [{"text": "🔙 Ku noqo Menu-ga", "callback_data": "menu_main"}]
         ]
     }
@@ -261,6 +281,10 @@ def process_message(message):
         handle_booking(chat_id)
     elif text_lower in ["/cv", "resume", "wareysi"]:
         handle_cv(chat_id)
+    elif text_lower in ["/app", "miniapp", "app"]:
+        send_message(chat_id, "🚀 <b>Guji badhanka hoose si aad u furto Mini App-ka:</b>", {
+            "inline_keyboard": [[{"text": "📱 Fur Mini App-ka", "web_app": {"url": WEB_APP_URL}}]]
+        })
     else:
         # Check spam
         is_spam, reason = is_spam_or_invalid(text)
@@ -278,6 +302,7 @@ def process_message(message):
 
         markup = {
             "inline_keyboard": [
+                [{"text": "📱 Fur Mini App", "web_app": {"url": WEB_APP_URL}}],
                 [{"text": "💼 Shaqooyinka IT-ga", "callback_data": "menu_jobs"}, {"text": "📚 Buugaagta Isbar", "callback_data": "menu_books"}],
                 [{"text": "📅 Qabso Ballan Live ah", "callback_data": "menu_booking"}]
             ]
@@ -286,9 +311,12 @@ def process_message(message):
 
 def run_bot_polling():
     print(f"\n=======================================================")
-    print(f"   Shaqo Raadiyaha Dhalinyarada Soomaaliyeed Telegram Bot")
-    print(f"   Connecting to Telegram API...")
+    print(f"   Somali Books & Jobs Telegram Mini App Bot")
+    print(f"   Bot: @Somalibooksbot")
+    print(f"   Configuring Menu Button & Connecting...")
     print(f"=======================================================\n")
+
+    configure_bot_menu_button()
 
     offset = None
     while True:
@@ -311,7 +339,7 @@ def run_bot_polling():
             else:
                 print(f"[!] getUpdates response code {res.status_code}: {res.text}")
                 time.sleep(5)
-        except requests.exceptions.RequestException as e:
+        except requests.exceptions.RequestException:
             # Network hiccup or telegram timeout
             time.sleep(4)
         except Exception as e:
