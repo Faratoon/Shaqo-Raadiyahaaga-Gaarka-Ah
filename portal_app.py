@@ -7,11 +7,11 @@ from pathlib import Path
 from flask import Flask, render_template, request, jsonify, send_file
 from jobspy import scrape_jobs
 from openai import OpenAI
+import shutil
 
 app = Flask(__name__)
 
 BASE_DIR = Path(__file__).resolve().parent
-import shutil
 
 IS_VERCEL = bool(os.environ.get("VERCEL"))
 if IS_VERCEL:
@@ -72,27 +72,38 @@ def save_applied_link(job_url):
     with open(APPLIED_FILE, "w", encoding="utf-8") as f:
         json.dump(list(applied), f, indent=2)
 
-def generate_tailored_materials(job, client=None):
+def generate_tailored_materials(job, client=None, user_profile=None):
     company = job.get('company', 'Hiring Team')
     title = job.get('title', 'Position')
     location = job.get('location', 'Edmonton, AB')
 
+    # Candidate profile context
+    user_name = "Mohamed Yasin Mohamoud"
+    contact_phone = "(587) 306-4137"
+    contact_email = "Suxufi34@gmail.com"
+    skills_str = "Google IT Support, Computer Instruction, UN/IOM Experience, AVU Degree"
+
+    if user_profile and isinstance(user_profile, dict):
+        if user_profile.get("name"):
+            user_name = user_profile.get("name")
+        if user_profile.get("skills"):
+            skills_str = ", ".join(user_profile.get("skills"))
+
     if client:
         prompt = f"""
 You are an expert career advisor in Canada.
-Analyze this job for candidate Mohamed Yasin Mohamoud:
+Analyze this job for candidate {user_name}:
 
-{CANDIDATE_PROFILE}
-
+Skills & Background: {skills_str}
+Location: {location}
 Job Title: {title}
 Company: {company}
-Location: {location}
 Job Description Excerpt:
 {job.get('description', '')[:1500]}
 
 Generate a JSON object with:
 1. "match_score": percentage match string like "94%"
-2. "match_reason": 1-2 sentence explanation of why Mohamed is a strong fit based on his IOM teaching, Google IT certs, and AVU degree.
+2. "match_reason": 1-2 sentence explanation of why candidate is a strong fit based on their background.
 3. "key_pitch": 2 sentences highlighting key strengths for this role.
 4. "cover_letter": a tailored, professional 3-paragraph Canadian-style cover letter ready to submit.
 
@@ -111,46 +122,40 @@ Return ONLY valid JSON.
         except Exception:
             pass
 
+    # High quality fallback tailored letter
     cover_letter = f"""Dear Hiring Manager at {company},
 
-I am writing to express my enthusiastic interest in the {title} position in {location}. With over five years of dedicated experience delivering computer literacy, office productivity software, and digital media instruction for the International Organization for Migration (IOM) in Indonesia, alongside comprehensive credentials in Google IT Support and modern AI automation, I am eager to contribute to your organization.
+I am writing to express my enthusiastic interest in the {title} position in {location}. With a proven track record delivering technical training, systems support, and digital literacy instruction, alongside solid problem-solving and communication abilities, I am eager to contribute to your organization's mission.
 
-During my service with IOM, I designed and facilitated interactive training modules in Computer Basics, Microsoft Office Suite (Word, Excel, PowerPoint), and digital editing for diverse multicultural refugee cohorts. My commitment to empowering learners with workforce-ready technical skills was recognized with an official Certificate of Commendation from IOM leadership. Additionally, I hold a Bachelor's Degree in Media and Mass Communication (AVU) and have completed advanced certifications in IT Security, Systems Administration, and Computer Networking through Coursera/Google.
+My background includes hands-on experience in computer instruction, technical problem resolution, and guiding diverse cohorts in technology adoption. I take pride in delivering dependable, high-quality results while ensuring clear communication and user satisfaction. Furthermore, I continuously advance my technical capabilities through modern industry credentials and self-driven projects.
 
-I am deeply committed to serving the Edmonton community and would welcome the opportunity to bring my instructional background, cross-cultural empathy, and technical problem-solving capabilities to {company}. Thank you for your time and consideration.
+I am deeply committed to bringing my instructional background, cross-cultural empathy, and technical problem-solving capabilities to {company}. Thank you for your time and consideration.
 
 Sincerely,
 
-Mohamed Yasin Mohamoud
-Edmonton, AB, Canada
-Phone: (587) 306-4137 | Email: Suxufi34@gmail.com"""
+{user_name}
+{location}, Canada
+Phone: {contact_phone} | Email: {contact_email}"""
 
     return {
         "match_score": "94%",
-        "match_reason": f"Directly aligns with your 5+ years of computer instruction at UN/IOM, AVU degree, and Google IT Support certifications.",
-        "key_pitch": "Highlight your UN/IOM Certificate of Commendation, adult digital literacy coaching, and systems administration skills.",
+        "match_reason": f"Directly aligns with your demonstrated experience in {skills_str} and professional track record.",
+        "key_pitch": "Highlight your technical instruction background, quick problem-solving, and dedication to excellence.",
         "cover_letter": cover_letter
     }
 
 # -------------------------------------------------------------
-# AI Career Chatbot Engine for Somali Youth, Students & Job Seekers
+# AI Career Chatbot Engine
 # -------------------------------------------------------------
 def get_career_ai_response(user_message: str) -> str:
     user_lower = user_message.lower().strip()
     client = get_openai_client()
 
-    # Try external LLM if available
     if client:
         system_instruction = """
-Waxaad tahay 'Kaaliyaha Shaqada ee AI-ga' (Career AI Advisor) oo si gaar ah loogu talagalay dhalinyarada Soomaaliyeed, ardayda jaamacadaha, dugsiyada sare iyo xirfadlayaasha shaqo doonka ah.
-Waxaad ku hadashaa af-Soomaali aad u qurux badan, dhiirigelin leh, xirfadaysan, mararka qaarna ereyada farsamada Ingiriisi u adeegso.
-Ujeedadaadu waa:
-1. Inaad ardayda ka caawiso sida loo helo shaqadii ugu horreysay ama internships.
-2. Inaad ka caawiso diyaarinta CV/Resume casri ah oo ATS-friendly ah.
-3. Inaad bixiso talooyin ku saabsan wareysiga shaqada (Interview Preparation) iyo habka STAR.
-4. Inaad tusto xirfadaha IT/AI ee maanta dunida loogu baahida badan yahay.
-5. Inaad dhiirigeliso dhalinta kuna xirto fursadaha dhabta ah ee suuqa.
-Jawaabahaagu ha noqdaan kuwo kooban, qodobbaysan oo ficil toos ah leh (Actionable points).
+Waxaad tahay 'Kaaliyaha Shaqada ee AI-ga' (Career AI Advisor) oo loogu talagalay dhalinyarada Soomaaliyeed, ardayda jaamacadaha iyo shaqo doonka.
+Waxaad ku hadashaa af-Soomaali aad u qurux badan, dhiirigelin leh, xirfadaysan.
+Ujeedadaadu waa inaad ka caawiso helitaanka shaqada, qorista CV/Resume ATS-friendly ah, iyo u diyaar-garowga wareysiyada (STAR method).
 """
         try:
             resp = client.chat.completions.create(
@@ -165,9 +170,9 @@ Jawaabahaagu ha noqdaan kuwo kooban, qodobbaysan oo ficil toos ah leh (Actionabl
             )
             return resp.choices[0].message.content
         except Exception:
-            pass  # Fall through to built-in expert knowledge base
+            pass
 
-    # Comprehensive Built-in Knowledge Base (Somali & English)
+    # Built-in Knowledge Base
     if any(k in user_lower for k in ["cv", "resume", "warqad", "habeeyo", "ats"]):
         return """📄 **Talooyinka Dahabiga ah ee Diyaarinta CV Casri ah (ATS-Friendly):**
 
@@ -175,82 +180,39 @@ Jawaabahaagu ha noqdaan kuwo kooban, qodobbaysan oo ficil toos ah leh (Actionabl
    * Ka fogow sawirrada, jaantusyada adag iyo naqshadaha xad-dhaafka ah sababtoo ah nidaamyada shirkadaha (ATS) ma akhrin karaan.
 2. **Qeybaha Ugu Muhiimsan:**
    * **Professional Summary:** 3-4 sadar oo qeexaya xirfaddaada iyo qiimaha aad shirkadda u kordhinayso.
-   * **Core Skills:** Liis kooban oo xirfadaha farsamada (Technical) iyo kuwa shakhsiga (Soft Skills).
-   * **Projects & Portfolios:** Gaar ahaan ardayda, ku dar mashaariicdii jaamacadda, GitHub, ama websites aad dhistay.
-   * **Experience / Volunteering:** Shaqooyinkii hore ama tabarrucii aad samaysay.
+   * **Core Skills:** Liis kooban oo xirfadaha farsamada iyo kuwa shakhsiga ah.
+   * **Projects / Volunteering:** Gaar ahaan ardayda, ku dar mashaariicdii jaamacadda ama tabarrucii aad samaysay.
    * **Education & Certifications:** Shahaadooyinka rasmiga ah (Jaamacad, Google IT, Coursera).
 3. **Adeegso Ereyada Shaqada (Keywords):**
-   * Hubi in ereyada shaqada lagu xayeysiiyay ay ku dhex jiraan CV-gaaga si dhibcahaagu u kordhaan.
+   * Hubi in ereyada xayeysiiska shaqada ay ku dhex jiraan CV-gaaga si dhibcahaagu u kordhaan."""
 
-💡 *Ma doonaysaa inaan kuu qoro 'Professional Summary' aad ku darto CV-gaaga? Ii sheeg takhasuskaaga!*"""
+    elif any(k in user_lower for k in ["wareysi", "interview", "su'aal", "suaal", "star"]):
+        return """🎯 **Sida Loogu Guuleysto Wareysiga Shaqada (STAR Method):**
 
-    elif any(k in user_lower for k in ["wareysi", "interview", "su'aal", "suaal", "qaabka", "star"]):
-        return """🎯 **Sida Loogu Guuleysto Wareysiga Shaqada (Job Interview Guide):**
+* **S (Situation):** Sharax xaaladdii ama caqabaddii jirtay.
+* **T (Task):** Maxaa lagaa rabay inaad xalliso?
+* **A (Action):** Tallaabooyinkee ayaad adigu shakhsiyan qaadday?
+* **R (Result):** Maxaa ka dhashay? (Adeegso tirooyin iyo guulo dhab ah).
 
-1. **Adeegso Habka STAR (Farsamada ugu caansan adduunka):**
-   * **S (Situation):** Sharax xaaladdii ama caqabaddii jirtay.
-   * **T (Task):** Maxaa lagaa rabay inaad xalliso?
-   * **A (Action):** Tallaabooyinkee ayaad adigu shakhsiyan qaadday?
-   * **R (Result):** Maxaa ka dhashay? (Adeegso tirooyin haddaad karto, tusaale: *"Waxaan tababaray 50 arday"*).
+💡 *Talo muhiim ah: Marka lagu weydiiyo "Tell me about yourself", xoogga saar xirfadahaaga iyo sababta aad shaqadan gaarka ah ugu habboon tahay.*"""
 
-2. **Su'aasha 1-aad: "Tell me about yourself":**
-   * Ha ka sheekayn taariikh nololeedkaaga gaarka ah. Xoogga saar: (1) Halka aad hadda joogto, (2) Khibradahaaga ugu muhiimsan, (3) Sababta aad u doonayso shaqadan gaarka ah.
-
-3. **Baadh Shirkadda (Research):**
-   * Kahor wareysiga, baro waxa shirkaddu qabato, hadafyadooda (mission & values), iyo wararkoodii ugu dambeeyay.
-
-4. **U diyaari Su'aalo aad adigu weydiiso:**
-   * Dhamaadka waxaad dhihi kartaa: *"Waa maxay waxa ugu muhiimsan ee qofka booskan haya looga baahan yahay 90-ka maalmood ee ugu horreysa?"*"""
-
-    elif any(k in user_lower for k in ["arday", "jaamac", "qalin", "fresh", "graduate", "khibrad la'aan", "waayo-aragnimo", "bilow"]):
+    elif any(k in user_lower for k in ["arday", "jaamac", "qalin", "fresh", "graduate", "khibrad la'aan"]):
         return """🎓 **Talooyinka Ardayda & Qalin-jebiyayaasha Cusub (Zero Experience):**
 
-1. **Ha dhihin "Khibrad ma lihi":**
-   * Mashaariicdii jaamacadda (Graduation Project, Course Assignments) iyo cilmi-baarisyadii aad samaysay waa waayo-aragnimo dhab ah! U qor sidii mashaariic dhab ah oo aad xal ugu keentay dhibaato.
-2. **Tabaruc & Volunteering:**
-   * Ku biir ururada samafalka, masaajidda, ama jaaliyadaha si aad u hesho shaqo tabaruc ah. Mohamed Yasin wuxuu tusaale u yahay in tabarrucii IOM uu ku helay shahaado sharaf caalami ah iyo albaabbo shaqo!
-3. **Qaado Shahaadooyin Degdeg ah (Micro-Credentials):**
-   * Google Career Certificates (Coursera), Microsoft, ama LinkedIn Learning. Waxay muujinayaan inaad tahay qof wax barashada jecel.
-4. **Networking (Xidhiidhka LinkedIn):**
-   * Sameyso koonto LinkedIn oo xirfadaysan, la xidhiidh dadka takhasuskaaga ku jira, faallooyin macno leh ka bixi mowduucyada xirfaddaada quseeya."""
-
-    elif any(k in user_lower for k in ["xirfad", "skill", "baro", "ai", "it", "mustaqbal", "shaqooyinka"]):
-        return """💡 **Xirfadaha Casriga ah ee IT & AI ee Maanta Loogu Raadinta Badan Yahay:**
-
-1. **AI & Automation Tools:**
-   * Baro Prompt Engineering, No-code tools sida Make.com, Zapier, iyo dhismaha AI Chatbots. Shirkadaha oo dhami waxay doonayaan qof hawlahooda fududeeya.
-2. **Technical Support & Networking:**
-   * Google IT Support Professional certificate (Hardware, OS, Security, Networking) waa dariiq degdeg ah oo shaqooyin $25-$35/saac looga helo suuqa.
-3. **Data Analysis & Visualization:**
-   * Excel Advanced, SQL, Power BI, iyo aasaaska Python.
-4. **Digital Literacy & Training:**
-   * Awoodda aad dadka kale ku bari karto kombiyuutarka iyo tiknoolajiyadda waa xirfad aad loogu baahan yahay goobaha waxbarashada iyo ururada caalamiga ah.
-
-🚀 *Xirfadahaasi maanta shahaado jaamacadeed oo 4 sano ah uma baahna; 3-6 bilood oo dadaal ah ayaad ku hanan kartaa!*"""
-
-    elif any(k in user_lower for k in ["cover letter", "warqadda codsiga", "warqad"]):
-        return """✍️ **Sida Loo Qoro Cover Letter Casri ah oo 3-Faqrood ah:**
-
-* **Faqrada 1-aad (Hordhaca & Xiisaha):**  
-  Sheeg booska aad codsanayso, halkaad ka heshay xayeysiiska, iyo sababta aad ugu xiisaynayso shirkaddooda.
-* **Faqrada 2-aad (Qiimahaaga & Xirfaddaada):**  
-  Soo qaado 1 ama 2 guul oo aad hore u gaadhay ama mashruuc aad fulisay oo toos u waafaqaya waxa ay raadinayaan.
-* **Faqrada 3-aad (Gunaanadka & Ballanta):**  
-  U mahadceli wakhtigooda, xaqiiji inaad diyaar u tahay kulan wareysi ah, oo ku saxiix magacaaga iyo xogtaada xidhiidhka.
-
-✨ *Portal-kan laftiisa markaad shaqo doorato, wuxuu si toos ah kuugu diyaarinayaa Canadian Cover Letter dhammeystiran!*"""
+1. **Mashaariicda & Tabaruca:** Mashaariicdii aad jaamacadda ku samaysay iyo tabarrucii aad ka qabatay bulshada waa waayo-aragnimo dhab ah!
+2. **Micro-Credentials:** Qaado shahaadooyin degdeg ah sida Google IT Support ama AI Tools oo aad 2-3 bilood ku qaadan karto.
+3. **LinkedIn Networking:** Sameyso profile xirfadaysan, la xiriir dadka shirkadaha ka shaqeeya, oo muuji dadaalkaaga."""
 
     else:
-        return f"""Salamaat sxb! 👋 Waxaan ahay **Kaaliyaha Shaqada ee AI-ga**, oo loo dhisay inuu dhalinyarada Soomaaliyeed, ardayda jaamacadaha iyo shaqo doonka ku hago dariiqa guusha.
+        return """Salamaat sxb! 👋 Waxaan ahay **Kaaliyaha Shaqada ee AI-ga**.
 
-Waxyaabaha aan toos kaaga caawin karo:
-1. 📄 **Diyaarinta & Sixitaanka CV/Resume-gaaga** (ATS-friendly guidance)
-2. 🎯 **U diyaargarowga Wareysiga Shaqada** (Interview Tips & STAR Method)
-3. ✍️ **Qorista Waraaqaha Codsiga** (Canadian Cover Letters)
-4. 💡 **Barashada Xirfadaha AI, IT & Tiknoolajiyadda** ee suuqa maanta
-5. 🔍 **Isticmaalka Portal-ka "Shaqo Raadiyahaaga Gaarka Ah"** si aad 5 shaqo oo tayaysan maalin kasta u hesho!
+Waxaan kaa caawin karaa:
+1. 📄 **Diyaarinta & Sixitaanka CV/Resume-gaaga (ATS-friendly)**
+2. 🎯 **U diyaargarowga Wareysiga Shaqada (STAR Method)**
+3. ✍️ **Qorista Waraaqaha Codsiga ee Canadian-ka (Cover Letters)**
+4. 🔍 **Raadinta shaqooyinka ku habboon aqoontaada**
 
-*Maxaad maanta jeceshahay inaan ka wada hadalno sxb? Ii soo qor su'aashaada!* 🚀"""
+*Ii soo qor su'aashaada ama xirfadda aad rabto inaan kaa caawiyo!* 🚀"""
 
 @app.route("/")
 def index():
@@ -277,6 +239,7 @@ def search_jobs():
     location = data.get("location", "Edmonton, AB")
     is_remote = bool(data.get("remote", False))
     limit = int(data.get("limit", 5))
+    user_profile = data.get("user_profile")
 
     client = get_openai_client()
     applied_links = load_applied_links()
@@ -316,8 +279,8 @@ def search_jobs():
                     "is_applied": job_url in applied_links
                 }
 
-                # AI materials
-                ai_data = generate_tailored_materials(job_item, client)
+                # AI materials with custom or default profile
+                ai_data = generate_tailored_materials(job_item, client, user_profile)
                 job_item["match_score"] = ai_data.get("match_score", "94%")
                 job_item["match_reason"] = ai_data.get("match_reason", "")
                 job_item["key_pitch"] = ai_data.get("key_pitch", "")
@@ -327,7 +290,6 @@ def search_jobs():
                 if len(filtered_jobs) >= limit:
                     break
 
-        # Save to cache
         with open(CACHE_FILE, "w", encoding="utf-8") as f:
             json.dump(filtered_jobs, f, indent=2)
 
@@ -335,6 +297,45 @@ def search_jobs():
 
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 500
+
+@app.route("/api/assess", methods=["POST"])
+def assess_candidate():
+    data = request.json or {}
+    field = data.get("field", "IT & Technology")
+    skills = data.get("skills", [])
+    experience = data.get("experience", "Entry Level")
+    location = data.get("location", "Edmonton, AB")
+    resume_text = data.get("resume_text", "").strip()
+    name = data.get("name", "").strip() or "Candidate"
+
+    # Score calculation
+    score = 92
+    if len(skills) >= 4:
+        score += 3
+    if resume_text:
+        score = min(98, score + 3)
+
+    keyword_map = {
+        "IT & Tech": "IT support",
+        "Teaching & Education": "computer instructor",
+        "Administration & Data": "data coordinator",
+        "Youth & Community": "youth coordinator",
+        "AI & Automation": "AI automation",
+        "Customer Service": "customer support"
+    }
+    recommended_search = keyword_map.get(field, "computer instructor")
+
+    skills_joined = ", ".join(skills[:3]) if skills else "IT & Farsamada"
+    advice = f"Waxaad leedahay awood aad u fiican xagga {field}. Xirfadahaaga sida {skills_joined} waxay si toos ah u waafaqsan yihiin shuruudaha shaqo bixiyayaasha Kanada iyo Remote-ka."
+
+    return jsonify({
+        "status": "success",
+        "readiness_score": f"{score}%",
+        "field": field,
+        "recommended_keyword": recommended_search,
+        "advice": advice,
+        "skills_analyzed": skills
+    })
 
 @app.route("/api/chat", methods=["POST"])
 def chat_assistant():
@@ -369,7 +370,6 @@ def start_server():
     port = int(os.environ.get("PORT", 5050))
     print(f"\n=======================================================")
     print(f"   Shaqo Raadiyahaaga Gaarka Ah (AI Career Portal)")
-    print(f"   Mohamed Yasin Mohamoud - Powered by AI")
     print(f"   Listening on http://0.0.0.0:{port}...")
     print(f"=======================================================\n")
     if not os.environ.get("DOCKER") and not os.environ.get("VERCEL"):

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shaqo Raadiyahaaga Gaarka Ah | AI Career & Course Hub</title>
+    <title>Shaqo Raadiyahaaga Gaarka Ah | AI Job & Career Discovery</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -41,7 +41,7 @@
             padding-bottom: 70px;
         }
 
-        /* Top Announcement & Language Switcher Bar */
+        /* Top Announcement & Multi-Language Selector */
         .top-announcement {
             background: linear-gradient(90deg, #0b132b 0%, #1e3a8a 50%, #0284c7 100%);
             color: white;
@@ -208,11 +208,11 @@
             padding: 0 20px;
         }
 
-        /* AI Landing Hero */
+        /* Hero Banner */
         .hero-banner {
             background: radial-gradient(circle at 80% 20%, rgba(2, 132, 199, 0.28), transparent 50%), linear-gradient(135deg, #0b132b 0%, #1c2541 65%, #0f172a 100%);
             border-radius: var(--radius-lg);
-            padding: 46px 36px;
+            padding: 44px 36px;
             color: white;
             margin-bottom: 25px;
             box-shadow: var(--shadow-md);
@@ -254,9 +254,7 @@
             margin-bottom: 14px;
             letter-spacing: -0.5px;
         }
-        .hero-banner h2 span {
-            color: #38bdf8;
-        }
+        .hero-banner h2 span { color: #38bdf8; }
         .hero-banner p {
             font-size: 15.5px;
             color: #cbd5e1;
@@ -306,267 +304,233 @@
             transform: translateY(-2px);
         }
 
-        /* Stats & Trust Bar */
-        .stats-bar {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-            gap: 16px;
+        /* Modern Gen-Z 3-Step Guide */
+        .genz-guide-section {
             margin-bottom: 30px;
         }
-        .stat-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-md);
-            padding: 20px;
-            text-align: center;
-            box-shadow: var(--shadow-sm);
-        }
-        .stat-number {
-            font-size: 26px;
-            font-weight: 800;
-            color: #0284c7;
-            margin-bottom: 4px;
-        }
-        .stat-label {
-            font-size: 12.5px;
-            color: var(--text-muted);
-            font-weight: 600;
-        }
-
-        /* Founder Showcase Section */
-        .founder-section {
-            background: var(--card-bg);
-            border-radius: var(--radius-lg);
-            border: 1px solid var(--border);
-            padding: 30px;
-            margin-bottom: 35px;
-            box-shadow: var(--shadow-sm);
-            display: flex;
-            align-items: center;
-            gap: 28px;
-            flex-wrap: wrap;
-        }
-        .founder-avatar-col {
-            text-align: center;
-            min-width: 140px;
-        }
-        .founder-avatar {
-            width: 110px;
-            height: 110px;
-            background: linear-gradient(135deg, #1e3a8a, #0284c7);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 46px;
-            color: white;
-            margin: 0 auto 12px;
-            box-shadow: 0 8px 20px rgba(2, 132, 199, 0.25);
-        }
-        .founder-badge {
-            background: #e0f2fe;
-            color: #0369a1;
-            font-size: 11.5px;
-            font-weight: 800;
-            padding: 4px 10px;
-            border-radius: 12px;
-        }
-        .founder-info-col {
-            flex: 1;
-            min-width: 280px;
-        }
-        .founder-title h3 {
-            font-size: 22px;
-            font-weight: 800;
-            color: #0f172a;
-            margin-bottom: 4px;
-        }
-        .founder-title p {
-            font-size: 14px;
-            color: var(--text-muted);
-            font-weight: 600;
-            margin-bottom: 12px;
-        }
-        .founder-bio {
-            font-size: 13.5px;
-            color: #334155;
-            line-height: 1.6;
-            margin-bottom: 16px;
-        }
-        .founder-credentials {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-bottom: 18px;
-        }
-        .cred-pill {
-            background: #f1f5f9;
-            color: #334155;
-            border: 1px solid #cbd5e1;
-            padding: 5px 12px;
-            border-radius: 8px;
-            font-size: 12px;
-            font-weight: 700;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .founder-links {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-        .founder-link-btn {
-            color: #0284c7;
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 700;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .founder-link-btn:hover {
-            text-decoration: underline;
-        }
-
-        /* Courses Section */
-        .section-title-wrap {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            margin-bottom: 18px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .section-title {
-            font-size: 22px;
-            font-weight: 800;
-            color: #0f172a;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .section-subtitle {
-            font-size: 13.5px;
-            color: var(--text-muted);
-            margin-top: 3px;
-        }
-
-        .courses-grid {
+        .guide-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 20px;
-            margin-bottom: 40px;
+            gap: 16px;
         }
-        .course-card {
+        .guide-card {
             background: var(--card-bg);
             border: 1px solid var(--border);
             border-radius: var(--radius-md);
-            padding: 24px;
+            padding: 22px;
             box-shadow: var(--shadow-sm);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: all 0.25s;
             position: relative;
             overflow: hidden;
+            transition: all 0.2s;
         }
-        .course-card:hover {
-            transform: translateY(-4px);
-            border-color: var(--azure);
+        .guide-card:hover {
+            transform: translateY(-3px);
             box-shadow: var(--shadow-md);
+            border-color: var(--azure);
         }
-        .course-card::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #0284c7, #38bdf8);
-        }
-        .course-badge-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 14px;
-        }
-        .course-tag {
+        .guide-step-badge {
+            display: inline-block;
             background: #e0f2fe;
             color: #0369a1;
             font-size: 11px;
             font-weight: 800;
             padding: 4px 10px;
-            border-radius: 6px;
-            text-transform: uppercase;
-        }
-        .course-level {
-            font-size: 11.5px;
-            color: var(--text-muted);
-            font-weight: 600;
-        }
-        .course-icon {
-            font-size: 32px;
+            border-radius: 12px;
             margin-bottom: 12px;
         }
-        .course-card h4 {
-            font-size: 17px;
+        .guide-icon {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+        .guide-card h4 {
+            font-size: 16px;
             font-weight: 800;
             color: #0f172a;
-            margin-bottom: 8px;
-            line-height: 1.35;
-        }
-        .course-card p {
-            font-size: 13px;
-            color: #475569;
-            line-height: 1.55;
-            margin-bottom: 16px;
-        }
-        .course-highlights {
-            list-style: none;
-            margin-bottom: 18px;
-        }
-        .course-highlights li {
-            font-size: 12.5px;
-            color: #334155;
             margin-bottom: 6px;
+        }
+        .guide-card p {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* Interactive AI Career Assessment Card */
+        .assessment-card {
+            background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+            border-radius: var(--radius-lg);
+            border: 2px solid #bae6fd;
+            padding: 30px;
+            margin-bottom: 35px;
+            box-shadow: var(--shadow-md);
+            position: relative;
+        }
+        .assessment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .assessment-header h3 {
+            font-size: 21px;
+            font-weight: 800;
+            color: #0f172a;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
         }
-        .course-card-actions {
+        .assessment-tabs {
             display: flex;
             gap: 8px;
-            align-items: center;
+            background: #f1f5f9;
+            padding: 4px;
+            border-radius: 12px;
         }
-        .btn-learn {
-            flex: 1;
-            text-align: center;
-            background: #0f172a;
-            color: white;
-            text-decoration: none;
-            padding: 9px 14px;
+        .assess-tab-btn {
+            background: transparent;
+            border: none;
+            padding: 7px 16px;
             border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #475569;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .assess-tab-btn.active {
+            background: white;
+            color: #0284c7;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+        }
+
+        .assess-content-pane {
+            display: none;
+        }
+        .assess-content-pane.active {
+            display: block;
+        }
+
+        .assess-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        .assess-group label {
+            display: block;
             font-size: 12.5px;
             font-weight: 700;
-            transition: background 0.2s;
+            color: #334155;
+            margin-bottom: 6px;
         }
-        .btn-learn:hover {
-            background: #0284c7;
+        .assess-select, .assess-input {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            font-size: 13.5px;
+            font-family: inherit;
+            outline: none;
+            background: white;
+            transition: border-color 0.2s;
         }
-        .btn-ask-course {
-            background: #f1f5f9;
+        .assess-select:focus, .assess-input:focus {
+            border-color: var(--azure);
+            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.1);
+        }
+
+        /* Interactive Skill Toggle Pills */
+        .skills-tag-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        .skill-toggle-pill {
+            background: white;
             border: 1px solid #cbd5e1;
             color: #334155;
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-size: 12px;
-            font-weight: 700;
+            padding: 7px 14px;
+            border-radius: 20px;
+            font-size: 12.5px;
+            font-weight: 600;
             cursor: pointer;
+            user-select: none;
+            transition: all 0.15s;
         }
-        .btn-ask-course:hover {
-            background: #e2e8f0;
+        .skill-toggle-pill:hover {
+            border-color: #94a3b8;
+            background: #f8fafc;
         }
+        .skill-toggle-pill.selected {
+            background: #0284c7;
+            color: white;
+            border-color: #0284c7;
+            box-shadow: 0 2px 6px rgba(2, 132, 199, 0.25);
+        }
+
+        /* Resume Upload Drag Area */
+        .resume-drop-zone {
+            border: 2px dashed #93c5fd;
+            background: #f0f9ff;
+            border-radius: var(--radius-md);
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            margin-bottom: 16px;
+            transition: all 0.2s;
+        }
+        .resume-drop-zone:hover {
+            background: #e0f2fe;
+            border-color: #0284c7;
+        }
+        .resume-paste-area {
+            width: 100%;
+            height: 120px;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 13px;
+            outline: none;
+            margin-bottom: 16px;
+        }
+
+        .btn-run-assess {
+            background: linear-gradient(135deg, #0284c7, #0369a1);
+            color: white;
+            border: none;
+            padding: 13px 28px;
+            border-radius: 12px;
+            font-size: 14.5px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+        }
+        .btn-run-assess:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(135deg, #0369a1, #075985);
+        }
+
+        /* Assessment Result Panel */
+        .assess-result-box {
+            display: none;
+            margin-top: 22px;
+            background: #f0fdf4;
+            border: 1px solid #86efac;
+            border-radius: var(--radius-md);
+            padding: 20px;
+            animation: fadeIn 0.3s ease-in;
+        }
+        .assess-result-box.show {
+            display: block;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 
         /* Search Panel */
         .search-panel {
@@ -687,6 +651,37 @@
         }
 
         /* Jobs Section */
+        .section-title-wrap {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 18px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .section-title {
+            font-size: 22px;
+            font-weight: 800;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-subtitle {
+            font-size: 13.5px;
+            color: var(--text-muted);
+            margin-top: 3px;
+        }
+        .quota-counter {
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #334155;
+        }
+
         .jobs-container {
             display: flex;
             flex-direction: column;
@@ -871,6 +866,102 @@
             background: #fff7ed;
         }
 
+        /* Founder Showcase Section */
+        .founder-section {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border);
+            padding: 30px;
+            margin-top: 40px;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            flex-wrap: wrap;
+        }
+        .founder-avatar-col {
+            text-align: center;
+            min-width: 140px;
+        }
+        .founder-avatar {
+            width: 110px;
+            height: 110px;
+            background: linear-gradient(135deg, #1e3a8a, #0284c7);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 46px;
+            color: white;
+            margin: 0 auto 12px;
+            box-shadow: 0 8px 20px rgba(2, 132, 199, 0.25);
+        }
+        .founder-badge {
+            background: #e0f2fe;
+            color: #0369a1;
+            font-size: 11.5px;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 12px;
+        }
+        .founder-info-col {
+            flex: 1;
+            min-width: 280px;
+        }
+        .founder-title h3 {
+            font-size: 22px;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 4px;
+        }
+        .founder-title p {
+            font-size: 14px;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        .founder-bio {
+            font-size: 13.5px;
+            color: #334155;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+        .founder-credentials {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+        }
+        .cred-pill {
+            background: #f1f5f9;
+            color: #334155;
+            border: 1px solid #cbd5e1;
+            padding: 5px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .founder-links {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .founder-link-btn {
+            color: #0284c7;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .founder-link-btn:hover {
+            text-decoration: underline;
+        }
+
         /* Floating AI Chatbot Widget */
         .chat-widget-btn {
             position: fixed;
@@ -929,13 +1020,8 @@
             overflow: hidden;
             animation: slideUp 0.25s ease-out;
         }
-        .chat-window.open {
-            display: flex;
-        }
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        .chat-window.open { display: flex; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
         .chat-header {
             background: linear-gradient(135deg, #0b132b, #1e3a8a);
@@ -960,22 +1046,9 @@
             justify-content: center;
             font-size: 18px;
         }
-        .chat-title h3 {
-            font-size: 15px;
-            font-weight: 800;
-        }
-        .chat-title p {
-            font-size: 11.5px;
-            color: #94a3b8;
-        }
-        .chat-close-btn {
-            background: transparent;
-            border: none;
-            color: #cbd5e1;
-            font-size: 22px;
-            cursor: pointer;
-            padding: 4px;
-        }
+        .chat-title h3 { font-size: 15px; font-weight: 800; }
+        .chat-title p { font-size: 11.5px; color: #94a3b8; }
+        .chat-close-btn { background: transparent; border: none; color: #cbd5e1; font-size: 22px; cursor: pointer; padding: 4px; }
 
         .chat-body {
             flex: 1;
@@ -1009,28 +1082,6 @@
             border-bottom-right-radius: 3px;
         }
 
-        .chat-pills {
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-            margin-top: 8px;
-        }
-        .chat-pill {
-            background: #f1f5f9;
-            border: 1px solid #cbd5e1;
-            color: #334155;
-            padding: 5px 10px;
-            border-radius: 12px;
-            font-size: 11.5px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.15s;
-        }
-        .chat-pill:hover {
-            background: #e2e8f0;
-            border-color: #94a3b8;
-        }
-
         .chat-footer {
             padding: 12px 14px;
             background: #ffffff;
@@ -1048,9 +1099,7 @@
             font-family: inherit;
             outline: none;
         }
-        .chat-input:focus {
-            border-color: var(--azure);
-        }
+        .chat-input:focus { border-color: var(--azure); }
         .chat-send-btn {
             background: #0284c7;
             color: white;
@@ -1064,11 +1113,8 @@
             justify-content: center;
             transition: all 0.2s;
         }
-        .chat-send-btn:hover {
-            background: #0369a1;
-        }
+        .chat-send-btn:hover { background: #0369a1; }
 
-        /* Spinner & Empty */
         .spinner {
             display: inline-block;
             width: 16px;
@@ -1088,10 +1134,10 @@
             border: 1px solid var(--border);
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
             .hero-banner { padding: 30px 20px; }
             .hero-banner h2 { font-size: 24px; }
+            .assessment-card { padding: 20px 16px; }
             .chat-window { bottom: 85px; right: 12px; width: calc(100vw - 24px); height: 500px; }
             .nav-links { display: none; }
             .brand-title h1 { font-size: 17px; }
@@ -1104,7 +1150,7 @@
     <div class="top-announcement">
         <div class="top-announcement-content">
             <div class="announcement-text">
-                <span id="txtAnnouncement">✨ Global AI Career & Course Hub • No Sign-In Required • Edmonton 🇨🇦</span>
+                <span id="txtAnnouncement">✨ AI Job Discovery & Career Matching • 100% Free • No Login Required • Edmonton 🇨🇦</span>
             </div>
             <div class="lang-switch-group">
                 <span style="font-size:11px; opacity:0.8; margin-right:4px;">🌐 Language:</span>
@@ -1122,12 +1168,12 @@
                 <div class="brand-icon">🦅</div>
                 <div class="brand-title">
                     <h1 id="txtBrandTitle">Shaqo Raadiyahaaga Gaarka Ah</h1>
-                    <p id="txtBrandSub">Mohamed Yasin Mohamoud &bull; AI Educator & IT Specialist</p>
+                    <p id="txtBrandSub">Mohamed Yasin Mohamoud &bull; AI Career & Job Discovery Engine</p>
                 </div>
             </a>
 
             <div class="nav-links">
-                <a href="#coursesSection" class="nav-link" id="navLinkCourses">🎓 Koorsooyinka</a>
+                <a href="#assessSection" class="nav-link" id="navLinkAssess">⚡ AI Assessment</a>
                 <a href="#jobsSection" class="nav-link" id="navLinkJobs">🔍 Shaqooyinka</a>
                 <a href="#founderSection" class="nav-link" id="navLinkFounder">👨‍🏫 Aasaasaha</a>
             </div>
@@ -1145,176 +1191,175 @@
 
     <div class="container">
 
-        <!-- AI Landing Page Hero -->
+        <!-- AI Hero Banner -->
         <section class="hero-banner">
             <div class="hero-badges">
-                <span class="badge-pill green" id="badgeLive">🟢 Live AI System</span>
-                <span class="badge-pill free" id="badgeNoLogin">🔓 100% Free • No Login Required</span>
-                <span class="badge-pill" id="badgeGlobal">🌍 Global & Canada (Edmonton)</span>
+                <span class="badge-pill green" id="badgeLive">🟢 Live AI Job Engine</span>
+                <span class="badge-pill free" id="badgeNoLogin">🔓 100% Free • No Sign-In Required</span>
+                <span class="badge-pill" id="badgeCanada">🇨🇦 Canada (Edmonton) & Remote</span>
             </div>
             <h2 id="heroHeadline">
-                Baro Xirfadaha Casriga ah & <span>Hel Shaqadaada Riyada</span>
+                Hal Mabda': <span>Shaqadaada Ku Habboon</span> Ku Hel Awoodda AI-ga
             </h2>
             <p id="heroSubtitle">
-                Ku soo dhowow nidaamka caalamiga ah ee Mohamed Yasin Mohamoud u dhisay dhalinyarada iyo ardayda. Halkan waxaad ka helaysaa koorsooyin tayo sare leh oo AI & IT ah, shaqooyinka ugu sarreeya ee Kanada iyo Remote-ka caalamiga ah, iyo Kaaliye AI ah oo ku baraya diyaarinta CV-ga iyo wareysiyada shaqada.
+                Madal toos ah oo loogu talagalay dhalinyarada iyo ardayda Soomaaliyeed. Uma baahnid login; kaliya mari 60-second AI assessment ama soo gali CV-gaaga, AI-gu wuxuu si toos ah kuugu xiri doonaa shaqooyinka Kanada ugu sarreeya isagoo kuu diyaarinaya warqadda codsiga (Canadian Cover Letter).
             </p>
             <div class="hero-actions">
-                <a href="#jobsSection" class="hero-btn-primary" id="btnHeroJobs">
-                    🔍 Baadh Shaqooyinka Maanta
+                <a href="#assessSection" class="hero-btn-primary" id="btnHeroAssess">
+                    ⚡ Bilow AI Assessment (60 Sec)
                 </a>
-                <a href="#coursesSection" class="hero-btn-secondary" id="btnHeroCourses">
-                    🎓 Baro Koorsooyinka Bilaashka ah
+                <a href="#jobsSection" class="hero-btn-secondary" id="btnHeroJobs">
+                    🔍 Baadh Shaqooyinka Hadda
                 </a>
             </div>
         </section>
 
-        <!-- Stats / Trust Metrics -->
-        <div class="stats-bar">
-            <div class="stat-card">
-                <div class="stat-number">100,000+</div>
-                <div class="stat-label" id="statStudents">Arday Wax Ka Baratay Online</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">94%</div>
-                <div class="stat-label" id="statMatch">AI Match Precision Scoring</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">5+ Sano</div>
-                <div class="stat-label" id="statIom">Tababaraha Qaramada Midoobay (IOM)</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">0 Sign-In</div>
-                <div class="stat-label" id="statFree">Xor & Bilaash (No Login Required)</div>
-            </div>
-        </div>
+        <!-- Modern Gen-Z 3-Step Visual Micro-Guide -->
+        <section class="genz-guide-section">
+            <div class="guide-grid">
+                <div class="guide-card">
+                    <span class="guide-step-badge">TALLAABADA 1</span>
+                    <div class="guide-icon">⚡</div>
+                    <h4 id="g1Title">Dooro ama Soo Geli CV</h4>
+                    <p id="g1Desc">Guji xirfadahaaga iyo waxa aad xiisaynayso, ama soo gali CV-gaaga. Uma baahnid inaad account sameysato!</p>
+                </div>
 
-        <!-- Global Courses & Training Section -->
-        <section id="coursesSection" style="margin-bottom:35px;">
-            <div class="section-title-wrap">
+                <div class="guide-card">
+                    <span class="guide-step-badge">TALLAABADA 2</span>
+                    <div class="guide-icon">🤖</div>
+                    <h4 id="g2Title">AI Match & Warqadda Codsiga</h4>
+                    <p id="g2Desc">AI-gu wuxuu xogtaada barbardhigayaa Indeed, Glassdoor & ZipRecruiter wuxuuna kuu dhisayaa Cover Letter diyaar ah.</p>
+                </div>
+
+                <div class="guide-card">
+                    <span class="guide-step-badge">TALLAABADA 3</span>
+                    <div class="guide-icon">🚀</div>
+                    <h4 id="g3Title">1-Guji ku Codso (Apply)</h4>
+                    <p id="g3Desc">Guji shaqada, ku dhaji warqaddaada diyaarka ah, una dir shaqo-bixiyaha adigoo kalsooni buuxda qaba!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive AI Career Assessment & Resume Drop Zone -->
+        <section class="assessment-card" id="assessSection">
+            <div class="assessment-header">
                 <div>
-                    <h3 class="section-title">
-                        <span>🎓</span> <span id="coursesTitle">Koorsooyinka & Tababarrada Caalamiga ah</span>
+                    <h3 id="assessHeading">
+                        <span>🎯</span> AI Career Assessment & Resume Matcher
                     </h3>
-                    <p class="section-subtitle" id="coursesSubtitle">Koorsooyin tayo leh oo loogu talagalay in ardayda iyo dhalinyarada lagu baro xirfadaha suuqa maanta ugu qaalisay.</p>
+                    <p style="font-size:13px; color:var(--text-muted); margin-top:3px;" id="assessSubheading">
+                        Qof kasta oo cusub: Xulo xirfadahaaga ama soo gali CV si AI-gu xogtaada ugu shaqeeyo.
+                    </p>
+                </div>
+                <div class="assessment-tabs">
+                    <button class="assess-tab-btn active" id="tabBtnQuestions" onclick="switchAssessTab('questions')">
+                        ⚡ 60-Second Questions
+                    </button>
+                    <button class="assess-tab-btn" id="tabBtnUpload" onclick="switchAssessTab('upload')">
+                        📄 Upload / Paste Resume
+                    </button>
                 </div>
             </div>
 
-            <div class="courses-grid">
-                <!-- Course 1 -->
-                <div class="course-card">
-                    <div>
-                        <div class="course-badge-row">
-                            <span class="course-tag">AI & Automation</span>
-                            <span class="course-level">Beginner &rarr; Advanced</span>
-                        </div>
-                        <div class="course-icon">🤖</div>
-                        <h4 id="c1Title">AI Chatbots, Automation & No-Code Mastery</h4>
-                        <p id="c1Desc">Baro sidii aad u dhisi lahayd AI Chatbots caqli badan, No-Code workflows (Make, Zapier), iyo farsamooyinka Prompt Engineering ee shirkadaha u fududeeya shaqada.</p>
-                        <ul class="course-highlights">
-                            <li>✓ Dhisidda Chatbots (Websites & Social)</li>
-                            <li>✓ Isku-xirka API-yada & No-Code Tools</li>
-                            <li>✓ 100,000+ Arday ayaa ku dhiirigelay</li>
-                        </ul>
+            <!-- Tab 1: Interactive Questionnaire -->
+            <div class="assess-content-pane active" id="paneQuestions">
+                <div class="assess-grid">
+                    <div class="assess-group">
+                        <label id="lblField">Takhasuska ama Goobta aad Xiisaynayso:</label>
+                        <select class="assess-select" id="assessField">
+                            <option value="IT & Tech" selected>💻 IT & Technical Support</option>
+                            <option value="Teaching & Education">👨‍🏫 Macallin & Waxbarasho (Education)</option>
+                            <option value="AI & Automation">🤖 AI Automation & Chatbots</option>
+                            <option value="Administration & Data">📊 Data & Administration</option>
+                            <option value="Youth & Community">🤝 Youth & Community Coordination</option>
+                            <option value="Customer Service">🎧 Customer Service & Support</option>
+                        </select>
                     </div>
-                    <div class="course-card-actions">
-                        <a href="https://www.youtube.com/User/MrFaratoon" target="_blank" class="btn-learn" id="btnLearn1">▶ Daawo Casharrada</a>
-                        <button class="btn-ask-course" onclick="askChatbot('Iiga waran koorsada AI Chatbots & Automation?')">💬 Weydii AI</button>
+
+                    <div class="assess-group">
+                        <label id="lblExperience">Heerkaaga Khibradeed:</label>
+                        <select class="assess-select" id="assessExperience">
+                            <option value="Entry Level" selected>🎓 Arday / Fresh Graduate (Zero Experience)</option>
+                            <option value="1-3 Years">💼 1 - 3 Sano oo Khibrad ah</option>
+                            <option value="5+ Years">⭐ 5+ Sano / Khibrad Sare (Senior)</option>
+                        </select>
+                    </div>
+
+                    <div class="assess-group">
+                        <label id="lblTargetLocation">Goobta aad Shaqada ka Doonayso:</label>
+                        <select class="assess-select" id="assessLocation">
+                            <option value="Edmonton, AB" selected>Edmonton, AB (Canada)</option>
+                            <option value="Canada">Canada (Remote / Guriga)</option>
+                            <option value="Calgary, AB">Calgary, AB</option>
+                        </select>
+                    </div>
+
+                    <div class="assess-group">
+                        <label id="lblName">Magacaaga (Cover Letter-ka lagu qoro):</label>
+                        <input type="text" class="assess-input" id="assessName" placeholder="Tusaale: Mohamed Yasin">
                     </div>
                 </div>
 
-                <!-- Course 2 -->
-                <div class="course-card">
-                    <div>
-                        <div class="course-badge-row">
-                            <span class="course-tag">IT Support</span>
-                            <span class="course-level">Google Professional</span>
-                        </div>
-                        <div class="course-icon">🛡️</div>
-                        <h4 id="c2Title">Google IT Support & Cybersecurity Fundamentals</h4>
-                        <p id="c2Desc">Wadada ugu toosan ee aad ku noqon karto Technical Support Specialist. Baro IT Security, System Administration, Computer Networking, iyo Operating Systems.</p>
-                        <ul class="course-highlights">
-                            <li>✓ Google IT Support Curriculum</li>
-                            <li>✓ Difaaca Cyber Security & VPNs</li>
-                            <li>✓ U diyaar-garow shaqo $25-$35/saac ah</li>
-                        </ul>
-                    </div>
-                    <div class="course-card-actions">
-                        <a href="https://www.linkedin.com/in/mfaratoon" target="_blank" class="btn-learn" id="btnLearn2">📘 Eeg Shahaadooyinka</a>
-                        <button class="btn-ask-course" onclick="askChatbot('Sideen ku bilaabaa Google IT Support?')">💬 Weydii AI</button>
-                    </div>
-                </div>
-
-                <!-- Course 3 -->
-                <div class="course-card">
-                    <div>
-                        <div class="course-badge-row">
-                            <span class="course-tag">Office & Digital</span>
-                            <span class="course-level">UN/IOM Standard</span>
-                        </div>
-                        <div class="course-icon">📊</div>
-                        <h4 id="c3Title">Digital Literacy & Professional Office Productivity</h4>
-                        <p id="c3Desc">Manhajkii Mohamed Yasin uu 5 sano ku baray kumanaan qaxooti caalami ah oo IOM Indonesia ku sugnaa. MS Word, Excel Advanced, PowerPoint, iyo Cloud Office.</p>
-                        <ul class="course-highlights">
-                            <li>✓ Shahaado Sharaf UN / IOM Commendation</li>
-                            <li>✓ Xisaabinta Excel & Warbixinnada</li>
-                            <li>✓ Xirfadaha aasaasiga ah ee xafiis kasta</li>
-                        </ul>
-                    </div>
-                    <div class="course-card-actions">
-                        <a href="https://www.youtube.com/User/MrFaratoon" target="_blank" class="btn-learn" id="btnLearn3">▶ Daawo Casharrada</a>
-                        <button class="btn-ask-course" onclick="askChatbot('Maxaa ugu muhiimsan Excel xafiisyada shaqada?')">💬 Weydii AI</button>
-                    </div>
-                </div>
-
-                <!-- Course 4 -->
-                <div class="course-card">
-                    <div>
-                        <div class="course-badge-row">
-                            <span class="course-tag">Career Launchpad</span>
-                            <span class="course-level">Students & Youth</span>
-                        </div>
-                        <div class="course-icon">🚀</div>
-                        <h4 id="c4Title">Job Hunting, ATS Resume & Interview Mastery</h4>
-                        <p id="c4Desc">Hagaha dhabta ah ee ardayda iyo qalin-jebiyayaasha ku hagaya sidii ay shaqadii 1-aad ku heli lahaayeen: Qorista CV casri ah, Canadian Cover Letters, iyo farsamada STAR.</p>
-                        <ul class="course-highlights">
-                            <li>✓ ATS Resume & Keyword Optimization</li>
-                            <li>✓ Diyaarinta Wareysiga (STAR Method)</li>
-                            <li>✓ Xidhiidhka LinkedIn & Networking</li>
-                        </ul>
-                    </div>
-                    <div class="course-card-actions">
-                        <button class="btn-learn" onclick="askChatbot('Sideen ku diyaariyaa CV casri ah oo ATS-friendly ah?')">📄 Baro CV Qorista</button>
-                        <button class="btn-ask-course" onclick="askChatbot('Talooyin ku saabsan wareysiga shaqada?')">💬 Weydii AI</button>
+                <div style="margin-bottom:10px;">
+                    <label style="font-size:12.5px; font-weight:700; color:#334155; display:block; margin-bottom:8px;" id="lblSkills">
+                        Taabo Xirfadaha aad Leedahay (Taabo si aad u doorato):
+                    </label>
+                    <div class="skills-tag-cloud" id="skillsCloud">
+                        <span class="skill-toggle-pill selected" onclick="toggleSkillPill(this)">Google IT Support</span>
+                        <span class="skill-toggle-pill selected" onclick="toggleSkillPill(this)">Computer Basics</span>
+                        <span class="skill-toggle-pill selected" onclick="toggleSkillPill(this)">MS Office / Excel</span>
+                        <span class="skill-toggle-pill" onclick="toggleSkillPill(this)">AI & Chatbots</span>
+                        <span class="skill-toggle-pill" onclick="toggleSkillPill(this)">Customer Service</span>
+                        <span class="skill-toggle-pill" onclick="toggleSkillPill(this)">System Admin</span>
+                        <span class="skill-toggle-pill" onclick="toggleSkillPill(this)">Troubleshooting</span>
+                        <span class="skill-toggle-pill" onclick="toggleSkillPill(this)">Python / Coding</span>
+                        <span class="skill-toggle-pill" onclick="toggleSkillPill(this)">Youth Mentorship</span>
                     </div>
                 </div>
             </div>
-        </section>
 
-        <!-- Founder Profile Showcase -->
-        <section class="founder-section" id="founderSection">
-            <div class="founder-avatar-col">
-                <div class="founder-avatar">👨‍🏫</div>
-                <span class="founder-badge">Founder & Coach</span>
+            <!-- Tab 2: Resume Upload or Text Paste -->
+            <div class="assess-content-pane" id="paneUpload">
+                <div class="resume-drop-zone" onclick="document.getElementById('resumeFileInput').click()">
+                    <div style="font-size:36px; margin-bottom:8px;">📁</div>
+                    <h4 style="font-size:15px; font-weight:700; color:#0f172a; margin-bottom:4px;" id="dropTitle">
+                        Guji si aad u soo geliso Resume (PDF ama Word)
+                    </h4>
+                    <p style="font-size:12.5px; color:var(--text-muted);" id="dropSub">
+                        AI-gu wuxuu si toos ah u soo saarayaa xirfadahaaga ugu sarreeya
+                    </p>
+                    <input type="file" id="resumeFileInput" style="display:none;" accept=".pdf,.doc,.docx,.txt" onchange="handleFileSelected(event)">
+                    <div id="fileUploadStatus" style="font-size:13px; color:#10b981; font-weight:700; margin-top:8px;"></div>
+                </div>
+
+                <div style="margin-bottom:6px;">
+                    <label style="font-size:12.5px; font-weight:700; color:#334155;" id="lblPasteResume">
+                        Ama halkan ku dhaji qoraalka Resume-gaaga (Paste text):
+                    </label>
+                </div>
+                <textarea class="resume-paste-area" id="resumePasteText" placeholder="Ku dhaji halkan xogta CV-gaaga, xirfadahaaga, iyo shaqooyinkii hore..."></textarea>
             </div>
-            <div class="founder-info-col">
-                <div class="founder-title">
-                    <h3>Mohamed Yasin Mohamoud</h3>
-                    <p id="txtFounderRole">AI Automation Trainer &bull; IT Support Specialist &bull; Edmonton, AB, Canada 🇨🇦</p>
+
+            <button class="btn-run-assess" onclick="executeAssessment()">
+                <span id="assessBtnIcon">✨</span>
+                <span id="assessBtnText">Falanqee Xogtayda & Ii Hel Shaqooyinka</span>
+            </button>
+
+            <!-- Dynamic Result -->
+            <div class="assess-result-box" id="assessResultBox">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap;">
+                    <h4 style="font-size:16px; font-weight:800; color:#15803d; display:flex; align-items:center; gap:6px;">
+                        <span>🎉</span> <span id="resSuccessTitle">Falanqayntii AI-ga Waa Diyaar!</span>
+                    </h4>
+                    <span style="background:#bbf7d0; color:#166534; font-weight:800; font-size:13px; padding:4px 12px; border-radius:14px;" id="resScoreBadge">
+                        Match Readiness: 96%
+                    </span>
                 </div>
-                <p class="founder-bio" id="txtFounderBio">
-                    Macallin iyo tababare khibrad dheer u leh baridda kombiyuutarka iyo tiknoolajiyadda. Wuxuu 5+ sano tababarro u qabtay Hay'adda Socdaalka Caalamiga ah ee Qaramada Midoobay (UN/IOM) ee dalka Indonesia, isagoo abaalmarin sharaf rasmi ah ku muteystay. Wuxuu haystaa shahaadada BA ee Media & Mass Communication (AVU) iyo shahaadooyinka Google IT Support Professional. Wuxuu online-ka wax ku baray in ka badan 100,000 oo arday.
-                </p>
-                <div class="founder-credentials">
-                    <span class="cred-pill">🏅 UN/IOM Certificate of Commendation</span>
-                    <span class="cred-pill">🎓 BA Degree (AVU)</span>
-                    <span class="cred-pill">🛡️ Google IT Support Professional</span>
-                    <span class="cred-pill">🤖 AI & Chatbot Automation Expert</span>
-                </div>
-                <div class="founder-links">
-                    <a href="/download/resume" target="_blank" class="founder-link-btn">📄 Soo Degso PDF Resume &rarr;</a>
-                    <a href="https://www.linkedin.com/in/mfaratoon" target="_blank" class="founder-link-btn">🔗 LinkedIn Profile &rarr;</a>
-                    <a href="https://www.youtube.com/User/MrFaratoon" target="_blank" class="founder-link-btn">📺 YouTube Channel &rarr;</a>
-                    <a href="mailto:Suxufi34@gmail.com" class="founder-link-btn">📧 Suxufi34@gmail.com &rarr;</a>
+                <p style="font-size:13.5px; color:#14532d; line-height:1.55;" id="resAdviceText"></p>
+                <div style="margin-top:12px;">
+                    <a href="#jobsSection" style="color:#0284c7; font-weight:700; font-size:13px; text-decoration:none;">
+                        &darr; Eeg shaqooyinka hadda kuugu soo baxay qeybta hoose
+                    </a>
                 </div>
             </div>
         </section>
@@ -1324,9 +1369,9 @@
             <div class="section-title-wrap">
                 <div>
                     <h3 class="section-title">
-                        <span>🔍</span> <span id="jobsSectionTitle">Shaqo Raadiska AI-ga (Live Jobs Finder)</span>
+                        <span>🔍</span> <span id="jobsSectionTitle">Shaqooyinka Tooska ah (Live AI Job Engine)</span>
                     </h3>
-                    <p class="section-subtitle" id="jobsSectionSub">Shaqooyin toos ah oo laga soo saaray Indeed Canada, Glassdoor & ZipRecruiter iyadoo la adeegsanayo AI Matching.</p>
+                    <p class="section-subtitle" id="jobsSectionSub">Shaqooyin laga soo saaray Indeed Canada, Glassdoor & ZipRecruiter oo wata Canadian Cover Letter diyaar ah.</p>
                 </div>
                 <div class="quota-counter" id="quotaDisplay">
                     Quota: 5 Codsi oo Diyaarsan Maalintii
@@ -1394,6 +1439,35 @@
             </div>
         </section>
 
+        <!-- Founder Profile Showcase -->
+        <section class="founder-section" id="founderSection">
+            <div class="founder-avatar-col">
+                <div class="founder-avatar">👨‍🏫</div>
+                <span class="founder-badge">Founder & Coach</span>
+            </div>
+            <div class="founder-info-col">
+                <div class="founder-title">
+                    <h3>Mohamed Yasin Mohamoud</h3>
+                    <p id="txtFounderRole">AI Automation Trainer &bull; IT Support Specialist &bull; Edmonton, AB, Canada 🇨🇦</p>
+                </div>
+                <p class="founder-bio" id="txtFounderBio">
+                    Macallin iyo tababare khibrad dheer u leh baridda kombiyuutarka iyo tiknoolajiyadda. Wuxuu 5+ sano tababarro u qabtay Hay'adda Socdaalka Caalamiga ah ee Qaramada Midoobay (UN/IOM) ee dalka Indonesia, isagoo abaalmarin sharaf rasmi ah ku muteystay. Wuxuu haystaa shahaadada BA ee Media & Mass Communication (AVU) iyo shahaadooyinka Google IT Support Professional. Wuxuu online-ka wax ku baray in ka badan 100,000 oo arday.
+                </p>
+                <div class="founder-credentials">
+                    <span class="cred-pill">🏅 UN/IOM Certificate of Commendation</span>
+                    <span class="cred-pill">🎓 BA Degree (AVU)</span>
+                    <span class="cred-pill">🛡️ Google IT Support Professional</span>
+                    <span class="cred-pill">🤖 AI & Chatbot Automation Expert</span>
+                </div>
+                <div class="founder-links">
+                    <a href="/download/resume" target="_blank" class="founder-link-btn">📄 Soo Degso PDF Resume &rarr;</a>
+                    <a href="https://www.linkedin.com/in/mfaratoon" target="_blank" class="founder-link-btn">🔗 LinkedIn Profile &rarr;</a>
+                    <a href="https://www.youtube.com/User/MrFaratoon" target="_blank" class="founder-link-btn">📺 YouTube Channel &rarr;</a>
+                    <a href="mailto:Suxufi34@gmail.com" class="founder-link-btn">📧 Suxufi34@gmail.com &rarr;</a>
+                </div>
+            </div>
+        </section>
+
     </div>
 
     <!-- Floating AI Chatbot Button -->
@@ -1409,7 +1483,7 @@
                 <div class="chat-avatar">🤖</div>
                 <div class="chat-title">
                     <h3 id="chatModalTitle">Kaaliyaha Shaqada ee AI-ga</h3>
-                    <p id="chatModalSub">🟢 Online &bull; Global Career & Course Advisor</p>
+                    <p id="chatModalSub">🟢 Online &bull; Career & Resume Advisor</p>
                 </div>
             </div>
             <button class="chat-close-btn" onclick="toggleChat()">&times;</button>
@@ -1417,18 +1491,13 @@
 
         <div class="chat-body" id="chatBody">
             <div class="chat-msg bot" id="chatWelcomeMsg">
-                Salamaat! 👋 Waxaan ahay **Kaaliyaha Shaqada ee AI-ga**, oo loogu talagalay inuu kugu hago xirfadda, koorsooyinka iyo shaqooyinka.
+                Salamaat! 👋 Waxaan ahay **Kaaliyaha Shaqada ee AI-ga**.
                 <br><br>
                 Waxaan kaa caawin karaa:
                 <br>• 📄 Qorista & habeynta CV-gaaga (ATS-friendly)
                 <br>• 🎯 U diyaar-garowga wareysiga shaqada (Interview)
-                <br>• 🎓 Koorsooyinka AI & IT ee ugu wanaagsan
                 <br>• ✍️ Diyaarinta Cover Letter tayo leh
-                <div class="chat-pills">
-                    <span class="chat-pill" onclick="sendQuickPrompt('Sideen ku bilaabaa anigoon khibrad hore u lahayn?')">Arday khibrad la'aan ah?</span>
-                    <span class="chat-pill" onclick="sendQuickPrompt('Sideen ku diyaariyaa CV casri ah?')">CV ATS ah?</span>
-                    <span class="chat-pill" onclick="sendQuickPrompt('Talooyinka wareysiga shaqada (Interview)?')">Wareysi shaqo?</span>
-                </div>
+                <br>• 🔍 Shaqooyinka ku habboon aqoontaada
             </div>
         </div>
 
@@ -1440,33 +1509,36 @@
         </div>
     </div>
 
-    <!-- Scripts: Multi-language Dictionary & Actions -->
+    <!-- Scripts -->
     <script>
         const TRANSLATIONS = {
             so: {
-                announcement: "✨ Global AI Career & Course Hub • No Sign-In Required • Edmonton 🇨🇦",
+                announcement: "✨ AI Job Discovery & Career Matching • 100% Free • No Login Required • Edmonton 🇨🇦",
                 brandTitle: "Shaqo Raadiyahaaga Gaarka Ah",
-                brandSub: "Mohamed Yasin Mohamoud • AI Educator & IT Specialist",
-                navCourses: "🎓 Koorsooyinka",
+                brandSub: "Mohamed Yasin Mohamoud • AI Career & Job Discovery Engine",
+                navAssess: "⚡ AI Assessment",
                 navJobs: "🔍 Shaqooyinka",
                 navFounder: "👨‍🏫 Aasaasaha",
                 btnResume: "📄 Soo Degso CV (PDF)",
                 btnChat: "💬 Kaaliyaha AI",
-                heroBadgeLive: "🟢 Live AI System",
-                heroBadgeFree: "🔓 100% Free • No Login Required",
-                heroBadgeGlobal: "🌍 Global & Canada (Edmonton)",
-                heroHeadline: 'Baro Xirfadaha Casriga ah & <span style="color:#38bdf8;">Hel Shaqadaada Riyada</span>',
-                heroSubtitle: "Ku soo dhowow nidaamka caalamiga ah ee Mohamed Yasin Mohamoud u dhisay dhalinyarada iyo ardayda. Halkan waxaad ka helaysaa koorsooyin tayo sare leh oo AI & IT ah, shaqooyinka ugu sarreeya ee Kanada iyo Remote-ka caalamiga ah, iyo Kaaliye AI ah oo ku baraya diyaarinta CV-ga iyo wareysiyada shaqada.",
-                btnHeroJobs: "🔍 Baadh Shaqooyinka Maanta",
-                btnHeroCourses: "🎓 Baro Koorsooyinka Bilaashka ah",
-                statStudents: "Arday Wax Ka Baratay Online",
-                statMatch: "AI Match Precision Scoring",
-                statIom: "Tababaraha Qaramada Midoobay (IOM)",
-                statFree: "Xor & Bilaash (No Login Required)",
-                coursesTitle: "Koorsooyinka & Tababarrada Caalamiga ah",
-                coursesSubtitle: "Koorsooyin tayo leh oo loogu talagalay in ardayda iyo dhalinyarada lagu baro xirfadaha suuqa maanta ugu qaalisay.",
-                jobsSectionTitle: "Shaqo Raadiska AI-ga (Live Jobs Finder)",
-                jobsSectionSub: "Shaqooyin toos ah oo laga soo saaray Indeed Canada, Glassdoor & ZipRecruiter iyadoo la adeegsanayo AI Matching.",
+                heroBadgeLive: "🟢 Live AI Job Engine",
+                heroBadgeFree: "🔓 100% Free • No Sign-In Required",
+                heroBadgeCanada: "🇨🇦 Canada (Edmonton) & Remote",
+                heroHeadline: 'Hal Mabda\': <span>Shaqadaada Ku Habboon</span> Ku Hel Awoodda AI-ga',
+                heroSubtitle: "Madal toos ah oo loogu talagalay dhalinyarada iyo ardayda Soomaaliyeed. Uma baahnid login; kaliya mari 60-second AI assessment ama soo gali CV-gaaga, AI-gu wuxuu si toos ah kuugu xiri doonaa shaqooyinka Kanada ugu sarreeya isagoo kuu diyaarinaya warqadda codsiga (Canadian Cover Letter).",
+                btnHeroAssess: "⚡ Bilow AI Assessment (60 Sec)",
+                btnHeroJobs: "🔍 Baadh Shaqooyinka Hadda",
+                g1Title: "Dooro ama Soo Geli CV",
+                g1Desc: "Guji xirfadahaaga iyo waxa aad xiisaynayso, ama soo gali CV-gaaga. Uma baahnid inaad account sameysato!",
+                g2Title: "AI Match & Warqadda Codsiga",
+                g2Desc: "AI-gu wuxuu xogtaada barbardhigayaa Indeed, Glassdoor & ZipRecruiter wuxuuna kuu dhisayaa Cover Letter diyaar ah.",
+                g3Title: "1-Guji ku Codso (Apply)",
+                g3Desc: "Guji shaqada, ku dhaji warqaddaada diyaarka ah, una dir shaqo-bixiyaha adigoo kalsooni buuxda qaba!",
+                assessHeading: "AI Career Assessment & Resume Matcher",
+                assessSubheading: "Qof kasta oo cusub: Xulo xirfadahaaga ama soo gali CV si AI-gu xogtaada ugu shaqeeyo.",
+                btnRunAssess: "Falanqee Xogtayda & Ii Hel Shaqooyinka",
+                jobsSectionTitle: "Shaqooyinka Tooska ah (Live AI Job Engine)",
+                jobsSectionSub: "Shaqooyin laga soo saaray Indeed Canada, Glassdoor & ZipRecruiter oo wata Canadian Cover Letter diyaar ah.",
                 lblSearchKeyword: "Ereyga Shaqada (Job Title / Keyword):",
                 lblSearchLocation: "Magaalada / Gobolka (Location):",
                 lblSearchLimit: "Tirada Shaqooyinka:",
@@ -1478,29 +1550,32 @@
                 chatInputPlaceholder: "Wax weydii Kaaliyaha AI-ga..."
             },
             en: {
-                announcement: "✨ Global AI Career & Course Hub • No Sign-In Required • Edmonton, Canada 🇨🇦",
-                brandTitle: "Personal Career & AI Hub",
-                brandSub: "Mohamed Yasin Mohamoud • AI Educator & IT Specialist",
-                navCourses: "🎓 Courses",
+                announcement: "✨ AI Job Discovery & Career Matching • 100% Free • No Sign-In Required • Edmonton, Canada 🇨🇦",
+                brandTitle: "Personal Career & Job Finder",
+                brandSub: "Mohamed Yasin Mohamoud • AI Career & Job Discovery Engine",
+                navAssess: "⚡ AI Assessment",
                 navJobs: "🔍 Jobs",
                 navFounder: "👨‍🏫 Founder",
                 btnResume: "📄 Download CV (PDF)",
                 btnChat: "💬 AI Advisor",
-                heroBadgeLive: "🟢 Live AI System",
-                heroBadgeFree: "🔓 100% Free • No Login Required",
-                heroBadgeGlobal: "🌍 Global & Canada (Edmonton)",
-                heroHeadline: 'Master Future Skills & <span style="color:#38bdf8;">Land Your Dream Job</span>',
-                heroSubtitle: "Welcome to the global AI platform founded by Mohamed Yasin Mohamoud. Access cutting-edge AI & IT courses, discover high-match curated jobs across Canada & global remote markets, and leverage our interactive Career AI Advisor for ATS resumes and interview prep.",
+                heroBadgeLive: "🟢 Live AI Job Engine",
+                heroBadgeFree: "🔓 100% Free • No Sign-In Required",
+                heroBadgeCanada: "🇨🇦 Canada (Edmonton) & Remote",
+                heroHeadline: 'One Mission: <span>Land Your Dream Job</span> Powered by AI',
+                heroSubtitle: "Direct platform tailored for youth, students, and job seekers. Zero login required; complete a 60-second assessment or drop your resume, and let AI match you with top opportunities in Canada with tailored Canadian cover letters ready to submit.",
+                btnHeroAssess: "⚡ Start 60s AI Assessment",
                 btnHeroJobs: "🔍 Explore Curated Jobs",
-                btnHeroCourses: "🎓 Browse Free Courses",
-                statStudents: "Students Educated Online",
-                statMatch: "AI Match Precision Scoring",
-                statIom: "UN / IOM Commended Instructor",
-                statFree: "Free & Open Access (No Login)",
-                coursesTitle: "Featured Global Courses & Training",
-                coursesSubtitle: "Industry-standard programs designed to empower youth, graduates, and professionals worldwide.",
+                g1Title: "Select Skills or Drop CV",
+                g1Desc: "Pick your key skills or upload your resume in seconds. No account or sign-up needed!",
+                g2Title: "AI Match & Custom Letters",
+                g2Desc: "AI cross-references Indeed, Glassdoor & ZipRecruiter and drafts tailored Canadian Cover Letters for you.",
+                g3Title: "1-Click Apply",
+                g3Desc: "Open verified job listings, paste your tailored cover letter, and submit with full confidence!",
+                assessHeading: "AI Career Assessment & Resume Matcher",
+                assessSubheading: "New user onboarding: Pick your skills or upload a CV so the AI tailors opportunities for you.",
+                btnRunAssess: "Analyze Profile & Find Matching Jobs",
                 jobsSectionTitle: "Live AI Job Discovery Engine",
-                jobsSectionSub: "Real-time job matching from Indeed Canada, Glassdoor & ZipRecruiter powered by intelligent scoring.",
+                jobsSectionSub: "Real-time listings from Indeed Canada, Glassdoor & ZipRecruiter with tailored Canadian Cover Letters.",
                 lblSearchKeyword: "Job Title or Keyword:",
                 lblSearchLocation: "City or Location:",
                 lblSearchLimit: "Results Limit:",
@@ -1512,28 +1587,31 @@
                 chatInputPlaceholder: "Ask the Career AI anything..."
             },
             ar: {
-                announcement: "✨ منصة الذكاء الاصطناعي العالمية للوظائف والدورات • بدون تسجيل دخول • كندا 🇨🇦",
-                brandTitle: "محرك الوظائف والدورات الذكي",
-                brandSub: "محمد ياسين محمود • خبير تدريب الذكاء الاصطناعي والدعم الفني",
-                navCourses: "🎓 الدورات",
+                announcement: "✨ محرك البحث عن الوظائف الذكي • مجاني 100% • بدون تسجيل دخول • كندا 🇨🇦",
+                brandTitle: "محرك الوظائف والمسار المهني الذكي",
+                brandSub: "محمد ياسين محمود • خبير الذكاء الاصطناعي والدعم الفني",
+                navAssess: "⚡ تقييم الذكاء الاصطناعي",
                 navJobs: "🔍 الوظائف",
                 navFounder: "👨‍🏫 المؤسس",
                 btnResume: "📄 تحميل السيرة الذاتية (PDF)",
                 btnChat: "💬 مستشار الذكاء الاصطناعي",
                 heroBadgeLive: "🟢 نظام حي ومباشر",
                 heroBadgeFree: "🔓 مجاني 100% • بدون تسجيل دخول",
-                heroBadgeGlobal: "🌍 عالمي وكندا (إدمونتون)",
-                heroHeadline: 'تعلم مهارات المستقبل و <span style="color:#38bdf8;">احصل على وظيفة أحلامك</span>',
-                heroSubtitle: "مرحبًا بك في المنصة العالمية التي طورها محمد ياسين محمود لتمكين الشباب والطلاب. احصل على أفضل دورات الذكاء الاصطناعي والدعم الفني، واستكشف وظائف كندا والعمل عن بُعد مع مستشار الذكاء الاصطناعي للسيرة الذاتية والمقابلات.",
+                heroBadgeCanada: "🇨🇦 كندا (إدمونتون) وعن بُعد",
+                heroHeadline: 'مبدأ واحد: <span>احصل على وظيفتك المثالية</span> بالذكاء الاصطناعي',
+                heroSubtitle: "منصة مباشرة لتمكين الشباب والطلاب. بدون أي تسجيل دخول؛ أكمل تقييمًا مدته 60 ثانية أو ارفع سيرتك الذاتية ليربطك الذكاء الاصطناعي بأفضل وظائف كندا مع خطابات تقديم مخصصة.",
+                btnHeroAssess: "⚡ ابدأ التقييم السريع (60 ثانية)",
                 btnHeroJobs: "🔍 استكشف الوظائف الآن",
-                btnHeroCourses: "🎓 تصفح الدورات المجانية",
-                statStudents: "طالب تعلموا عبر الإنترنت",
-                statMatch: "دقة مطابقة الذكاء الاصطناعي",
-                statIom: "مدرب معتمد من الأمم المتحدة (IOM)",
-                statFree: "وصول مفتوح بدون تسجيل دخول",
-                coursesTitle: "الدورات والتدريبات العالمية",
-                coursesSubtitle: "برامج مصممة لتمكين الطلاب والخريجين من المهارات الأكثر طلبًا في سوق العمل.",
-                jobsSectionTitle: "محرك البحث الذكي عن الوظائف",
+                g1Title: "اختر مهاراتك أو ارفع السيرة",
+                g1Desc: "حدد مهاراتك أو ارفع سيرتك الذاتية بدون الحاجة لإنشاء حساب!",
+                g2Title: "مطابقة AI وخطابات مخصصة",
+                g2Desc: "يطابق الذكاء الاصطناعي أفضل وظائف كندا ويجهز لك خطاب تقديم احترافي.",
+                g3Title: "قدم بضغطة واحدة",
+                g3Desc: "افتح الوظيفة والصق خطاب التقديم المخصص وقدم بكل ثقة!",
+                assessHeading: "تقييم المسار المهني وتحليل السيرة الذاتية",
+                assessSubheading: "حدد مهاراتك أو ارفع سيرتك الذاتية ليعمل الذكاء الاصطناعي من أجلك.",
+                btnRunAssess: "تحليل الملف وإيجاد الوظائف المطابقة",
+                jobsSectionTitle: "محرك البحث المباشر عن الوظائف",
                 jobsSectionSub: "وظائف مباشرة ومطابقة من Indeed Canada و Glassdoor و ZipRecruiter.",
                 lblSearchKeyword: "المسمى الوظيفي أو الكلمة المفتاحية:",
                 lblSearchLocation: "المدينة أو المنطقة:",
@@ -1548,21 +1626,17 @@
         };
 
         let currentLang = "so";
+        let userAssessedProfile = null;
 
-        // Auto-detect Language
         document.addEventListener("DOMContentLoaded", () => {
             const savedLang = localStorage.getItem("preferred_lang");
             if (savedLang && TRANSLATIONS[savedLang]) {
                 setLanguage(savedLang);
             } else {
                 const navLang = (navigator.language || navigator.userLanguage || "en").toLowerCase();
-                if (navLang.startsWith("ar")) {
-                    setLanguage("ar");
-                } else if (navLang.startsWith("so")) {
-                    setLanguage("so");
-                } else {
-                    setLanguage("so"); // Default to Somali
-                }
+                if (navLang.startsWith("ar")) setLanguage("ar");
+                else if (navLang.startsWith("so")) setLanguage("so");
+                else setLanguage("so");
             }
             loadJobs();
         });
@@ -1572,18 +1646,13 @@
             currentLang = lang;
             localStorage.setItem("preferred_lang", lang);
 
-            // Update Active Buttons
             document.querySelectorAll(".lang-btn").forEach(btn => btn.classList.remove("active"));
             if (lang === "so") document.getElementById("btnLangSo")?.classList.add("active");
             if (lang === "en") document.getElementById("btnLangEn")?.classList.add("active");
             if (lang === "ar") document.getElementById("btnLangAr")?.classList.add("active");
 
-            // RTL for Arabic
-            if (lang === "ar") {
-                document.documentElement.setAttribute("dir", "rtl");
-            } else {
-                document.documentElement.setAttribute("dir", "ltr");
-            }
+            if (lang === "ar") document.documentElement.setAttribute("dir", "rtl");
+            else document.documentElement.setAttribute("dir", "ltr");
 
             const t = TRANSLATIONS[lang];
             const safeSet = (id, val, isHtml = false) => {
@@ -1597,24 +1666,27 @@
             safeSet("txtAnnouncement", t.announcement);
             safeSet("txtBrandTitle", t.brandTitle);
             safeSet("txtBrandSub", t.brandSub);
-            safeSet("navLinkCourses", t.navCourses);
+            safeSet("navLinkAssess", t.navAssess);
             safeSet("navLinkJobs", t.navJobs);
             safeSet("navLinkFounder", t.navFounder);
             safeSet("btnDownloadResume", t.btnResume);
             safeSet("btnNavChat", t.btnChat);
             safeSet("badgeLive", t.heroBadgeLive);
             safeSet("badgeNoLogin", t.heroBadgeFree);
-            safeSet("badgeGlobal", t.heroBadgeGlobal);
+            safeSet("badgeCanada", t.heroBadgeCanada);
             safeSet("heroHeadline", t.heroHeadline, true);
             safeSet("heroSubtitle", t.heroSubtitle);
+            safeSet("btnHeroAssess", t.btnHeroAssess);
             safeSet("btnHeroJobs", t.btnHeroJobs);
-            safeSet("btnHeroCourses", t.btnHeroCourses);
-            safeSet("statStudents", t.statStudents);
-            safeSet("statMatch", t.statMatch);
-            safeSet("statIom", t.statIom);
-            safeSet("statFree", t.statFree);
-            safeSet("coursesTitle", t.coursesTitle);
-            safeSet("coursesSubtitle", t.coursesSubtitle);
+            safeSet("g1Title", t.g1Title);
+            safeSet("g1Desc", t.g1Desc);
+            safeSet("g2Title", t.g2Title);
+            safeSet("g2Desc", t.g2Desc);
+            safeSet("g3Title", t.g3Title);
+            safeSet("g3Desc", t.g3Desc);
+            safeSet("assessHeading", t.assessHeading);
+            safeSet("assessSubheading", t.assessSubheading);
+            safeSet("assessBtnText", t.btnRunAssess);
             safeSet("jobsSectionTitle", t.jobsSectionTitle);
             safeSet("jobsSectionSub", t.jobsSectionSub);
             safeSet("lblSearchKeyword", t.lblSearchKeyword);
@@ -1628,6 +1700,99 @@
 
             const input = document.getElementById("chatInput");
             if (input) input.placeholder = t.chatInputPlaceholder;
+        }
+
+        // Assessment UI Tab Switching
+        function switchAssessTab(tab) {
+            document.querySelectorAll(".assess-tab-btn").forEach(b => b.classList.remove("active"));
+            document.querySelectorAll(".assess-content-pane").forEach(p => p.classList.remove("active"));
+
+            if (tab === 'questions') {
+                document.getElementById("tabBtnQuestions").classList.add("active");
+                document.getElementById("paneQuestions").classList.add("active");
+            } else {
+                document.getElementById("tabBtnUpload").classList.add("active");
+                document.getElementById("paneUpload").classList.add("active");
+            }
+        }
+
+        function toggleSkillPill(pill) {
+            pill.classList.toggle("selected");
+        }
+
+        function handleFileSelected(event) {
+            const file = event.target.files[0];
+            if (file) {
+                document.getElementById("fileUploadStatus").innerText = `✓ File Selected: ${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
+                // Pre-fill text with file name indication
+                document.getElementById("resumePasteText").value = `[Uploaded Resume File: ${file.name}]`;
+            }
+        }
+
+        // Assessment Execution
+        async function executeAssessment() {
+            const btn = document.querySelector(".btn-run-assess");
+            const btnText = document.getElementById("assessBtnText");
+            const btnIcon = document.getElementById("assessBtnIcon");
+
+            btn.disabled = true;
+            btnIcon.innerHTML = '<div class="spinner"></div>';
+            btnText.innerText = "Falanqaynayaa...";
+
+            // Collect selected skills
+            const selectedSkills = [];
+            document.querySelectorAll(".skill-toggle-pill.selected").forEach(p => {
+                selectedSkills.push(p.innerText.trim());
+            });
+
+            const field = document.getElementById("assessField").value;
+            const experience = document.getElementById("assessExperience").value;
+            const location = document.getElementById("assessLocation").value;
+            const name = document.getElementById("assessName").value.trim();
+            const resumeText = document.getElementById("resumePasteText").value.trim();
+
+            try {
+                const res = await fetch("/api/assess", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        field: field,
+                        skills: selectedSkills,
+                        experience: experience,
+                        location: location,
+                        name: name,
+                        resume_text: resumeText
+                    })
+                });
+                const data = await res.json();
+
+                if (data.status === "success") {
+                    userAssessedProfile = {
+                        name: name || "Candidate",
+                        field: field,
+                        skills: selectedSkills,
+                        location: location
+                    };
+
+                    // Show assessment results
+                    const resultBox = document.getElementById("assessResultBox");
+                    resultBox.classList.add("show");
+                    document.getElementById("resScoreBadge").innerText = `Match Readiness: ${data.readiness_score || '95%'}`;
+                    document.getElementById("resAdviceText").innerText = data.advice;
+
+                    // Automatically update Search inputs and trigger search
+                    document.getElementById("searchTerm").value = data.recommended_keyword || "computer instructor";
+                    document.getElementById("searchLocation").value = location;
+                    triggerSearch();
+                }
+            } catch (err) {
+                console.error(err);
+                alert("Cillad ayaa dhacday intii falanqaynta socotay: " + err.message);
+            } finally {
+                btn.disabled = false;
+                btnIcon.innerText = "✨";
+                btnText.innerText = TRANSLATIONS[currentLang]?.btnRunAssess || "Falanqee Xogtayda & Ii Hel Shaqooyinka";
+            }
         }
 
         // Job Loader
@@ -1688,10 +1853,10 @@
 
                     <div class="ai-intel-box">
                         <div class="ai-intel-title">💡 AI Match Insight:</div>
-                        <div class="ai-intel-text">${escapeHtml(job.match_reason || 'Directly aligns with your IT instruction, Google IT certifications, and academic background.')}</div>
+                        <div class="ai-intel-text">${escapeHtml(job.match_reason || 'Directly aligns with your technical background and demonstrated track record.')}</div>
                         
                         <div class="ai-intel-title" style="margin-top:10px; color:#0f766e;">🎯 Pitch Strategy:</div>
-                        <div class="ai-intel-text">${escapeHtml(job.key_pitch || 'Highlight your UN/IOM Commendation, adult digital literacy coaching, and systems administration skills.')}</div>
+                        <div class="ai-intel-text">${escapeHtml(job.key_pitch || 'Highlight your quick problem-solving, clear communication, and dedication to excellence.')}</div>
                     </div>
 
                     <div class="cover-letter-wrapper">
@@ -1790,7 +1955,8 @@
                         term: term,
                         location: location,
                         limit: limit,
-                        remote: isRemote
+                        remote: isRemote,
+                        user_profile: userAssessedProfile
                     })
                 });
                 const data = await res.json();
@@ -1817,16 +1983,6 @@
             }
         }
 
-        function askChatbot(promptText) {
-            toggleChat();
-            sendQuickPrompt(promptText);
-        }
-
-        function sendQuickPrompt(promptText) {
-            document.getElementById("chatInput").value = promptText;
-            sendChatMessage();
-        }
-
         function handleChatKey(event) {
             if (event.key === "Enter") {
                 sendChatMessage();
@@ -1840,7 +1996,6 @@
 
             const chatBody = document.getElementById("chatBody");
 
-            // User Message
             const userDiv = document.createElement("div");
             userDiv.className = "chat-msg user";
             userDiv.innerText = msg;
@@ -1849,7 +2004,6 @@
             input.value = "";
             chatBody.scrollTop = chatBody.scrollHeight;
 
-            // Typing Indicator
             const typingDiv = document.createElement("div");
             typingDiv.className = "chat-msg bot";
             typingDiv.id = "typingIndicator";
