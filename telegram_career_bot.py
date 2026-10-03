@@ -14,7 +14,7 @@ try:
     from portal_app import get_career_ai_response, get_curated_somali_it_jobs, is_spam_or_invalid
 except ImportError:
     def get_career_ai_response(msg):
-        return "Salamaat! Waxaan ahay Kaaliyaha Baahiye AI & Shaqo Raadiyaha Dhalinyarada Soomaaliyeed ee IT-ga. Waxaan kaa caawin karaa shaqooyinka, CV ATS ah, iyo buugaagta Isbar."
+        return "Salamaat! Waxaan ahay Kaaliyaha Baahiye AI & Shaqo Raadiyaha Dhalinyarada Soomaaliyeed. Waxaan kaa caawin karaa dhammaan fursadaha shaqo, gaar ahaan IT-ga, CV ATS ah, iyo buugaagta Isbar."
     def get_curated_somali_it_jobs():
         return []
     def is_spam_or_invalid(msg):
@@ -22,9 +22,12 @@ except ImportError:
 
 BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN") or "8584246460:AAG_WjyrasBDU1mf959bh_TlzW1pIv1o48c"
 API_URL = f"https://api.telegram.org/bot{BOT_TOKEN}"
-WEB_APP_URL = "https://auto-jobs-applier-aih-awk-live.vercel.app"
+PRIMARY_DOMAIN = "https://isbar-ai.com"
+FALLBACK_DOMAIN = "https://auto-jobs-applier-aih-awk-live.vercel.app"
+WEB_APP_URL = PRIMARY_DOMAIN
 GITHUB_REPO_URL = "https://github.com/Faratoon/Shaqo-Raadiyahaaga-Gaarka-Ah"
-SHARE_TEXT = urllib.parse.quote("🔥 Fursadaha Shaqo ee IT-ga Soomaaliya, East Africa & Remote! Ka faa'iideyso @Baahiyebot & Mini App-ka 🚀")
+SUBSTACK_URL = "https://somalilibrary.substack.com"
+SHARE_TEXT = urllib.parse.quote("🔥 Fursadaha Shaqo & Akadeemiyada Isbar (isbar-ai.com)! Ka faa'iideyso @Baahiyebot & Mini App-ka 🚀")
 
 def configure_bot_menu_button():
     """Sets the Telegram Chat Menu Button to open the Mini App natively."""
@@ -32,7 +35,7 @@ def configure_bot_menu_button():
     payload = {
         "menu_button": {
             "type": "web_app",
-            "text": "📱 Mini App",
+            "text": "📱 isbar-ai.com",
             "web_app": {"url": WEB_APP_URL}
         }
     }
@@ -79,35 +82,47 @@ def answer_callback_query(callback_query_id, text=None):
 def get_main_keyboard():
     return {
         "inline_keyboard": [
+            # Row 1: Full-width Web App button
             [
-                {"text": "🚀 Fur Mini App (Full App)", "web_app": {"url": WEB_APP_URL}}
+                {"text": "🚀 Fur Web App-ka (isbar-ai.com)", "web_app": {"url": WEB_APP_URL}}
             ],
+            # Row 2: 2-column Career & CV Actions
             [
-                {"text": "💼 Shaqooyinka IT-ga 🔥", "callback_data": "menu_jobs"},
-                {"text": "📄 Dhis CV ATS ah", "callback_data": "menu_cv"}
+                {"text": "💼 Fursadaha Shaqada 🔥", "callback_data": "menu_jobs"},
+                {"text": "⚡ Dhis CV (ATS)", "callback_data": "menu_cv"}
             ],
+            # Row 3: 2-column Learning & Mentorship
             [
-                {"text": "📚 Buugaagta & Koorsooyinka", "callback_data": "menu_academy"},
-                {"text": "📅 Ballan Qabso (1-on-1)", "callback_data": "menu_booking"}
+                {"text": "📚 Buugaagta Isbar", "callback_data": "menu_academy"},
+                {"text": "📅 Ballan Live ah", "callback_data": "menu_booking"}
             ],
+            # Row 4: 2-column Public Info & Community
             [
-                {"text": "📢 Baahin / Share", "callback_data": "menu_broadcast"},
-                {"text": "⭐ GitHub (Open Source)", "url": GITHUB_REPO_URL}
+                {"text": "📬 Xidhiidhka & Substack", "callback_data": "menu_contact"},
+                {"text": "📢 Baahi / Share", "callback_data": "menu_broadcast"}
+            ],
+            # Row 5: Open Source GitHub Showcase
+            [
+                {"text": "⭐ GitHub (100% Open Source)", "url": GITHUB_REPO_URL}
             ]
         ]
     }
 
 def handle_start(chat_id, first_name):
-    welcome_text = f"""🦅 <b>Shaqo Raadiyaha Dhalinyarada Soomaaliyeed (@Baahiyebot)</b>
+    welcome_text = f"""🦅 <b>Shaqo Raadiyaha & Isbar Academy (@Baahiyebot)</b>
 
-Ku soo dhowow <b>{first_name}</b>! Madal u gaar ah fursadaha shaqo ee IT-ga (Soomaaliya, East Africa & Remote), dhisidda CV ATS ah, iyo AI-ga.
+Ku soo dhowow <b>{first_name}</b>! Madal u heellan shaqooyinka oo dhan (Customer Support, Management, Administration, Tech & Sales), iyadoo ahmiyad gaar ah iyo showcase siinaysa fursadaha farsamada & IT-ga, dhisidda CV ATS ah, iyo buugaagta casriga ah ee Isbar.
 
-<i>Dooro adeegga aad u baahan tahay:</i>"""
+<i>Dooro adeegga aad u baahan tahay hoos:</i>"""
     send_message(chat_id, welcome_text, get_main_keyboard())
 
 def handle_jobs(chat_id):
     jobs = get_curated_somali_it_jobs()
-    text = "💼 <b>Fursadaha Shaqo ee IT-ga (Ugu Dambeeyay):</b>\n\n"
+    text = """💼 <b>Fursadaha Shaqada (All Careers & IT Showcase):</b>
+
+Nidaamku wuxuu kuu raadinayaa dhammaan noocyada shaqooyinka (IT Support, Software, Data, Customer Care, Management) ee Soomaaliya (Muqdisho & Hargeysa), Bariga Afrika (Kenya, Itoobiya), Shaqooyinka Guriga (Global Remote), iyo Kanada.
+
+<b>Fursadaha Ugu Dambeeyay ee Tooska ah:</b>\n\n"""
     
     for idx, j in enumerate(jobs[:4], 1):
         text += f"<b>{idx}. {j['title']}</b>\n"
@@ -116,7 +131,11 @@ def handle_jobs(chat_id):
 
     markup = {
         "inline_keyboard": [
-            [{"text": "📱 Baadh Dhammaan Shaqooyinka (Mini App)", "web_app": {"url": f"{WEB_APP_URL}#jobsSection"}}],
+            [{"text": "📱 Baadh Dhammaan Shaqooyinka (Web App)", "web_app": {"url": f"{WEB_APP_URL}#jobsSection"}}],
+            [
+                {"text": "🇸🇴 Soomaaliya & Bariga Afrika", "web_app": {"url": f"{WEB_APP_URL}#jobsSection"}},
+                {"text": "🌐 Remote & Canada", "web_app": {"url": f"{WEB_APP_URL}#jobsSection"}}
+            ],
             [{"text": "📤 Share garee Shaqooyinka", "url": f"https://t.me/share/url?url=https://t.me/Baahiyebot&text={SHARE_TEXT}"}],
             [{"text": "🔙 Ku noqo Menu-ga", "callback_data": "menu_main"}]
         ]
@@ -124,17 +143,17 @@ def handle_jobs(chat_id):
     send_message(chat_id, text, markup)
 
 def handle_cv(chat_id):
-    text = """📄 <b>Diyaarinta CV ATS ah & Wareysiga Shaqada:</b>
+    text = """⚡ <b>Diyaarinta CV ATS ah & Diyaar-garowga Wareysiga:</b>
 
-• <b>ATS Resume:</b> Qaab nadiif ah oo shirkadaha caalamiga ah iyo kuwa maxalliga ah u aqbalaan si toos ah.
-• <b>Cover Letter:</b> Warqad codsi oo ku saleysan shaqada aad codsaneyso.
-• <b>STAR Method:</b> Qaabka ugu fiican ee looga jawaabo su'aalaha wareysiga (Situation, Task, Action, Result).
+• 📄 <b>ATS Resume (1-Page):</b> Qaab nadiif ah oo shirkadaha caalamiga ah iyo kuwa maxalliga ah u aqbalaan si toos ah iyadoo nidaamyada casriga ahi aysan reebayn.
+• 📝 <b>Cover Letter:</b> Warqad codsi oo ku habboon doorka aad codsanayso.
+• 🎯 <b>STAR Method:</b> Qaabka ugu guulaha badan ee looga jawaabo wareysiyada (Situation, Task, Action, Result).
 
-<i>Ka soo degso resume-ga rasmiga ah ama AI-ga ku falanqee CV-gaaga:</i>"""
+<i>Ka soo degso resume-ga rasmiga ah ama AI-ga ku falanqee xirfadahaaga:</i>"""
 
     markup = {
         "inline_keyboard": [
-            [{"text": "⚡ Falanqee CV-gaaga (Mini App)", "web_app": {"url": f"{WEB_APP_URL}#assessSection"}}],
+            [{"text": "⚡ Dhis & Falanqee CV-gaaga (Web App)", "web_app": {"url": f"{WEB_APP_URL}#assessSection"}}],
             [{"text": "📄 Soo Degso Resume Template (PDF)", "url": f"{WEB_APP_URL}/download/resume"}],
             [{"text": "🔙 Ku noqo Menu-ga", "callback_data": "menu_main"}]
         ]
@@ -145,8 +164,10 @@ def handle_academy(chat_id):
     text = """📚 <b>Akadeemiyada Isbar & Koorsooyinka Bilaashka ah:</b>
 
 📖 <b>Buugaagta Isbar (Af-Soomaali):</b>
-• 💻 Isbar Computer ($5) &bull; 👨‍💻 Isbar Programming ($5)
-• 🧠 Isbar AI Basic ($7) &bull; 🤖 Isbar ChatGPT (🎁 <b>Bilaash</b>)
+• 💻 <b>ISBAR COMPUTER</b> ($5) — 89 Pages (Windows 11, Mac OS, Office, Photoshop)
+• 👨‍💻 <b>ISBAR PROGRAMMING</b> ($5) — 177 Pages (Web, Python, Database, IDEs)
+• 🧠 <b>ISBAR AI BASIC</b> ($7) — 189 Pages (Taariikhda AI, Shaqooyinka, Ganacsiga)
+• 🤖 <b>ISBAR ChatGPT Prompts</b> — 🎁 <b>Bilaash</b> (87 Pages)
 
 🎓 <b>Koorsooyinka AI Automation (100% Bilaash):</b>
 • 🎥 AI Video Editing &bull; 📱 WhatsApp & Telegram Business Bots
@@ -154,8 +175,11 @@ def handle_academy(chat_id):
 
     markup = {
         "inline_keyboard": [
-            [{"text": "📱 Ka Degso Buugaagta & Koorsooyinka", "web_app": {"url": f"{WEB_APP_URL}#coursesHubSection"}}],
-            [{"text": "💬 Dalbo Buug (WhatsApp)", "url": "https://wa.me/15873064137?text=Salamaat%20Mohamed,%20waxaan%20rabaa%20buug%20Isbar"}],
+            [{"text": "📱 Gal Akadeemiyada Isbar (Web App)", "web_app": {"url": f"{WEB_APP_URL}#coursesHubSection"}}],
+            [
+                {"text": "💬 Dalbo Buug (WhatsApp)", "url": "https://wa.me/15873064137?text=Salamaat%20Mohamed,%20waxaan%20rabaa%20buug%20Isbar"},
+                {"text": "🎁 ChatGPT Prompts (Free)", "web_app": {"url": f"{WEB_APP_URL}#coursesHubSection"}}
+            ],
             [{"text": "🔙 Ku noqo Menu-ga", "callback_data": "menu_main"}]
         ]
     }
@@ -164,16 +188,50 @@ def handle_academy(chat_id):
 def handle_booking(chat_id):
     text = """📅 <b>Ballan Live ah & Mentorship (1-on-1):</b>
 
-Kulan toos ah (Google Meet / Zoom) oo aad la yeelanayso <b>Mohamed Faratoon</b>:
+Kulan toos ah oo online ah (Google Meet / Zoom) oo aad la yeelanayso <b>Mohamed Faratoon</b>:
+• ✅ La-talin ku saabsan jihadaada shaqo iyo xirfadeed
 • ✅ Dib-u-eegista CV-gaaga & Tababarka Wareysiga
-• ✅ Hagidda helitaanka shaqooyinka IT-ga & Koorsooyinka AI
+• ✅ Hagidda helitaanka shaqooyinka & Koorsooyinka AI Automation
 
 📍 <b>Edmonton, AB, Canada 🇨🇦 & Online Global</b>"""
 
     markup = {
         "inline_keyboard": [
-            [{"text": "📱 Qabso Ballan (Mini App)", "web_app": {"url": f"{WEB_APP_URL}#bookingSection"}}],
+            [{"text": "📅 Qabso Ballan Live ah (Web App)", "web_app": {"url": f"{WEB_APP_URL}#bookingSection"}}],
             [{"text": "💬 WhatsApp Toos ah (+1 587-306-4137)", "url": "https://wa.me/15873064137?text=Salamaat%20Mohamed,%20waxaan%20rabaa%20ballan%20live%20ah"}],
+            [{"text": "🔙 Ku noqo Menu-ga", "callback_data": "menu_main"}]
+        ]
+    }
+    send_message(chat_id, text, markup)
+
+def handle_contact(chat_id):
+    text = """📬 <b>Xidhiidhka & Xogta Dadweynaha (Public Contact & Info):</b>
+
+Kala xidhiidh aasaasaha iyo kooxda nidaamka siyaabaha rasmiga ah:
+
+• 📬 <b>Somalilibrary Substack (Warsidaha Rasmiga ah):</b>
+  <a href='https://somalilibrary.substack.com'>somalilibrary.substack.com</a>
+  <i>(Ku biir kumanaan arday oo todobaad kasta emailkooda ugu hela shaqooyinka, buugaagta Isbar & AI-ga)</i>
+
+• 📱 <b>WhatsApp Toos ah:</b> <a href='https://wa.me/15873064137'>+1 (587) 306-4137</a>
+• 📧 <b>Email:</b> Suxufi34@gmail.com
+• 🔗 <b>LinkedIn:</b> <a href='https://www.linkedin.com/in/mfaratoon'>linkedin.com/in/mfaratoon</a>
+• 📺 <b>YouTube Portfolio:</b> <a href='https://www.youtube.com/User/MrFaratoon'>youtube.com/User/MrFaratoon</a>
+• 🌐 <b>Website:</b> <a href='https://isbar-ai.com'>https://isbar-ai.com</a>
+
+📍 <b>Mohamed Yasin Mohamoud (Faratoon)</b> &bull; Edmonton, AB, Canada 🇨🇦"""
+
+    markup = {
+        "inline_keyboard": [
+            [{"text": "📬 Ku Biir Substack-ka (Bilaash)", "url": SUBSTACK_URL}],
+            [
+                {"text": "📱 WhatsApp Toos ah", "url": "https://wa.me/15873064137?text=Salamaat%20Mohamed,%20waxaan%20doonayaa%20macluumaad"},
+                {"text": "🔗 LinkedIn", "url": "https://www.linkedin.com/in/mfaratoon"}
+            ],
+            [
+                {"text": "📺 YouTube", "url": "https://www.youtube.com/User/MrFaratoon"},
+                {"text": "🌐 isbar-ai.com", "url": PRIMARY_DOMAIN}
+            ],
             [{"text": "🔙 Ku noqo Menu-ga", "callback_data": "menu_main"}]
         ]
     }
@@ -182,7 +240,7 @@ Kulan toos ah (Google Meet / Zoom) oo aad la yeelanayso <b>Mohamed Faratoon</b>:
 def handle_broadcast(chat_id):
     text = """📢 <b>Baahinta Fursadaha (Channels & Groups):</b>
 
-Waxaad shaqooyinkan iyo koorsooyinka bilaashka ah la wadaagi kartaa asxaabtaada ama channel-kaaga Telegram:"""
+Waxaad shaqooyinkan, buugaagta, iyo koorsooyinka bilaashka ah la wadaagi kartaa asxaabtaada ama channel-kaaga Telegram:"""
 
     markup = {
         "inline_keyboard": [
@@ -212,6 +270,8 @@ def process_callback_query(callback_query):
         handle_academy(chat_id)
     elif data == "menu_booking":
         handle_booking(chat_id)
+    elif data == "menu_contact":
+        handle_contact(chat_id)
     elif data == "menu_broadcast":
         handle_broadcast(chat_id)
 
@@ -231,12 +291,14 @@ def process_message(message):
         handle_start(chat_id, first_name)
     elif text_lower in ["/jobs", "shaqo", "shaqooyin", "jobs"]:
         handle_jobs(chat_id)
-    elif text_lower in ["/cv", "resume", "wareysi", "cv"]:
+    elif text_lower in ["/cv", "resume", "wareysi"]:
         handle_cv(chat_id)
-    elif text_lower in ["/academy", "/books", "/courses", "buug", "koorso"]:
+    elif text_lower in ["/academy", "/books", "/courses", "buug", "koorso", "isbar"]:
         handle_academy(chat_id)
     elif text_lower in ["/booking", "ballan", "mentorship"]:
         handle_booking(chat_id)
+    elif text_lower in ["/contact", "/substack", "contact", "contacts", "xiriir", "xidhiidh", "substack"]:
+        handle_contact(chat_id)
     elif text_lower in ["/broadcast", "/share", "baahin"]:
         handle_broadcast(chat_id)
     elif text_lower in ["/github", "github", "opensource"]:
@@ -247,9 +309,9 @@ def process_message(message):
             ]
         })
     elif text_lower in ["/app", "miniapp", "app"]:
-        send_message(chat_id, "🚀 <b>Guji badhanka hoose si aad u furto Mini App-ka:</b>", {
+        send_message(chat_id, "🚀 <b>Guji badhanka hoose si aad u furto Web App-ka (isbar-ai.com):</b>", {
             "inline_keyboard": [
-                [{"text": "📱 Fur Mini App-ka", "web_app": {"url": WEB_APP_URL}}],
+                [{"text": "📱 Fur isbar-ai.com", "web_app": {"url": WEB_APP_URL}}],
                 [{"text": "🔙 Ku noqo Menu-ga", "callback_data": "menu_main"}]
             ]
         })
@@ -269,8 +331,8 @@ def process_message(message):
 
         markup = {
             "inline_keyboard": [
-                [{"text": "📱 Fur Mini App", "web_app": {"url": WEB_APP_URL}}],
-                [{"text": "💼 Shaqooyinka IT-ga", "callback_data": "menu_jobs"}, {"text": "🔙 Menu-ga", "callback_data": "menu_main"}]
+                [{"text": "📱 Fur isbar-ai.com", "web_app": {"url": WEB_APP_URL}}],
+                [{"text": "💼 Fursadaha Shaqada", "callback_data": "menu_jobs"}, {"text": "🔙 Menu-ga", "callback_data": "menu_main"}]
             ]
         }
         send_message(chat_id, html_reply, markup, parse_mode="HTML")
@@ -278,7 +340,8 @@ def process_message(message):
 def run_bot_polling():
     print("\n=======================================================", flush=True)
     print("   Shaqo Raadiyaha Dhalinyarada Soomaaliyeed Telegram Bot", flush=True)
-    print("   Bot: @Baahiyebot (Clean & Minimalist)", flush=True)
+    print("   Bot: @Baahiyebot (Clean & Modernized)", flush=True)
+    print(f"   Domain: {PRIMARY_DOMAIN}", flush=True)
     print("=======================================================\n", flush=True)
 
     configure_bot_menu_button()
