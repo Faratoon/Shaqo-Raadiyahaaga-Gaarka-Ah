@@ -226,6 +226,29 @@
         }
         .btn-github-nav:hover { transform: translateY(-1px); background: #0f172a; }
 
+        .btn-resume {
+            background: linear-gradient(135deg, #059669, #10b981);
+            color: #ffffff !important;
+            text-decoration: none;
+            padding: 7px 13px;
+            border-radius: 10px;
+            font-size: 12.5px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.35);
+            transition: all 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            white-space: nowrap;
+        }
+        .btn-resume:hover {
+            transform: translateY(-1px);
+            background: linear-gradient(135deg, #047857, #059669);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.5);
+            color: #ffffff !important;
+        }
+
         .opensource-showcase-card {
             background: #ffffff;
             border: 1px solid var(--border);
@@ -1412,31 +1435,244 @@
             text-decoration: underline;
         }
 
-        /* Floating Chatbot */
+        /* ========================================================
+           UNIFIED FLOATING CHATBOT & 5-SEC POPUP TEASER
+           ======================================================== */
+        .chat-teaser-bubble {
+            position: fixed;
+            bottom: 92px;
+            right: 24px;
+            width: 320px;
+            max-width: calc(100vw - 36px);
+            background: #ffffff;
+            border-radius: 18px;
+            box-shadow: 0 16px 40px rgba(15, 23, 42, 0.22), 0 0 0 1px rgba(2, 132, 199, 0.18);
+            padding: 15px 16px;
+            z-index: 9999;
+            display: none;
+            opacity: 0;
+            transform: translateY(16px) scale(0.95);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .chat-teaser-bubble.show {
+            display: block;
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            animation: popInBounce 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        @keyframes popInBounce {
+            0% { opacity: 0; transform: translateY(20px) scale(0.9); }
+            70% { opacity: 1; transform: translateY(-4px) scale(1.02); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .chat-teaser-close {
+            position: absolute;
+            top: 8px;
+            right: 10px;
+            background: transparent;
+            border: none;
+            color: #94a3b8;
+            font-size: 19px;
+            cursor: pointer;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.2s;
+        }
+        .chat-teaser-close:hover {
+            background: #f1f5f9;
+            color: #0f172a;
+        }
+        .chat-teaser-content {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        .chat-teaser-sticker {
+            position: relative;
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #e0f2fe, #bae6fd);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.15);
+            border: 1px solid #7dd3fc;
+        }
+        .bot-sticker-anim {
+            display: inline-block;
+            animation: botWave 2.5s infinite ease-in-out;
+            transform-origin: 70% 70%;
+        }
+        @keyframes botWave {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            20% { transform: rotate(-14deg) scale(1.1); }
+            40% { transform: rotate(10deg) scale(1.1); }
+            60% { transform: rotate(-4deg) scale(1.05); }
+            80% { transform: rotate(4deg) scale(1); }
+        }
+        .sticker-pulse-dot {
+            position: absolute;
+            bottom: -2px;
+            right: -2px;
+            width: 11px;
+            height: 11px;
+            background: #10b981;
+            border: 2px solid #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #10b981;
+        }
+        .chat-teaser-text {
+            flex: 1;
+            padding-right: 10px;
+        }
+        .chat-teaser-title {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            margin-bottom: 4px;
+        }
+        .chat-teaser-title span:first-child {
+            font-size: 13.5px;
+            font-weight: 800;
+            color: #0f172a;
+        }
+        .chat-teaser-badge {
+            font-size: 10px;
+            font-weight: 700;
+            color: #059669;
+            background: #ecfdf5;
+            padding: 2px 6px;
+            border-radius: 6px;
+            border: 1px solid #a7f3d0;
+        }
+        .chat-teaser-text p {
+            font-size: 12.5px;
+            color: #475569;
+            margin: 0 0 10px 0;
+            line-height: 1.45;
+        }
+        .chat-teaser-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        .btn-teaser-open {
+            background: linear-gradient(135deg, #0284c7, #38bdf8);
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(2, 132, 199, 0.3);
+            transition: all 0.2s;
+        }
+        .btn-teaser-open:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.45);
+        }
+        .btn-teaser-dismiss {
+            background: transparent;
+            border: 1px solid #cbd5e1;
+            color: #64748b;
+            padding: 6px 10px;
+            border-radius: 8px;
+            font-size: 11.5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-teaser-dismiss:hover {
+            background: #f8fafc;
+            color: #334155;
+        }
+        .chat-teaser-pointer {
+            position: absolute;
+            bottom: -7px;
+            right: 36px;
+            width: 14px;
+            height: 14px;
+            background: #ffffff;
+            transform: rotate(45deg);
+            border-bottom: 1px solid rgba(2, 132, 199, 0.18);
+            border-right: 1px solid rgba(2, 132, 199, 0.18);
+            box-shadow: 3px 3px 6px rgba(15, 23, 42, 0.05);
+        }
+
+        /* Floating Chatbot Launcher */
         .chat-widget-btn {
             position: fixed;
             bottom: 24px;
             right: 24px;
-            background: linear-gradient(135deg, #0284c7, #38bdf8);
+            background: linear-gradient(135deg, #0b132b, #1e3a8a);
             color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 30px;
+            border: 1.5px solid rgba(56, 189, 248, 0.4);
+            padding: 8px 18px 8px 10px;
+            border-radius: 36px;
             font-weight: 800;
-            font-size: 14px;
+            font-size: 13.5px;
             cursor: pointer;
-            box-shadow: 0 8px 24px rgba(2, 132, 199, 0.45);
+            box-shadow: 0 10px 30px rgba(11, 19, 43, 0.4), 0 0 15px rgba(56, 189, 248, 0.25);
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             z-index: 10000;
-            transition: all 0.2s ease;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .chat-widget-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 28px rgba(2, 132, 199, 0.55);
+            transform: translateY(-2px) scale(1.03);
+            border-color: rgba(56, 189, 248, 0.8);
+            box-shadow: 0 14px 36px rgba(11, 19, 43, 0.5), 0 0 22px rgba(56, 189, 248, 0.45);
+        }
+        .chat-btn-avatar {
+            position: relative;
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #0284c7, #38bdf8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+        }
+        .chat-btn-sticker {
+            display: inline-block;
+            animation: botPulse 2.5s infinite ease-in-out;
+        }
+        @keyframes botPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15) rotate(6deg); }
+        }
+        .chat-btn-labels {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            line-height: 1.2;
+        }
+        .chat-btn-name {
+            font-size: 13px;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: -0.2px;
+        }
+        .chat-btn-sub {
+            font-size: 10.5px;
+            font-weight: 700;
+            color: #38bdf8;
         }
         .chat-badge-pulse {
+            position: absolute;
+            bottom: -1px;
+            right: -1px;
             width: 10px;
             height: 10px;
             background: #10b981;
@@ -1658,19 +1894,23 @@
 
         /* Mobile Styles */
         @media (max-width: 768px) {
-            .navbar { padding: 12px 16px; }
+            .navbar { padding: 10px 14px; }
             .nav-links { display: none; }
+            .nav-actions { gap: 6px; flex-wrap: nowrap; }
+            .btn-github-nav, .btn-telegram-nav, .btn-resume { padding: 6px 10px; font-size: 11.5px; border-radius: 8px; }
             .hero-banner { padding: 28px 20px; }
             .hero-banner h2 { font-size: 24px; }
             .unified-hub-card { padding: 18px; }
             .booking-section-wrapper { padding: 20px; }
             .booking-grid { grid-template-columns: 1fr; }
             .form-row-2 { grid-template-columns: 1fr; }
-            .chat-window { right: 12px; bottom: 80px; width: calc(100vw - 24px); height: 480px; }
-            .chat-widget-btn { bottom: 16px; right: 16px; padding: 10px 16px; font-size: 13px; }
+            .chat-window { right: 12px; bottom: 82px; width: calc(100vw - 24px); height: 480px; }
+            .chat-widget-btn { bottom: 16px; right: 16px; padding: 7px 14px 7px 10px; font-size: 12.5px; }
+            .chat-teaser-bubble { right: 12px; bottom: 76px; width: calc(100vw - 24px); }
             .footer-content { grid-template-columns: 1fr 1fr; }
         }
         @media (max-width: 480px) {
+            .btn-github-nav, .btn-telegram-nav, .btn-resume { padding: 5px 8px; font-size: 11px; }
             .footer-content { grid-template-columns: 1fr; }
         }
 
@@ -1726,7 +1966,6 @@
                 <a href="https://github.com/Faratoon/Shaqo-Raadiyahaaga-Gaarka-Ah" target="_blank" class="btn-github-nav" title="GitHub Open Source Repository">⭐ GitHub</a>
                 <a href="https://t.me/Baahiyebot" target="_blank" class="btn-telegram-nav" title="Telegram Mini App & Bot">📱 Mini App</a>
                 <a href="/download/resume" class="btn-resume" target="_blank" id="btnDownloadResume">📄 CV (PDF)</a>
-                <button class="btn-chat-trigger-nav" onclick="toggleChat()" id="btnNavChat">💬 Kaaliyaha AI</button>
             </div>
         </div>
     </header>
@@ -2563,17 +2802,51 @@ python portal_app.py</code></pre>
     </div>
 
     <!-- ========================================================
-         8. FLOATING CHATBOT (30 MSG LIMIT, ONLY TEXT)
+         8. UNIFIED AI CHATBOT & 5-SEC POPUP TEASER
          ======================================================== -->
-    <button class="chat-widget-btn" onclick="toggleChat()" id="btnFloatingChat">
-        <span class="chat-badge-pulse"></span>
-        <span>💬 Kaaliyaha AI (30 Msg)</span>
+    <!-- 5-Second Teaser Card -->
+    <div class="chat-teaser-bubble" id="chatTeaserBubble">
+        <button class="chat-teaser-close" onclick="dismissChatTeaser()" title="Xidh">&times;</button>
+        <div class="chat-teaser-content">
+            <div class="chat-teaser-sticker">
+                <span class="bot-sticker-anim">🤖</span>
+                <span class="sticker-pulse-dot"></span>
+            </div>
+            <div class="chat-teaser-text">
+                <div class="chat-teaser-title">
+                    <span>Kaaliyaha AI</span>
+                    <span class="chat-teaser-badge">🟢 Online</span>
+                </div>
+                <p>
+                    👋 <b>Salamaat!</b> Ma u baahan tahay shaqo IT ah ama diyaarinta CV ATS ah?
+                </p>
+                <div class="chat-teaser-actions">
+                    <button class="btn-teaser-open" onclick="openChatFromTeaser()">💬 I caawi hadda</button>
+                    <button class="btn-teaser-dismiss" onclick="dismissChatTeaser()">Mar kale</button>
+                </div>
+            </div>
+        </div>
+        <div class="chat-teaser-pointer"></div>
+    </div>
+
+    <!-- Floating Chatbot Launcher -->
+    <button class="chat-widget-btn" onclick="toggleChat()" id="btnFloatingChat" title="Kaaliyaha Shaqada ee AI-ga">
+        <div class="chat-btn-avatar">
+            <span class="chat-btn-sticker">🤖</span>
+            <span class="chat-badge-pulse"></span>
+        </div>
+        <div class="chat-btn-labels">
+            <span class="chat-btn-name">Kaaliyaha AI</span>
+            <span class="chat-btn-sub">🟢 30 Farriimood</span>
+        </div>
     </button>
 
     <div class="chat-window" id="chatWindow">
         <div class="chat-header">
             <div class="chat-header-info">
-                <div class="chat-avatar">🤖</div>
+                <div class="chat-avatar">
+                    <span class="bot-sticker-anim" style="font-size:20px;">🤖</span>
+                </div>
                 <div class="chat-title">
                     <h3>Kaaliyaha IT-ga & Koorsooyinka</h3>
                     <p>🟢 Online &bull; Qoraal kaliya</p>
@@ -3169,13 +3442,54 @@ python portal_app.py</code></pre>
             }
         }
 
-        // Chatbot Functions
+        // ========================================================
+        // Unified Chatbot Functions & 5-Second Teaser Auto-Popup
+        // ========================================================
+        let chatTeaserShown = false;
+        let chatTeaserTimer = null;
+
+        function initChatTeaserTimer() {
+            if (chatTeaserTimer) clearTimeout(chatTeaserTimer);
+            chatTeaserTimer = setTimeout(() => {
+                const win = document.getElementById("chatWindow");
+                if (win && win.classList.contains("open")) return;
+                const teaser = document.getElementById("chatTeaserBubble");
+                if (teaser && !chatTeaserShown) {
+                    teaser.style.display = "block";
+                    setTimeout(() => teaser.classList.add("show"), 20);
+                    chatTeaserShown = true;
+                }
+            }, 5000); // 5 seconds
+        }
+
+        function dismissChatTeaser() {
+            const teaser = document.getElementById("chatTeaserBubble");
+            if (teaser) {
+                teaser.classList.remove("show");
+                setTimeout(() => { teaser.style.display = "none"; }, 350);
+            }
+            chatTeaserShown = true;
+            if (chatTeaserTimer) clearTimeout(chatTeaserTimer);
+        }
+
+        function openChatFromTeaser() {
+            dismissChatTeaser();
+            toggleChat();
+        }
+
         function toggleChat() {
             const win = document.getElementById("chatWindow");
             win.classList.toggle("open");
             if (win.classList.contains("open")) {
+                dismissChatTeaser();
                 document.getElementById("chatInput").focus();
             }
+        }
+
+        if (document.readyState === "complete" || document.readyState === "interactive") {
+            initChatTeaserTimer();
+        } else {
+            window.addEventListener("DOMContentLoaded", initChatTeaserTimer);
         }
 
         function handleChatKey(event) {

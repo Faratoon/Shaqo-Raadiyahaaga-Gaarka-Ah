@@ -9,8 +9,15 @@ import shutil
 from datetime import datetime
 from pathlib import Path
 from flask import Flask, render_template, request, jsonify, send_file
-from jobspy import scrape_jobs
-from openai import OpenAI
+try:
+    from jobspy import scrape_jobs
+except ImportError:
+    scrape_jobs = None
+
+try:
+    from openai import OpenAI
+except ImportError:
+    OpenAI = None
 
 app = Flask(__name__)
 
