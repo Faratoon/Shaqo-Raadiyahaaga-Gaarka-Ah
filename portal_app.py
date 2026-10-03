@@ -129,15 +129,15 @@ def is_spam_or_invalid(text: str) -> tuple[bool, str]:
 
     # 2. Character repetition spam (e.g. "aaaaaa", "!!!!!!", "zzzzzz")
     if re.search(r"(.)\1{6,}", text_clean):
-        return True, "⚠️ Fadlan hadalka ha ku badin si uusan credit-ku u khasaarin. Haddii aad buugaag doonaysid, toos ugu biir: https://dhegeysobuug.substack.com/ (qof kasta oo subscribe gareeya buug ayaa loo dirayaa)."
+        return True, "⚠️ Fadlan hadalka ha ku badin si uusan credit-ku u khasaarin. Haddii aad buugaag doonaysid, toos ugu biir: https://dhegeysobuug.substack.com/ (waxaad helaysaa 2 buug oo bilaash ah oo si toos ah automatic inbox-kaaga ugu soo dhacaya marka aad subscribe gareyso)."
 
     # 3. Gibberish / keyboard mash detection
     words = text_clean.split()
     for w in words:
         if len(w) > 35 and not w.startswith("http"):
-            return True, "⚠️ Qoraalkaaga waxaa ku jira ereyo aan la fahmi karin. Haddii aad buugaag u baahan tahay, toos uga hel: https://dhegeysobuug.substack.com/"
+            return True, "⚠️ Qoraalkaaga waxaa ku jira ereyo aan la fahmi karin. Haddii aad buugaag u baahan tahay, toos uga hel: https://dhegeysobuug.substack.com/ (waxaad helaysaa 2 buug oo bilaash ah oo si automatic ah inbox-kaaga ugu soo dhacaya)."
         if len(w) >= 9 and not re.search(r"[aeiouy]", w, re.IGNORECASE) and not w.isdigit():
-            return True, "⚠️ Fadlan soo qor fariin macno leh. Haddii aad buug doonayso, toos ugu biir warsidaha: https://dhegeysobuug.substack.com/ waxaana laguugu soo diri doonaa buugaagta."
+            return True, "⚠️ Fadlan soo qor fariin macno leh. Haddii aad buug doonayso, toos ugu biir warsidaha: https://dhegeysobuug.substack.com/ waxaadna helaysaa 2 buug oo bilaash ah oo si automatic ah inbox-kaaga ugu soo dhacaya."
 
     # 4. Profanity check
     vulgar = ["wasmo", "siil", "gus", "futada", "fck", "bitch", "shit"]
@@ -366,7 +366,7 @@ Waxaad haysataa aqoon buuxda oo ku saabsan:
 2. HELITAANKA BUUGAAGTA & BADBAADINTA CREDITS-KA:
    - Haddii qofku buug weydiiyo, rabo in buug loo diro, ama hadalka baddiyo (si credit-ku uusan u khasaarin):
      Toos ugu dir warsidaha Dhegeyso Buug: https://dhegeysobuug.substack.com/
-     Qof kasta oo ku biira (subscribe gareeya) waxaan si toos ah email-kiisa ugu diraynaa buugaagta!
+     Qof kasta oo ku biira (subscribe gareeya) wuxuu helayaa 2 buug oo bilaash ah (free) oo si automatic ah ugu soo dhacaya inbox-kiisa (email-kiisa)!
 
 3. SIDEE LOO SAMEEYAY / OPEN SOURCE REPO:
    - Haddii qofku weydiiyo 'sida loo sameeyay', 'repo', ama 'koodhka':
@@ -411,8 +411,8 @@ U jawaab si kooban, xushmad leh, oo qoraal kaliya ah.
 4. 🤖 **ISBAR ChatGPT Prompts** (🎁 FREE / 100% Bilaash! | 87 Pages) • Qore: Mohamed Yasin • Editor: Yahye Abdirahman
 
 📬 **Sidee ku helaysaa Buugaagta?**
-Qof kasta oo ku biira (subscribe gareeya) warsidaha **Dhegeyso Buug** waxaan si toos ah email-kiisa ugu diraynaa buugaagta!
-👉 **Ku biir halkan:** [dhegeysobuug.substack.com](https://dhegeysobuug.substack.com/)"""
+Qof kasta oo ku biira (subscribe gareeya) warsidaha **Dhegeyso Buug** wuxuu helayaa **2 Buug oo Bilaash ah (Free)** oo si toos ah (automatic ah) ugu soo dhacaya inbox-kaaga (email-kaaga)!
+👉 **Is-diiwaangeli halkan si aad 2-da buug u hesho:** [dhegeysobuug.substack.com](https://dhegeysobuug.substack.com/)"""
 
     elif any(k in user_lower for k in ["sida loo", "sidee loo", "sameeyaa", "repo", "source code", "shubo", "deploy", "dhis", "github"]):
         return """⭐ **Madashan waa 100% Open Source (Bilaash):**
@@ -446,8 +446,8 @@ Qofkii raba inuu barto sida loo dhiso loona shubo (deploy) codsiyada casriga ah 
     elif any(k in user_lower for k in ["substack", "somalilibrary", "warside", "newsletter"]):
         return """📬 **Warsidayaasha Rasmiga ah:**
 
-1. 📚 **Dhegeyso Buug Substack (Helitaanka Buugaagta):**
-   Qof kasta oo subscribe gareeya waxaan toos ugu diraynaa buugaagta:
+1. 📚 **Dhegeyso Buug Substack (Hel 2 Buug oo Bilaash ah):**
+   Qof kasta oo subscribe gareeya wuxuu helayaa 2 buug oo bilaash ah oo si automatic ah inbox-kiisa ugu soo dhacaya:
    🔗 [dhegeysobuug.substack.com](https://dhegeysobuug.substack.com/)
 
 2. 📰 **Somalilibrary Substack (Fursadaha Shaqada & AI-ga):**
@@ -482,7 +482,7 @@ Waxaad si toos ah ula xiriiri kartaa **Mohamed Yasin**:
 
 Waxaan diyaar kuugu ahay inaan kaa caawiyo:
 1. 💻 **Shaqooyinka IT-ga ee Soomaaliya (Muqdisho, Hargeysa), East Africa & Remote**
-2. 📚 **Buugaagta Isbar** (Subscribe dheh [dhegeysobuug.substack.com](https://dhegeysobuug.substack.com/) si toos ah ayaan kuugu soo diraynaa buugaagta!)
+2. 📚 **Buugaagta Isbar** (Subscribe dheh [dhegeysobuug.substack.com](https://dhegeysobuug.substack.com/) waxaad helaysaa 2 buug oo bilaash ah oo si automatic ah inbox-kaaga ugu soo dhacaya!)
 3. 🤖 **Koorsooyinka AI Automation & Chatbots (WhatsApp, Telegram, N8n, Typebot)**
 4. ⭐ **Open Source Repo** (Baro sida loo dhiso loona shubo iyadoo AI la adeegsanayo)
 5. 📅 **Live Booking & Mentorship 1-on-1 ah la yeelo Mohamed Yasin**
@@ -657,7 +657,7 @@ def chat_assistant():
     if not allowed:
         return jsonify({
             "status": "limit_reached",
-            "reply": "⚠️ Waxaad gaartay xadka 30-ka fariimood ee kulankan si loo ilaaliyo khayraadka nidaamka. Haddii aad buugaag doonayso, fadlan toos ugu biir warsidaha Dhegeyso Buug: https://dhegeysobuug.substack.com/ (qof kasta oo subscribe gareeya buug ayaa loo dirayaa). Haddii aad rabto ballan live ah ama caawin toos ah oo aad la yeelato Mohamed Yasin, isticmaal qeybta 'Ballan Live ah' ama WhatsApp: +1 (587) 306-4137.",
+            "reply": "⚠️ Waxaad gaartay xadka 30-ka fariimood ee kulankan si loo ilaaliyo khayraadka nidaamka. Haddii aad buugaag doonayso, fadlan toos ugu biir warsidaha Dhegeyso Buug: https://dhegeysobuug.substack.com/ (waxaad helaysaa 2 buug oo bilaash ah oo si automatic ah inbox-kaaga ugu soo dhacaya marka aad subscribe gareyso). Haddii aad rabto ballan live ah ama caawin toos ah oo aad la yeelato Mohamed Yasin, isticmaal qeybta 'Ballan Live ah' ama WhatsApp: +1 (587) 306-4137.",
             "remaining": 0,
             "count": count
         }), 429
