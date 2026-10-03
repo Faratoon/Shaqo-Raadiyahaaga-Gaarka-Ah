@@ -1,39 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="so">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mohamed Yasin Mohamoud | Career & Job Application Portal</title>
+    <title>Shaqo Raadiyahaaga Gaarka Ah | Mohamed Yasin Mohamoud</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #1e3a8a;
-            --primary-hover: #1d4ed8;
-            --accent: #0284c7;
-            --success: #16a34a;
+            --primary: #0f172a;
+            --primary-accent: #1e3a8a;
+            --azure: #0284c7;
+            --azure-light: #e0f2fe;
+            --somali-blue: #4189e8;
+            --success: #10b981;
+            --success-light: #d1fae5;
             --bg: #f8fafc;
             --card-bg: #ffffff;
             --text-main: #0f172a;
             --text-muted: #64748b;
             --border: #e2e8f0;
+            --border-hover: #cbd5e1;
+            --radius-lg: 16px;
+            --radius-md: 12px;
+            --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.04);
+            --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.08);
+            --shadow-lg: 0 16px 36px rgba(15, 23, 42, 0.12);
         }
+
         * { box-sizing: border-box; margin: 0; padding: 0; }
+        
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif;
             background-color: var(--bg);
             color: var(--text-main);
-            line-height: 1.5;
-            padding-bottom: 50px;
+            line-height: 1.6;
+            padding-bottom: 70px;
         }
-        .navbar {
-            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+
+        /* Top Bar */
+        .top-announcement {
+            background: linear-gradient(90deg, #1e3a8a, #0284c7);
             color: white;
-            padding: 24px 30px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 8px 16px;
+            letter-spacing: 0.2px;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: rgba(15, 23, 42, 0.98);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 20px 24px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
         }
         .nav-content {
-            max-width: 1100px;
+            max-width: 1140px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
@@ -41,75 +69,238 @@
             flex-wrap: wrap;
             gap: 15px;
         }
-        .profile-title h1 {
+        .brand-box {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .brand-icon {
+            width: 46px;
+            height: 46px;
+            background: linear-gradient(135deg, #0284c7, #38bdf8);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 24px;
+            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.35);
+        }
+        .brand-title h1 {
+            font-size: 21px;
             font-weight: 800;
             letter-spacing: -0.5px;
+            color: #ffffff;
         }
-        .profile-title p {
-            font-size: 13.5px;
-            opacity: 0.85;
-            margin-top: 3px;
+        .brand-title p {
+            font-size: 13px;
+            color: #94a3b8;
+            font-weight: 500;
         }
         .header-actions {
             display: flex;
-            gap: 10px;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
         }
-        .btn-download {
-            background: #22c55e;
+        .btn-resume {
+            background: #10b981;
             color: white;
             text-decoration: none;
             padding: 9px 18px;
-            border-radius: 8px;
-            font-weight: 600;
+            border-radius: 10px;
+            font-weight: 700;
             font-size: 13.5px;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
+            transition: all 0.2s;
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.25);
+        }
+        .btn-resume:hover {
+            background: #059669;
+            transform: translateY(-1px);
+        }
+        .btn-chat-trigger-nav {
+            background: #0284c7;
+            color: white;
+            border: none;
+            padding: 9px 18px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 13.5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
             transition: all 0.2s;
         }
-        .btn-download:hover { background: #16a34a; transform: translateY(-1px); }
+        .btn-chat-trigger-nav:hover {
+            background: #0369a1;
+            transform: translateY(-1px);
+        }
 
+        /* Container */
         .container {
-            max-width: 1100px;
+            max-width: 1140px;
             margin: 25px auto;
             padding: 0 20px;
         }
 
-        /* Quick Search Bar */
+        /* Hero Banner */
+        .hero-banner {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 60%, #0369a1 100%);
+            border-radius: var(--radius-lg);
+            padding: 36px 32px;
+            color: white;
+            margin-bottom: 25px;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-banner::after {
+            content: "🇸🇴";
+            position: absolute;
+            right: 25px;
+            bottom: -15px;
+            font-size: 120px;
+            opacity: 0.08;
+            pointer-events: none;
+        }
+        .hero-badges {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 14px;
+        }
+        .badge-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12.5px;
+            font-weight: 600;
+        }
+        .badge-pill.green {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: rgba(16, 185, 129, 0.4);
+            color: #6ee7b7;
+        }
+        .hero-banner h2 {
+            font-size: 28px;
+            font-weight: 800;
+            line-height: 1.3;
+            margin-bottom: 10px;
+        }
+        .hero-banner p {
+            font-size: 15px;
+            color: #cbd5e1;
+            max-width: 760px;
+            line-height: 1.6;
+        }
+
+        /* Student & Youth Resource Cards */
+        .resource-section-title {
+            font-size: 17px;
+            font-weight: 800;
+            color: #1e293b;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+        .resource-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            transition: all 0.2s;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .resource-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--azure);
+            box-shadow: var(--shadow-sm);
+        }
+        .resource-icon {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        .resource-card h3 {
+            font-size: 15.5px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 6px;
+        }
+        .resource-card p {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+        .resource-tag {
+            margin-top: 12px;
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--azure);
+        }
+
+        /* Search Panel */
         .search-panel {
             background: var(--card-bg);
-            border-radius: 14px;
-            padding: 20px 24px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
             border: 1px solid var(--border);
             margin-bottom: 25px;
         }
+        .quick-filter-title {
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
         .quick-actions {
             display: flex;
-            gap: 12px;
-            margin-bottom: 16px;
+            gap: 10px;
+            margin-bottom: 18px;
             flex-wrap: wrap;
         }
         .btn-quick {
             background: #f1f5f9;
-            color: #1e293b;
+            color: #334155;
             border: 1px solid #cbd5e1;
-            padding: 10px 18px;
-            border-radius: 8px;
+            padding: 9px 16px;
+            border-radius: 10px;
             font-weight: 600;
             font-size: 13.5px;
             cursor: pointer;
             transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
         .btn-quick:hover {
             background: #e2e8f0;
             border-color: #94a3b8;
         }
         .btn-quick.active {
-            background: var(--primary);
+            background: #0f172a;
             color: white;
-            border-color: var(--primary);
+            border-color: #0f172a;
         }
 
         .search-inputs {
@@ -122,449 +313,979 @@
             flex: 1;
             min-width: 220px;
         }
+        .input-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            color: #475569;
+            margin-bottom: 5px;
+        }
         .input-group input, .input-group select {
             width: 100%;
-            padding: 10px 14px;
+            padding: 11px 14px;
             border: 1px solid #cbd5e1;
-            border-radius: 8px;
+            border-radius: 10px;
             font-size: 14px;
+            font-family: inherit;
             outline: none;
             transition: border-color 0.2s;
         }
         .input-group input:focus, .input-group select:focus {
-            border-color: var(--accent);
+            border-color: var(--azure);
+            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.1);
+        }
+        .check-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13.5px;
+            font-weight: 600;
+            color: #334155;
+            cursor: pointer;
+            padding-top: 20px;
+        }
+        .check-group input {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
         }
         .btn-search {
-            background: var(--primary);
+            background: linear-gradient(135deg, #0284c7, #0369a1);
             color: white;
             border: none;
-            padding: 11px 24px;
-            border-radius: 8px;
-            font-weight: 600;
+            padding: 12px 26px;
+            border-radius: 10px;
+            font-weight: 700;
             font-size: 14px;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: all 0.2s;
+            margin-top: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
-        .btn-search:hover { background: var(--primary-hover); }
-
-        /* Loading Spinner */
-        .spinner-container {
-            display: none;
-            text-align: center;
-            padding: 40px 20px;
+        .btn-search:hover {
+            background: linear-gradient(135deg, #0369a1, #075985);
+            transform: translateY(-1px);
         }
-        .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid var(--primary);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 12px auto;
+        .btn-search:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+            transform: none;
         }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
         /* Section Header */
-        .results-header {
+        .section-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 16px;
+            margin-bottom: 18px;
+            flex-wrap: wrap;
+            gap: 10px;
         }
-        .results-header h2 {
-            font-size: 18px;
-            font-weight: 700;
-            color: #1e293b;
+        .section-header h2 {
+            font-size: 20px;
+            font-weight: 800;
+            color: #0f172a;
         }
-        .limit-badge {
-            background: #dcfce7;
-            color: #166534;
-            font-size: 12.5px;
-            font-weight: 700;
-            padding: 4px 12px;
+        .quota-counter {
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            padding: 6px 14px;
             border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #334155;
         }
 
         /* Job Cards */
+        .jobs-container {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
         .job-card {
             background: var(--card-bg);
-            border-radius: 12px;
-            padding: 22px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
             border: 1px solid var(--border);
-            border-left: 5px solid var(--accent);
-            transition: transform 0.15s, box-shadow 0.15s;
+            border-left: 5px solid var(--azure);
+            transition: all 0.2s;
         }
         .job-card:hover {
-            box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+            box-shadow: var(--shadow-md);
             transform: translateY(-2px);
+        }
+        .job-card.is-applied {
+            border-left-color: var(--success);
+            background: #f0fdf4;
         }
         .card-top {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
             gap: 15px;
+            margin-bottom: 12px;
         }
         .job-title {
-            font-size: 18.5px;
-            font-weight: 700;
+            font-size: 19px;
+            font-weight: 800;
             color: #0f172a;
             margin-bottom: 4px;
         }
         .job-sub {
             font-size: 14.5px;
             color: var(--text-muted);
-            font-weight: 500;
+            font-weight: 600;
         }
         .match-badge {
-            background: #e0f2fe;
+            background: var(--azure-light);
             color: #0369a1;
             font-weight: 800;
-            font-size: 13.5px;
+            font-size: 14px;
             padding: 6px 14px;
             border-radius: 20px;
-            white-space: nowrap;
             border: 1px solid #bae6fd;
+            white-space: nowrap;
         }
-        .meta-tags {
-            margin: 12px 0;
+        .job-meta-row {
             display: flex;
             gap: 8px;
             flex-wrap: wrap;
+            margin-bottom: 16px;
         }
-        .tag {
+        .meta-pill {
             background: #f1f5f9;
             color: #475569;
-            font-size: 12px;
-            font-weight: 600;
             padding: 4px 10px;
             border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
         }
-        .pitch-box {
+
+        .ai-intel-box {
             background: #f8fafc;
             border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            padding: 12px 16px;
+            border-radius: 10px;
+            padding: 14px 18px;
+            margin-bottom: 16px;
+        }
+        .ai-intel-title {
+            font-size: 12.5px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #0369a1;
+            margin-bottom: 6px;
+        }
+        .ai-intel-text {
             font-size: 13.5px;
-            margin: 14px 0;
-            line-height: 1.6;
+            color: #334155;
+            line-height: 1.5;
         }
-        .letter-box {
-            background: #fffdf5;
-            border: 1px solid #fef08a;
-            border-radius: 8px;
-            padding: 14px 16px;
+
+        /* Cover Letter Accordion */
+        .cover-letter-wrapper {
             margin-top: 14px;
+            border: 1px solid #fed7aa;
+            background: #fffaf0;
+            border-radius: 10px;
+            overflow: hidden;
         }
-        .letter-header {
+        .cover-letter-header {
+            padding: 12px 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 8px;
+            cursor: pointer;
+            user-select: none;
+            background: #fff7ed;
         }
-        .letter-title {
-            font-size: 12.5px;
+        .cover-letter-header h4 {
+            font-size: 13.5px;
             font-weight: 700;
-            color: #854d0e;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            color: #c2410c;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
-        .cover-text {
+        .cover-letter-body {
+            padding: 16px;
+            display: none;
+            border-top: 1px solid #ffedd5;
+        }
+        .cover-letter-body.show {
+            display: block;
+        }
+        .cover-letter-text {
+            font-family: inherit;
             font-size: 13px;
             color: #334155;
             white-space: pre-wrap;
-            line-height: 1.5;
-            max-height: 160px;
-            overflow-y: auto;
-            padding-right: 6px;
+            line-height: 1.6;
         }
+
+        /* Card Actions */
         .card-actions {
-            margin-top: 18px;
             display: flex;
-            justify-content: space-between;
+            gap: 10px;
             align-items: center;
+            margin-top: 18px;
             flex-wrap: wrap;
-            gap: 10px;
         }
-        .left-actions {
-            display: flex;
-            gap: 10px;
-        }
-        .btn-apply {
-            background: #2563eb;
+        .btn-apply-main {
+            background: #0284c7;
             color: white;
             text-decoration: none;
             padding: 10px 20px;
             border-radius: 8px;
+            font-weight: 700;
             font-size: 13.5px;
-            font-weight: 600;
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            transition: background 0.2s;
+            transition: all 0.2s;
         }
-        .btn-apply:hover { background: #1d4ed8; }
-        .btn-copy {
+        .btn-apply-main:hover {
+            background: #0369a1;
+        }
+        .btn-mark-applied {
             background: #f1f5f9;
-            color: #1e293b;
+            color: #334155;
             border: 1px solid #cbd5e1;
             padding: 9px 16px;
             border-radius: 8px;
-            font-size: 13px;
             font-weight: 600;
+            font-size: 13.5px;
             cursor: pointer;
             transition: all 0.2s;
         }
-        .btn-copy:hover { background: #e2e8f0; }
-        .applied-check {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 13px;
-            color: var(--text-muted);
-            cursor: pointer;
+        .btn-mark-applied:hover {
+            background: #e2e8f0;
         }
-        .applied-check input { cursor: pointer; }
-        .applied-badge {
-            background: #dcfce7;
-            color: #15803d;
-            padding: 4px 10px;
+        .btn-mark-applied.applied {
+            background: #10b981;
+            color: white;
+            border-color: #10b981;
+        }
+        .btn-copy-letter {
+            background: white;
+            color: #c2410c;
+            border: 1px solid #fed7aa;
+            padding: 6px 12px;
             border-radius: 6px;
             font-size: 12px;
             font-weight: 700;
+            cursor: pointer;
+        }
+        .btn-copy-letter:hover {
+            background: #fff7ed;
+        }
+
+        /* Floating AI Chatbot Widget */
+        .chat-widget-btn {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+            color: white;
+            border: none;
+            padding: 14px 22px;
+            border-radius: 30px;
+            font-weight: 800;
+            font-size: 15px;
+            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.35);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            z-index: 999;
+            transition: all 0.25s;
+        }
+        .chat-widget-btn:hover {
+            transform: scale(1.04);
+            box-shadow: 0 12px 30px rgba(2, 132, 199, 0.45);
+        }
+        .chat-badge-pulse {
+            width: 10px;
+            height: 10px;
+            background: #10b981;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+            animation: pulse 1.6s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+
+        /* Chat Window Modal */
+        .chat-window {
+            position: fixed;
+            bottom: 90px;
+            right: 24px;
+            width: 390px;
+            max-width: calc(100vw - 32px);
+            height: 560px;
+            max-height: calc(100vh - 120px);
+            background: #ffffff;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border);
             display: none;
+            flex-direction: column;
+            z-index: 1000;
+            overflow: hidden;
+            animation: slideUp 0.25s ease-out;
+        }
+        .chat-window.open {
+            display: flex;
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #0f172a, #1e3a8a);
+            color: white;
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .chat-header-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .chat-avatar {
+            width: 38px;
+            height: 38px;
+            background: #0284c7;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+        .chat-title h3 {
+            font-size: 15px;
+            font-weight: 800;
+        }
+        .chat-title p {
+            font-size: 11.5px;
+            color: #94a3b8;
+        }
+        .chat-close-btn {
+            background: transparent;
+            border: none;
+            color: #cbd5e1;
+            font-size: 22px;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .chat-body {
+            flex: 1;
+            padding: 16px;
+            overflow-y: auto;
+            background: #f8fafc;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .chat-msg {
+            max-width: 86%;
+            padding: 11px 15px;
+            border-radius: 14px;
+            font-size: 13.5px;
+            line-height: 1.5;
+            word-wrap: break-word;
+        }
+        .chat-msg.bot {
+            align-self: flex-start;
+            background: #ffffff;
+            color: #1e293b;
+            border: 1px solid #e2e8f0;
+            border-bottom-left-radius: 3px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+        }
+        .chat-msg.user {
+            align-self: flex-end;
+            background: #0284c7;
+            color: #ffffff;
+            border-bottom-right-radius: 3px;
+        }
+
+        .chat-pills {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-top: 4px;
+        }
+        .chat-pill {
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            color: #334155;
+            padding: 5px 10px;
+            border-radius: 12px;
+            font-size: 11.5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .chat-pill:hover {
+            background: #e2e8f0;
+            border-color: #94a3b8;
+        }
+
+        .chat-footer {
+            padding: 12px 14px;
+            background: #ffffff;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        .chat-input {
+            flex: 1;
+            border: 1px solid #cbd5e1;
+            border-radius: 20px;
+            padding: 9px 14px;
+            font-size: 13.5px;
+            font-family: inherit;
+            outline: none;
+        }
+        .chat-input:focus {
+            border-color: var(--azure);
+        }
+        .chat-send-btn {
+            background: #0284c7;
+            color: white;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .chat-send-btn:hover {
+            background: #0369a1;
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
         /* Empty State */
         .empty-state {
             text-align: center;
-            padding: 60px 20px;
+            padding: 40px 20px;
             background: white;
-            border-radius: 12px;
-            border: 1px dashed #cbd5e1;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
         }
-        .empty-state h3 { font-size: 18px; margin-bottom: 6px; color: #334155; }
-        .empty-state p { font-size: 14px; color: var(--text-muted); }
+        .empty-state h3 {
+            font-size: 18px;
+            color: #334155;
+            margin-bottom: 6px;
+        }
+        .empty-state p {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-banner { padding: 24px 20px; }
+            .hero-banner h2 { font-size: 22px; }
+            .chat-window { bottom: 85px; right: 12px; width: calc(100vw - 24px); height: 500px; }
+            .brand-title h1 { font-size: 18px; }
+        }
     </style>
 </head>
 <body>
 
+    <!-- Top Announcement -->
+    <div class="top-announcement">
+        🇸🇴 Ku Soo Dhawoow Shaqo Raadiyaha Gaarka Ah &bull; Loo Sameeyay Dhalinyarada, Ardayda Jaamacadaha & Xirfadlayaasha Soomaaliyeed &bull; Edmonton 🇨🇦
+    </div>
+
+    <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-content">
-            <div class="profile-title">
-                <h1>Mohamed Yasin Mohamoud</h1>
-                <p>AI Educator & IT Specialist &bull; Edmonton, AB &bull; (587) 306-4137 &bull; Suxufi34@gmail.com</p>
+            <div class="brand-box">
+                <div class="brand-icon">🦅</div>
+                <div class="brand-title">
+                    <h1>Shaqo Raadiyahaaga Gaarka Ah</h1>
+                    <p>Mohamed Yasin Mohamoud &bull; AI Educator & IT Specialist</p>
+                </div>
             </div>
             <div class="header-actions">
-                <a href="/download/resume" class="btn-download" target="_blank">
-                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/></svg>
-                    Download My PDF Resume
+                <a href="/download/resume" class="btn-resume" target="_blank">
+                    📄 Soo Degso Resume (PDF)
                 </a>
+                <button class="btn-chat-trigger-nav" onclick="toggleChat()">
+                    💬 Kaaliyaha Shaqada (AI)
+                </button>
             </div>
         </div>
     </nav>
 
     <div class="container">
-        
+
+        <!-- Hero Section -->
+        <div class="hero-banner">
+            <div class="hero-badges">
+                <span class="badge-pill green">🟢 Live System Ready</span>
+                <span class="badge-pill">🎓 Jaamacadaha & Dugsiyada</span>
+                <span class="badge-pill">🇨🇦 Edmonton & Remote Canada</span>
+                <span class="badge-pill">🤖 AI Powered Matching</span>
+            </div>
+            <h2>Fursadaha Shaqo ee Ku Habboon Aqoontaada & Xirfaddaada</h2>
+            <p>
+                Portal-kan waxaa si gaar ah loogu dhisay inuu dhalinyarada iyo ardayda Soomaaliyeed ka caawiyo raadinta shaqooyinka ugu sarreeya ee Kanada (Indeed, Glassdoor, ZipRecruiter), isbarbardhigga aqoontaada (Match Score ~94%), iyo curinta waraaqaha codsiga (Canadian Cover Letters) oo hal-guji ku diyaarsan!
+            </p>
+        </div>
+
+        <!-- Student & Youth Career Guide Cards -->
+        <div class="resource-section-title">
+            <span>🎓</span> Hagaha Shaqada ee Dhalinyarada & Ardayda (Quick Youth Career Hub)
+        </div>
+        <div class="resource-grid">
+            <div class="resource-card" onclick="askChatbot('Talooyin ku saabsan sida ardayda cusub ee jaamacadda dhamaysay shaqo ku heli karaan?')">
+                <div class="resource-icon">🎓</div>
+                <h3>Ardayda & Qalin-jebiyayaasha</h3>
+                <p>Sidee shaqadii 1-aad ku heli kartaa adigoon waayo-aragnimo badan hore u lahayn? Ka faa'iideyso mashaariicda & tabaruca.</p>
+                <span class="resource-tag">Guji si aad talo u hesho &rarr;</span>
+            </div>
+
+            <div class="resource-card" onclick="askChatbot('Sideen ku diyaariyaa CV casri ah oo ATS-friendly ah?')">
+                <div class="resource-icon">📄</div>
+                <h3>Diyaarinta CV Casri ah</h3>
+                <p>Nidaamyada casriga ah ee shirkadaha (ATS) sida ay CV-gaaga u aqrin lahaayeen iyo qaladaadka ugu badan ee laga digtoonaado.</p>
+                <span class="resource-tag">Baro qaabka ATS &rarr;</span>
+            </div>
+
+            <div class="resource-card" onclick="askChatbot('Iiga caawi u diyaargarowga wareysiga shaqada iyo habka STAR?')">
+                <div class="resource-icon">🎯</div>
+                <h3>Talooyinka Wareysiga (Interview)</h3>
+                <p>Baro farsamada STAR method (Situation, Task, Action, Result) iyo sida looga jawaabo su'aalaha ugu adag.</p>
+                <span class="resource-tag">U diyaar-garow wareysi &rarr;</span>
+            </div>
+
+            <div class="resource-card" onclick="askChatbot('Waa maxay xirfadaha IT iyo AI ee maanta ugu baahida badan?')">
+                <div class="resource-icon">💡</div>
+                <h3>Xirfadaha ugu Qaalisan (IT & AI)</h3>
+                <p>Prompt Engineering, AI Automation, Google IT Support, iyo No-Code Tools oo aad 3-6 bilood ku baran karto.</p>
+                <span class="resource-tag">Eeg xirfadaha sare &rarr;</span>
+            </div>
+        </div>
+
         <!-- Search & Control Panel -->
         <div class="search-panel">
+            <div class="quick-filter-title">🔍 Xulashada Degdegga ah ee Shaqooyinka:</div>
             <div class="quick-actions">
-                <button class="btn-quick active" onclick="quickSearch('computer instructor', 'Edmonton, AB', false, this)">📍 5 Edmonton Teacher / IT Jobs</button>
-                <button class="btn-quick" onclick="quickSearch('digital literacy', 'Edmonton, AB', false, this)">💻 5 Digital Literacy Jobs</button>
-                <button class="btn-quick" onclick="quickSearch('AI automation', 'Canada', true, this)">🌐 5 Remote AI / Tech Jobs</button>
-                <button class="btn-quick" onclick="quickSearch('volunteer coordinator', 'Edmonton, AB', false, this)">🤝 5 Community / Volunteer Jobs</button>
+                <button class="btn-quick active" onclick="quickFilter(this, 'computer instructor', 'Edmonton, AB', false)">
+                    👨‍🏫 Macallin IT / Computer Instructor
+                </button>
+                <button class="btn-quick" onclick="quickFilter(this, 'IT support', 'Edmonton, AB', false)">
+                    💻 IT Support & Helpdesk
+                </button>
+                <button class="btn-quick" onclick="quickFilter(this, 'AI automation', 'Canada', true)">
+                    🤖 AI Automation (Remote)
+                </button>
+                <button class="btn-quick" onclick="quickFilter(this, 'youth coordinator', 'Edmonton, AB', false)">
+                    🎓 Youth & Student Coordinator
+                </button>
+                <button class="btn-quick" onclick="quickFilter(this, 'digital literacy trainer', 'Edmonton, AB', false)">
+                    📖 Digital Literacy Trainer
+                </button>
+                <button class="btn-quick" onclick="quickFilter(this, 'volunteer coordinator', 'Edmonton, AB', false)">
+                    🤝 Volunteer Coordinator
+                </button>
             </div>
 
             <div class="search-inputs">
                 <div class="input-group">
-                    <input type="text" id="searchTerm" placeholder="Job Title (e.g. Computer Instructor, IT Support)" value="computer instructor">
+                    <label>Ereyga Shaqada (Job Title / Keyword):</label>
+                    <input type="text" id="searchTerm" value="computer instructor" placeholder="Tusaale: IT support, teacher, coordinator...">
                 </div>
                 <div class="input-group">
-                    <input type="text" id="searchLocation" placeholder="Location" value="Edmonton, AB">
+                    <label>Magaalada / Gobolka (Location):</label>
+                    <input type="text" id="searchLocation" value="Edmonton, AB" placeholder="Tusaale: Edmonton, AB ama Canada">
                 </div>
-                <div style="display: flex; align-items: center; gap: 6px;">
-                    <input type="checkbox" id="searchRemote">
-                    <label for="searchRemote" style="font-size: 13.5px; font-weight: 500;">Remote only</label>
-                </div>
-                <div style="width: 90px;">
+                <div class="input-group" style="max-width: 140px;">
+                    <label>Tirada Shaqooyinka:</label>
                     <select id="searchLimit">
-                        <option value="5" selected>5 jobs</option>
-                        <option value="10">10 jobs</option>
+                        <option value="5" selected>5 Shaqo (Heer Sare)</option>
+                        <option value="10">10 Shaqo</option>
                     </select>
                 </div>
-                <button class="btn-search" onclick="executeSearch()">Search Jobs</button>
+                <label class="check-group">
+                    <input type="checkbox" id="searchRemote">
+                    Shaqooyinka Remote-ka (Guriga)
+                </label>
+                <button class="btn-search" id="btnSearch" onclick="triggerSearch()">
+                    <span id="searchIcon">🔍</span>
+                    <span id="searchText">Baadh Shaqooyinka Cusub</span>
+                </button>
             </div>
         </div>
 
-        <!-- Spinner -->
-        <div class="spinner-container" id="spinner">
-            <div class="spinner"></div>
-            <p style="font-weight: 600; color: #1e3a8a;">Searching Indeed Canada & ZipRecruiter in real-time...</p>
-            <p style="font-size: 13px; color: var(--text-muted);">Analyzing match scores and generating tailored cover letters...</p>
+        <!-- Jobs Listing Section -->
+        <div class="section-header">
+            <h2>📋 Shaqooyinka Ku Habboon ee Hadda Diyaarka ah</h2>
+            <div class="quota-counter" id="quotaDisplay">
+                Target: Ugu badnaan 5 Codsi Maalintii
+            </div>
         </div>
 
-        <!-- Section Title -->
-        <div class="results-header" id="resultsHeader">
-            <h2>Today's Curated Applications</h2>
-            <span class="limit-badge" id="resultsCountBadge">5 Jobs Ready</span>
+        <div class="jobs-container" id="jobsList">
+            <!-- Jobs will be populated by JS -->
+            <div class="empty-state">
+                <div class="spinner" style="border-color:#cbd5e1; border-top-color:#0284c7; width:30px; height:30px; margin-bottom:12px;"></div>
+                <h3>Shaqooyinka ayaa la soo shubayaa...</h3>
+                <p>Fadlan sug daqiiqad inta portal-ku isku xirayo shaqooyinka ugu dambeeyay.</p>
+            </div>
         </div>
-
-        <!-- Job Cards Container -->
-        <div id="jobsList"></div>
 
     </div>
 
+    <!-- Floating AI Chatbot Button -->
+    <button class="chat-widget-btn" onclick="toggleChat()">
+        <span class="chat-badge-pulse"></span>
+        <span>💬 Kaaliyaha Shaqada (AI)</span>
+    </button>
+
+    <!-- Floating AI Chatbot Window -->
+    <div class="chat-window" id="chatWindow">
+        <div class="chat-header">
+            <div class="chat-header-info">
+                <div class="chat-avatar">🤖</div>
+                <div class="chat-title">
+                    <h3>Kaaliyaha Shaqada ee AI-ga</h3>
+                    <p>🟢 Online &bull; Somali Youth Career Advisor</p>
+                </div>
+            </div>
+            <button class="chat-close-btn" onclick="toggleChat()">&times;</button>
+        </div>
+
+        <div class="chat-body" id="chatBody">
+            <div class="chat-msg bot">
+                Salamaat sxb! 👋 Waxaan ahay **Kaaliyaha Shaqada ee AI-ga**, oo loogu talagalay dhalinyarada Soomaaliyeed, ardayda jaamacadaha iyo dugsiyada. 
+                <br><br>
+                Waxaan kaa caawin karaa:
+                <br>• 📄 Qorista & habeynta CV-gaaga (ATS-friendly)
+                <br>• 🎯 U diyaar-garowga wareysiga shaqada (Interview)
+                <br>• ✍️ Diyaarinta Cover Letter tayo leh
+                <br>• 💡 Barashada xirfadaha IT/AI ee maanta loogu jecel yahay!
+                <div class="chat-pills">
+                    <span class="chat-pill" onclick="sendQuickPrompt('Sideen ku bilaabaa anigoon khibrad hore u lahayn?')">Arday khibrad la'aan ah?</span>
+                    <span class="chat-pill" onclick="sendQuickPrompt('Sideen ku diyaariyaa CV casri ah?')">CV ATS ah?</span>
+                    <span class="chat-pill" onclick="sendQuickPrompt('Talooyinka wareysiga shaqada (Interview)?')">Wareysi shaqo?</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-footer">
+            <input type="text" class="chat-input" id="chatInput" placeholder="Wax weydii Kaaliyaha AI-ga..." onkeydown="handleChatKey(event)">
+            <button class="chat-send-btn" onclick="sendChatMessage()">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.493-7.493Z"/></svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
     <script>
-        // Load cached jobs on startup
+        // Load initial jobs
         document.addEventListener("DOMContentLoaded", () => {
-            fetchJobs();
+            loadJobs();
         });
 
-        async function fetchJobs() {
+        async function loadJobs() {
             try {
                 const res = await fetch("/api/jobs");
                 const data = await res.json();
-                if (data.jobs && data.jobs.length > 0) {
-                    renderJobs(data.jobs);
-                } else {
-                    quickSearch("computer instructor", "Edmonton, AB", false, document.querySelector(".btn-quick"));
-                }
-            } catch (err) {
-                console.error("Error loading cached jobs:", err);
-            }
-        }
-
-        async function quickSearch(term, loc, remote, btn) {
-            document.querySelectorAll(".btn-quick").forEach(b => b.classList.remove("active"));
-            if (btn) btn.classList.add("active");
-            document.getElementById("searchTerm").value = term;
-            document.getElementById("searchLocation").value = loc;
-            document.getElementById("searchRemote").checked = remote;
-            await executeSearch();
-        }
-
-        async function executeSearch() {
-            const term = document.getElementById("searchTerm").value.trim();
-            const location = document.getElementById("searchLocation").value.trim();
-            const remote = document.getElementById("searchRemote").checked;
-            const limit = parseInt(document.getElementById("searchLimit").value) || 5;
-
-            document.getElementById("spinner").style.display = "block";
-            document.getElementById("jobsList").innerHTML = "";
-
-            try {
-                const res = await fetch("/api/search", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ term, location, remote, limit })
-                });
-                const data = await res.json();
-                document.getElementById("spinner").style.display = "none";
-                if (data.jobs && data.jobs.length > 0) {
+                if (data.status === "success" && data.jobs && data.jobs.length > 0) {
                     renderJobs(data.jobs);
                 } else {
                     document.getElementById("jobsList").innerHTML = `
                         <div class="empty-state">
-                            <h3>No exact jobs found</h3>
-                            <p>Try modifying your search term or broadening the location.</p>
+                            <h3>Weli wax shaqo ah lama hayo</h3>
+                            <p>Guji batoonka sare ee 'Baadh Shaqooyinka Cusub' si aad u soo saarto 5-ta shaqo ee maanta!</p>
                         </div>
                     `;
                 }
             } catch (err) {
-                document.getElementById("spinner").style.display = "none";
-                alert("Search error: " + err);
+                console.error(err);
+                document.getElementById("jobsList").innerHTML = `
+                    <div class="empty-state">
+                        <h3>Cillad ayaa dhacday</h3>
+                        <p>Fadlan dib u riix batoonka raadinta ama hubi server-kaaga.</p>
+                    </div>
+                `;
             }
         }
 
         function renderJobs(jobs) {
             const container = document.getElementById("jobsList");
             container.innerHTML = "";
-            document.getElementById("resultsCountBadge").innerText = `${jobs.length} Jobs Ready`;
+
+            let appliedCount = 0;
 
             jobs.forEach((job, index) => {
-                const card = document.createElement("div");
-                card.className = "job-card";
-                card.id = `job-${index}`;
+                if (job.is_applied) appliedCount++;
 
+                const card = document.createElement("div");
+                card.className = `job-card ${job.is_applied ? 'is-applied' : ''}`;
+                
                 card.innerHTML = `
                     <div class="card-top">
                         <div>
                             <div class="job-title">${index + 1}. ${escapeHtml(job.title)}</div>
-                            <div class="job-sub">${escapeHtml(job.company)} &bull; ${escapeHtml(job.location)}</div>
+                            <div class="job-sub">🏢 ${escapeHtml(job.company)} &bull; 📍 ${escapeHtml(job.location)}</div>
                         </div>
-                        <div class="match-badge">${job.match_score || "94%"} Match</div>
-                    </div>
-
-                    <div class="meta-tags">
-                        <span class="tag">Platform: ${escapeHtml(job.site)}</span>
-                        <span class="tag">Type: ${escapeHtml(job.job_type)}</span>
-                        <span class="tag">Posted: ${escapeHtml(job.date_posted)}</span>
-                        <span class="applied-badge" id="badge-${index}" style="${job.is_applied ? 'display:inline-block;' : ''}">✓ Applied</span>
-                    </div>
-
-                    <div class="pitch-box">
-                        <b>Why You Fit This Role:</b> ${escapeHtml(job.match_reason || "")}<br>
-                        <b>Key Application Strength:</b> ${escapeHtml(job.key_pitch || "")}
-                    </div>
-
-                    <div class="letter-box">
-                        <div class="letter-header">
-                            <span class="letter-title">Tailored Canadian Cover Letter</span>
-                            <button class="btn-copy" onclick="copyLetter(${index})">📋 Copy Letter</button>
+                        <div class="match-badge">
+                            ✨ ${escapeHtml(job.match_score || '94%')} Iswaafaqid
                         </div>
-                        <div class="cover-text" id="letter-${index}">${escapeHtml(job.cover_letter)}</div>
+                    </div>
+
+                    <div class="job-meta-row">
+                        <span class="meta-pill">Platform: ${escapeHtml(job.site || 'Indeed')}</span>
+                        <span class="meta-pill">Nooca: ${escapeHtml(job.job_type || 'Full-time')}</span>
+                        <span class="meta-pill">Taariikhda: ${escapeHtml(job.date_posted || 'Dhowaan')}</span>
+                        ${job.is_applied ? '<span class="meta-pill" style="background:#10b981; color:white;">✓ Waa La Codsaday</span>' : ''}
+                    </div>
+
+                    <div class="ai-intel-box">
+                        <div class="ai-intel-title">💡 Sababta aad ugu habboon tahay (AI Match Insight):</div>
+                        <div class="ai-intel-text">${escapeHtml(job.match_reason || 'Waxay toos ugu habboon tahay xirfaddaada waxbaridda kombiyuutarka, Google IT Support, iyo aqoontaada jaamacadeed.')}</div>
+                        
+                        <div class="ai-intel-title" style="margin-top:10px; color:#0f766e;">🎯 Qodobka Guusha (Your Pitch):</div>
+                        <div class="ai-intel-text">${escapeHtml(job.key_pitch || 'Xoogga saar Shahaadada Sharafta ee Qaramada Midoobay (IOM), khibradaada tababarka ardayda, iyo nidaaminta kombiyuutarrada.')}</div>
+                    </div>
+
+                    <div class="cover-letter-wrapper">
+                        <div class="cover-letter-header" onclick="toggleAccordion('letter_${index}')">
+                            <h4>
+                                <span>📝</span> Warqadda Codsiga ee Diyaarsan (Canadian Cover Letter)
+                            </h4>
+                            <span style="font-size:12px; font-weight:700; color:#c2410c;">Guji si aad u aragto &darr;</span>
+                        </div>
+                        <div class="cover-letter-body" id="letter_${index}">
+                            <div style="display:flex; justify-content:flex-end; margin-bottom:8px;">
+                                <button class="btn-copy-letter" onclick="copyLetterText('letter_text_${index}')">📋 Nuqul Ka Qaad (Copy)</button>
+                            </div>
+                            <pre class="cover-letter-text" id="letter_text_${index}">${escapeHtml(job.cover_letter || '')}</pre>
+                        </div>
                     </div>
 
                     <div class="card-actions">
-                        <div class="left-actions">
-                            <a href="${job.job_url}" target="_blank" class="btn-apply" onclick="markAppliedDirectly('${escapeHtml(job.job_url)}', ${index})">
-                                Open & Apply on ${escapeHtml(job.site)} &rarr;
-                            </a>
-                            <button class="btn-copy" onclick="copyLetter(${index})">Copy Cover Letter</button>
-                        </div>
-                        <label class="applied-check">
-                            <input type="checkbox" id="check-${index}" ${job.is_applied ? 'checked' : ''} onchange="toggleApplied('${escapeHtml(job.job_url)}', ${index}, this.checked)">
-                            Mark as Applied
-                        </label>
+                        <a href="${escapeHtml(job.job_url)}" target="_blank" class="btn-apply-main" onclick="markAuto('${escapeHtml(job.job_url)}')">
+                            🚀 Guji Si Aad U Codsato (Open Job)
+                        </a>
+                        <button class="btn-mark-applied ${job.is_applied ? 'applied' : ''}" onclick="toggleApplied(this, '${escapeHtml(job.job_url)}')">
+                            ${job.is_applied ? '✓ Waa La Codsaday (Applied)' : 'Calaamadee in la codsaday'}
+                        </button>
                     </div>
                 `;
+
                 container.appendChild(card);
             });
+
+            document.getElementById("quotaDisplay").innerText = `Hadda: ${appliedCount} Codsi La Diray / Hadafka Maanta: 5`;
         }
 
-        function copyLetter(index) {
-            const text = document.getElementById(`letter-${index}`).innerText;
+        function toggleAccordion(id) {
+            const el = document.getElementById(id);
+            if (el) el.classList.toggle("show");
+        }
+
+        function copyLetterText(id) {
+            const text = document.getElementById(id).innerText;
             navigator.clipboard.writeText(text).then(() => {
-                alert("Cover Letter copied to clipboard!");
+                alert("✓ Warqadda codsiga waa la koobiyeeyay! Hadda toos ayaad ugu dhajin kartaa website-ka shaqada.");
             });
         }
 
-        async function toggleApplied(jobUrl, index, checked) {
-            const badge = document.getElementById(`badge-${index}`);
-            if (checked) {
-                badge.style.display = "inline-block";
-                await fetch("/api/mark_applied", {
+        async function toggleApplied(btn, jobUrl) {
+            try {
+                const res = await fetch("/api/mark_applied", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ job_url: jobUrl })
                 });
-            } else {
-                badge.style.display = "none";
+                if (res.ok) {
+                    btn.classList.add("applied");
+                    btn.innerText = "✓ Waa La Codsaday (Applied)";
+                    loadJobs();
+                }
+            } catch (err) {
+                console.error(err);
             }
         }
 
-        function markAppliedDirectly(jobUrl, index) {
-            const check = document.getElementById(`check-${index}`);
-            if (check && !check.checked) {
-                check.checked = true;
-                toggleApplied(jobUrl, index, true);
+        function markAuto(jobUrl) {
+            fetch("/api/mark_applied", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ job_url: jobUrl })
+            }).catch(e => console.error(e));
+        }
+
+        function quickFilter(btn, term, loc, isRemote) {
+            document.querySelectorAll(".btn-quick").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            document.getElementById("searchTerm").value = term;
+            document.getElementById("searchLocation").value = loc;
+            document.getElementById("searchRemote").checked = isRemote;
+            triggerSearch();
+        }
+
+        async function triggerSearch() {
+            const btn = document.getElementById("btnSearch");
+            const term = document.getElementById("searchTerm").value.trim();
+            const location = document.getElementById("searchLocation").value.trim();
+            const limit = parseInt(document.getElementById("searchLimit").value);
+            const isRemote = document.getElementById("searchRemote").checked;
+
+            btn.disabled = true;
+            document.getElementById("searchIcon").innerHTML = '<div class="spinner"></div>';
+            document.getElementById("searchText").innerText = "Shaqooyinka ayaa la raadinayaa...";
+
+            try {
+                const res = await fetch("/api/search", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        term: term,
+                        location: location,
+                        limit: limit,
+                        remote: isRemote
+                    })
+                });
+                const data = await res.json();
+                if (data.status === "success" && data.jobs) {
+                    renderJobs(data.jobs);
+                } else {
+                    alert("Ma helin shaqooyin cusub ama cillad ayaa dhacday: " + (data.message || ''));
+                }
+            } catch (e) {
+                alert("Cillad intii shaqada la raadinayay: " + e.message);
+            } finally {
+                btn.disabled = false;
+                document.getElementById("searchIcon").innerText = "🔍";
+                document.getElementById("searchText").innerText = "Baadh Shaqooyinka Cusub";
             }
         }
 
-        function escapeHtml(text) {
-            if (!text) return "";
-            return String(text)
+        // Chatbot Functions
+        function toggleChat() {
+            const win = document.getElementById("chatWindow");
+            win.classList.toggle("open");
+            if (win.classList.contains("open")) {
+                document.getElementById("chatInput").focus();
+            }
+        }
+
+        function askChatbot(promptText) {
+            toggleChat();
+            sendQuickPrompt(promptText);
+        }
+
+        function sendQuickPrompt(promptText) {
+            document.getElementById("chatInput").value = promptText;
+            sendChatMessage();
+        }
+
+        function handleChatKey(event) {
+            if (event.key === "Enter") {
+                sendChatMessage();
+            }
+        }
+
+        async function sendChatMessage() {
+            const input = document.getElementById("chatInput");
+            const msg = input.value.trim();
+            if (!msg) return;
+
+            const chatBody = document.getElementById("chatBody");
+
+            // Append User Message
+            const userDiv = document.createElement("div");
+            userDiv.className = "chat-msg user";
+            userDiv.innerText = msg;
+            chatBody.appendChild(userDiv);
+
+            input.value = "";
+            chatBody.scrollTop = chatBody.scrollHeight;
+
+            // Typing Indicator
+            const typingDiv = document.createElement("div");
+            typingDiv.className = "chat-msg bot";
+            typingDiv.id = "typingIndicator";
+            typingDiv.innerHTML = '<span class="spinner" style="border-color:#cbd5e1; border-top-color:#0284c7; width:12px; height:12px; margin-right:6px;"></span> Kaaliyaha ayaa ka fekeraya...';
+            chatBody.appendChild(typingDiv);
+            chatBody.scrollTop = chatBody.scrollHeight;
+
+            try {
+                const res = await fetch("/api/chat", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ message: msg })
+                });
+                const data = await res.json();
+                
+                const ind = document.getElementById("typingIndicator");
+                if (ind) ind.remove();
+
+                const botDiv = document.createElement("div");
+                botDiv.className = "chat-msg bot";
+                botDiv.innerHTML = formatMarkdown(data.reply || "Waan ka xumahay, fariin ma helin.");
+                chatBody.appendChild(botDiv);
+                chatBody.scrollTop = chatBody.scrollHeight;
+
+            } catch (err) {
+                const ind = document.getElementById("typingIndicator");
+                if (ind) ind.remove();
+
+                const botDiv = document.createElement("div");
+                botDiv.className = "chat-msg bot";
+                botDiv.innerText = "Cillad ayaa dhacday xiriirka server-ka. Fadlan isku day mar kale.";
+                chatBody.appendChild(botDiv);
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }
+        }
+
+        function formatMarkdown(text) {
+            let escaped = escapeHtml(text);
+            escaped = escaped.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
+            escaped = escaped.replace(/\*(.*?)\*/g, '<i>$1</i>');
+            escaped = escaped.replace(/\n/g, '<br>');
+            return escaped;
+        }
+
+        function escapeHtml(str) {
+            if (!str) return "";
+            return str
                 .replace(/&/g, "&amp;")
                 .replace(/</g, "&lt;")
                 .replace(/>/g, "&gt;")
