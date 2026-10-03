@@ -192,6 +192,22 @@
         }
         .btn-substack-nav:hover { opacity: 0.9; }
 
+        .btn-telegram-nav {
+            background: linear-gradient(135deg, #0088cc, #0284c7);
+            color: white;
+            text-decoration: none;
+            padding: 7px 13px;
+            border-radius: 10px;
+            font-size: 12.5px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 2px 8px rgba(0, 136, 204, 0.3);
+            transition: transform 0.2s;
+        }
+        .btn-telegram-nav:hover { transform: translateY(-1px); }
+
         .btn-chat-trigger-nav {
             background: linear-gradient(135deg, #0284c7, #38bdf8);
             color: white;
@@ -330,6 +346,152 @@
             transition: all 0.2s;
         }
         .hero-btn-secondary:hover { background: rgba(255, 255, 255, 0.2); }
+
+        .hero-btn-telegram {
+            background: linear-gradient(135deg, #0088cc, #29b6f6);
+            color: white;
+            text-decoration: none;
+            padding: 13px 22px;
+            border-radius: var(--radius-md);
+            font-weight: 700;
+            font-size: 14.5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 14px rgba(0, 136, 204, 0.35);
+            transition: all 0.2s;
+        }
+        .hero-btn-telegram:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 136, 204, 0.5);
+        }
+
+        /* Hero Services Suite (Adeegyada Shaqo Tagista) */
+        .hero-services-wrap {
+            margin-top: 36px;
+            padding-top: 28px;
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+        }
+        .hero-services-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+        .hero-services-title {
+            font-size: 20px;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: -0.3px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .hero-services-badge {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(16, 185, 129, 0.2));
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            color: #38bdf8;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+        .hero-services-subtitle {
+            font-size: 13.5px;
+            color: #94a3b8;
+            margin-bottom: 20px;
+            line-height: 1.55;
+            max-width: 800px;
+        }
+        .hero-services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 16px;
+        }
+        .hero-service-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.25s ease;
+            text-decoration: none;
+            color: inherit;
+        }
+        .hero-service-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #38bdf8;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+        }
+        .hero-service-card-top {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            margin-bottom: 12px;
+        }
+        .hero-service-icon-box {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+        .hero-service-heading {
+            font-size: 16px;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1.3;
+            margin-bottom: 4px;
+        }
+        .hero-service-tag {
+            font-size: 11px;
+            font-weight: 700;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .hero-service-desc {
+            font-size: 13px;
+            color: #cbd5e1;
+            line-height: 1.55;
+            margin-bottom: 16px;
+        }
+        .hero-service-action-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 12px;
+            font-size: 12.5px;
+            font-weight: 700;
+        }
+        .hero-service-action-link {
+            color: #38bdf8;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+        .hero-service-card:hover .hero-service-action-link {
+            color: #6ee7b7;
+        }
+        .hero-service-meta-badge {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #e2e8f0;
+        }
 
         /* Section Headers */
         .section-header {
@@ -1496,6 +1658,7 @@
             </a>
 
             <nav class="nav-links">
+                <a href="#heroServices" class="nav-link" id="navLinkServices">💼 Adeegyada Shaqada</a>
                 <a href="#coursesHubSection" class="nav-link" id="navLinkCourses">📚 Koorsooyinka & Buugaagta</a>
                 <a href="#bookingSection" class="nav-link" id="navLinkBooking">📅 Ballan Live ah</a>
                 <a href="#assessSection" class="nav-link" id="navLinkAssess">⚡ AI Assessment</a>
@@ -1505,6 +1668,7 @@
             </nav>
 
             <div class="nav-actions">
+                <a href="https://t.me/Baahiyebot" target="_blank" class="btn-telegram-nav" title="Telegram Career Bot">✈️ Telegram Bot</a>
                 <a href="#substackSection" class="btn-substack-nav">📬 Substack</a>
                 <a href="#bookingSection" class="btn-booking-nav" id="btnNavBooking">📅 Ballan Qabso</a>
                 <a href="/download/resume" class="btn-resume" target="_blank" id="btnDownloadResume">📄 CV (PDF)</a>
@@ -1539,9 +1703,148 @@
                 <a href="#jobsSection" class="hero-btn-secondary" id="btnHeroJobs">
                     🔍 Baadh Shaqooyinka IT-ga Soomaalida
                 </a>
+                <a href="https://t.me/Baahiyebot" target="_blank" class="hero-btn-telegram" id="btnHeroTelegram">
+                    ✈️ Telegram Bot (@Baahiyebot)
+                </a>
                 <a href="#bookingSection" class="hero-btn-success" id="btnHeroBooking">
                     📅 Qabso Ballan Live ah (1-on-1)
                 </a>
+            </div>
+
+            <!-- Adeegyada Shaqo Tagista ee Dhalinyarada IT-ga -->
+            <div class="hero-services-wrap" id="heroServices">
+                <div class="hero-services-header">
+                    <div class="hero-services-title">
+                        <span>💼</span>
+                        <span id="txtHeroServicesTitle">Adeegyada Shaqo Tagista ee Dhalinyarada IT-ga</span>
+                    </div>
+                    <span class="hero-services-badge" id="badgeHeroServices">🚀 6 Adeeg oo Diyaar ah</span>
+                </div>
+                <p class="hero-services-subtitle" id="txtHeroServicesSub">
+                    Xirmo dhammaystiran oo loogu talagalay ardayda iyo qalin-jabiyayaasha Soomaaliyeed ee IT-ga si ay si kalsooni leh ugu galaan suuqa shaqada maxalliga ah iyo midka caalamiga ah:
+                </p>
+
+                <div class="hero-services-grid">
+                    <!-- Service 1: ATS Resume Engine -->
+                    <a href="#assessSection" class="hero-service-card">
+                        <div>
+                            <div class="hero-service-card-top">
+                                <div class="hero-service-icon-box" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8;">📄</div>
+                                <div>
+                                    <div class="hero-service-tag">Adeegga 1-aad</div>
+                                    <div class="hero-service-heading">Dhisidda CV ATS-Friendly ah</div>
+                                </div>
+                            </div>
+                            <p class="hero-service-desc">
+                                Habee CV-gaaga qaabka ay toos u aqbalaan hababka casriga ah ee shirkadaha caalamiga ah iyo kuwa Soomaalida (ATS), adigoo iftiiminaya xirfadahaaga farsamo.
+                            </p>
+                        </div>
+                        <div class="hero-service-action-row">
+                            <span class="hero-service-action-link">⚡ Falanqee & Dhis CV &rarr;</span>
+                            <span class="hero-service-meta-badge">60 Ilbiriqsi</span>
+                        </div>
+                    </a>
+
+                    <!-- Service 2: Job-Winning Cover Letter -->
+                    <a href="#assessSection" class="hero-service-card">
+                        <div>
+                            <div class="hero-service-card-top">
+                                <div class="hero-service-icon-box" style="background: rgba(168, 85, 247, 0.15); color: #c084fc;">📝</div>
+                                <div>
+                                    <div class="hero-service-tag">Adeegga 2-aad</div>
+                                    <div class="hero-service-heading">Curinta Cover Letter Guuleysta</div>
+                                </div>
+                            </div>
+                            <p class="hero-service-desc">
+                                Curri warqad codsi shaqo oo ku qoran heerka caalamiga ah (Canadian & Remote style) oo toos ugu habboon doorka aad codsanayso adigoo AI isticmaalaya.
+                            </p>
+                        </div>
+                        <div class="hero-service-action-row">
+                            <span class="hero-service-action-link">✍️ Curri Warqadda &rarr;</span>
+                            <span class="hero-service-meta-badge">Heer Caalami</span>
+                        </div>
+                    </a>
+
+                    <!-- Service 3: STAR Interview Prep -->
+                    <a href="#assessSection" class="hero-service-card">
+                        <div>
+                            <div class="hero-service-card-top">
+                                <div class="hero-service-icon-box" style="background: rgba(245, 158, 11, 0.15); color: #fbbf24;">🎯</div>
+                                <div>
+                                    <div class="hero-service-tag">Adeegga 3-aad</div>
+                                    <div class="hero-service-heading">Tababarka Wareysiga (STAR)</div>
+                                </div>
+                            </div>
+                            <p class="hero-service-desc">
+                                Isu diyaari wareysiyada adag ee IT-ga adigoo baranaya qaabka STAR (Situation, Task, Action, Result) iyo tusaalooyin dhab ah oo laga rabo wareysiga farsamada.
+                            </p>
+                        </div>
+                        <div class="hero-service-action-row">
+                            <span class="hero-service-action-link">💡 Baro Farsamada &rarr;</span>
+                            <span class="hero-service-meta-badge">STAR Method</span>
+                        </div>
+                    </a>
+
+                    <!-- Service 4: Job Matching Hub -->
+                    <a href="#jobsSection" class="hero-service-card">
+                        <div>
+                            <div class="hero-service-card-top">
+                                <div class="hero-service-icon-box" style="background: rgba(16, 185, 129, 0.15); color: #34d399;">🔍</div>
+                                <div>
+                                    <div class="hero-service-tag">Adeegga 4-aad</div>
+                                    <div class="hero-service-heading">Isku-Xirka Shaqooyinka IT-ga</div>
+                                </div>
+                            </div>
+                            <p class="hero-service-desc">
+                                Fursadaha ugu dambeeya ee shirkadaha Soomaaliya (Hormuud, Dahabshiil, Telesom), Bariga Afrika (Kenya, Itoobiya), Remote caalami ah, iyo Kanada.
+                            </p>
+                        </div>
+                        <div class="hero-service-action-row">
+                            <span class="hero-service-action-link">🔎 Baadh 15+ Shaqo &rarr;</span>
+                            <span class="hero-service-meta-badge">Soomaaliya & East Africa</span>
+                        </div>
+                    </a>
+
+                    <!-- Service 5: 1-on-1 Mentorship & Live Booking -->
+                    <a href="#bookingSection" class="hero-service-card">
+                        <div>
+                            <div class="hero-service-card-top">
+                                <div class="hero-service-icon-box" style="background: rgba(236, 72, 153, 0.15); color: #f472b6;">📅</div>
+                                <div>
+                                    <div class="hero-service-tag">Adeegga 5-aad</div>
+                                    <div class="hero-service-heading">Ballan Live ah (1-on-1 Mentorship)</div>
+                                </div>
+                            </div>
+                            <p class="hero-service-desc">
+                                Kulan toos ah oo Google Meet ama Zoom ah oo aad la yeelanayso Mohamed Faratoon si laguu siiyo hagid gaar ah oo ku saabsan shaqadaada iyo koorsooyinkaaga.
+                            </p>
+                        </div>
+                        <div class="hero-service-action-row">
+                            <span class="hero-service-action-link">🗓️ Qabso Ballan Live &rarr;</span>
+                            <span class="hero-service-meta-badge">Google Meet / Zoom</span>
+                        </div>
+                    </a>
+
+                    <!-- Service 6: Telegram Career Bot -->
+                    <a href="https://t.me/Baahiyebot" target="_blank" class="hero-service-card" style="border-color: rgba(0, 136, 204, 0.4); background: rgba(0, 136, 204, 0.08);">
+                        <div>
+                            <div class="hero-service-card-top">
+                                <div class="hero-service-icon-box" style="background: rgba(0, 136, 204, 0.25); color: #38bdf8;">🤖</div>
+                                <div>
+                                    <div class="hero-service-tag" style="color: #38bdf8;">Adeegga 6-aad • Mobilkaaga</div>
+                                    <div class="hero-service-heading">Telegram Career Bot (@Baahiyebot)</div>
+                                </div>
+                            </div>
+                            <p class="hero-service-desc">
+                                Bot-ka rasmiga ah ee Telegram-ka: toos taleefankaaga ugu hel ogeysiisyada shaqooyinka cusub, buugaagta Isbar, koorsooyinka bilaashka ah iyo la-taliyaha AI-ga 24/7!
+                            </p>
+                        </div>
+                        <div class="hero-service-action-row">
+                            <span class="hero-service-action-link" style="color: #6ee7b7;">✈️ Fur @Baahiyebot Telegram-ka &rarr;</span>
+                            <span class="hero-service-meta-badge" style="background: #0088cc; color: white;">24/7 Live</span>
+                        </div>
+                    </a>
+                </div>
             </div>
         </section>
 
@@ -2244,6 +2547,8 @@
             <div class="footer-col">
                 <h4>Fursadaha & Warsidaha</h4>
                 <ul class="footer-links">
+                    <li><a href="https://t.me/Baahiyebot" target="_blank" style="color:#38bdf8; font-weight:700;">✈️ Telegram Bot (@Baahiyebot)</a></li>
+                    <li><a href="#heroServices">💼 Adeegyada Shaqo Tagista</a></li>
                     <li><a href="#assessSection">⚡ AI Career Assessment</a></li>
                     <li><a href="#jobsSection">🔍 Shaqooyinka IT-ga ee Soomaaliya</a></li>
                     <li><a href="#substackSection">📬 Somalilibrary Substack</a></li>
@@ -2255,6 +2560,7 @@
             <div class="footer-col">
                 <h4>Xiriirka & Xafiiska</h4>
                 <ul class="footer-links">
+                    <li><a href="https://t.me/Baahiyebot" target="_blank" style="color:#38bdf8; font-weight:700;">✈️ Telegram: @Baahiyebot</a></li>
                     <li><a href="https://wa.me/15873064137" target="_blank">📱 WhatsApp: (587) 306-4137</a></li>
                     <li><a href="mailto:Suxufi34@gmail.com">📧 Suxufi34@gmail.com</a></li>
                     <li><a href="https://somalilibrary.substack.com" target="_blank">📬 somalilibrary.substack.com</a></li>
@@ -2282,6 +2588,7 @@
                 announcement: "✨ Shaqo Raadiyaha Dhalinyarada Soomaaliyeed ee Bartay IT-ga • Soomaaliya, East Africa, Remote & Canada • 100% Free",
                 brandTitle: "Shaqo Raadiyaha Dhalinyarada Soomaaliyeed",
                 brandSub: "Culuumta IT-ga, AI Automation & Shaqooyinka Soomaaliya, East Africa & Remote",
+                navServices: "💼 Adeegyada Shaqada",
                 navCourses: "📚 Koorsooyinka & Buugaagta",
                 navBooking: "📅 Ballan Live ah",
                 navAssess: "⚡ AI Assessment",
@@ -2294,6 +2601,7 @@
                 announcement: "✨ Somali Youth IT Career Discovery & Academy • Somalia, East Africa, Remote & Canada • 100% Free",
                 brandTitle: "Somali Youth IT Career Portal",
                 brandSub: "Computer Science, AI Automation & Tech Jobs in Somalia, East Africa & Remote",
+                navServices: "💼 Career Services",
                 navCourses: "📚 Courses & Books",
                 navBooking: "📅 Live Booking",
                 navAssess: "⚡ AI Assessment",
@@ -2306,6 +2614,7 @@
                 announcement: "✨ بوابة الوظائف التقنية للشباب الصومالي • الصومال، شرق إفريقيا وعن بُعد • مجاني 100%",
                 brandTitle: "محرك الوظائف التقنية للشباب الصومالي",
                 brandSub: "علوم الحاسوب، الذكاء الاصطناعي ووظائف الصومال وشرق إفريقيا",
+                navServices: "💼 خدمات التوظيف",
                 navCourses: "📚 الدورات والكتب",
                 navBooking: "📅 حجز موعد مباشر",
                 navAssess: "⚡ تقييم المسار",
@@ -2358,6 +2667,7 @@
             safeSet("txtAnnouncement", t.announcement);
             safeSet("txtBrandTitle", t.brandTitle);
             safeSet("txtBrandSub", t.brandSub);
+            safeSet("navLinkServices", t.navServices);
             safeSet("navLinkCourses", t.navCourses);
             safeSet("navLinkBooking", t.navBooking);
             safeSet("navLinkAssess", t.navAssess);
