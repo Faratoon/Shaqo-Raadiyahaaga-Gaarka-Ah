@@ -201,7 +201,7 @@ def handle_academy(chat_id):
 • 🤖 <b>ISBAR ChatGPT Prompts</b> — 🎁 <b>Bilaash</b> (87 Pages)
 
 📬 <b>Sidee ku helaysaa Buugaagta?</b>
-Qof kasta oo ku biira (subscribe gareeya) warsidaha <b>Dhegeyso Buug</b> waxaan si toos ah emailkiisa ugu diraynaa buugaagta:
+Qof kasta oo ku biira (subscribe gareeya) warsidaha <b>Dhegeyso Buug</b> wuxuu helayaa <b>2 Buug oo Bilaash ah (Free)</b> oo si toos ah (automatic ah) ugu soo dhacaya inbox-kiisa (email-kiisa)!
 👉 <a href="https://dhegeysobuug.substack.com/">dhegeysobuug.substack.com</a>
 
 🎓 <b>Koorsooyinka AI Automation (100% Bilaash):</b>
@@ -210,7 +210,7 @@ Qof kasta oo ku biira (subscribe gareeya) warsidaha <b>Dhegeyso Buug</b> waxaan 
 
     markup = {
         "inline_keyboard": [
-            [{"text": "📬 Ku Biir Dhegeyso Buug (Hel Buug)", "url": DHEGEYSO_BUUG_SUBSTACK}],
+            [{"text": "📬 Hel 2 Buug oo Free ah (Dhegeyso Buug)", "url": DHEGEYSO_BUUG_SUBSTACK}],
             [{"text": "📱 Gal Akadeemiyada Isbar (Web App)", "web_app": {"url": f"{WEB_APP_URL}#coursesHubSection"}}],
             [
                 {"text": "💬 Dalbo Buug (WhatsApp)", "url": "https://wa.me/15873064137?text=Salamaat%20Mohamed,%20waxaan%20rabaa%20buug%20Isbar"},
@@ -245,8 +245,8 @@ def handle_contact(chat_id):
 
 Kala xidhiidh aasaasaha iyo kooxda nidaamka siyaabaha rasmiga ah:
 
-• 📬 <b>Dhegeyso Buug Substack (Helitaanka Buugaagta):</b>
-  <a href='https://dhegeysobuug.substack.com/'>dhegeysobuug.substack.com</a>
+• 📬 <b>Dhegeyso Buug Substack (Hel 2 Buug oo Bilaash ah):</b>
+  <a href='https://dhegeysobuug.substack.com/'>dhegeysobuug.substack.com</a> (Si automatic ah ayay inbox-kaaga ugu soo dhacayaan marka aad subscribe gareyso)
 
 • 📬 <b>Somalilibrary Substack (Warsidaha Rasmiga ah):</b>
   <a href='https://somalilibrary.substack.com'>somalilibrary.substack.com</a>
@@ -262,7 +262,7 @@ Kala xidhiidh aasaasaha iyo kooxda nidaamka siyaabaha rasmiga ah:
     markup = {
         "inline_keyboard": [
             [
-                {"text": "📬 Dhegeyso Buug (Substack)", "url": DHEGEYSO_BUUG_SUBSTACK},
+                {"text": "📬 Hel 2 Buug oo Free ah", "url": DHEGEYSO_BUUG_SUBSTACK},
                 {"text": "📬 Somalilibrary Substack", "url": SUBSTACK_URL}
             ],
             [
