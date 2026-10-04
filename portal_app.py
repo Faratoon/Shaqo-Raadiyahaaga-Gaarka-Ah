@@ -157,115 +157,200 @@ def check_session_limit(session_id: str) -> tuple[bool, int, int]:
     remaining = max(0, MAX_SESSION_MESSAGES - current)
     return True, remaining, current
 
-def get_curated_somali_it_jobs(term="IT Support", location="Muqdisho, Soomaaliya", is_remote=False):
-    loc_l = location.lower()
-    term_l = term.lower()
+def get_curated_somali_it_jobs(term="Dhammaan", location="Muqdisho, Soomaaliya", is_remote=False):
+    loc_l = location.lower() if location else ""
+    term_l = term.lower() if term else ""
 
     all_jobs = [
+        # 1. Finance & Accounting
+        {
+            "site": "SomaliJobs",
+            "title": "Finance & Accounting Officer",
+            "company": "Dahabshiil Group",
+            "location": "Muqdisho & Hargeysa, Soomaaliya",
+            "job_url": "https://www.dahabshiil.com/careers/finance-accounting-officer",
+            "description": "Dahabshiil Group waxay raadinaysaa sarkaal xisaabeed oo maamula xisaab-xirka bisha, diyaarinta warbixinnada maaliyadeed, xisaabinta dakhliga iyo kharashka, iyo dib-u-eegista xisaabaadka bangiga. Shuruudo: Shahaadada koowaad ee Xisaabaadka ama Maaliyadda, aqoonta Excel iyo software-ada xisaabaadka.",
+            "date_posted": "2026-10-03",
+            "job_type": "Full-time",
+            "category": "finance"
+        },
+        # 2. HR & Administration
+        {
+            "site": "SomaliJobs",
+            "title": "Human Resources (HR) & Admin Assistant",
+            "company": "Salaam Somali Bank",
+            "location": "Muqdisho, Soomaaliya",
+            "job_url": "https://salaambank.so/careers/hr-admin-assistant-2026",
+            "description": "Salaam Somali Bank wuxuu shaqaaleysiinayaa Kaaliyaha HR & Maamulka. Shaqada waxaa ka mid ah qabashada codsiyada shaqo-doonka, abaabulka wareysiyada, diyaarinta heshiisyada shaqaalaha, iyo ilaalinta faylalka shaqaalaha.",
+            "date_posted": "2026-10-02",
+            "job_type": "Full-time",
+            "category": "finance"
+        },
+        # 3. Customer Care & Call Center
+        {
+            "site": "SomaliJobs",
+            "title": "Customer Care & Call Center Representative",
+            "company": "Hormuud Telecom",
+            "location": "Muqdisho, Soomaaliya",
+            "job_url": "https://www.hormuud.com/careers/customer-care-representative",
+            "description": "Hormuud Telecom waxay qaadanaysaa shaqaale u heellan adeegga macaamiisha (Call Center). Shaqadu waxay tahay ka jawaabista taleefannada macaamiisha, xallinta cabashooyinka EVC Plus, Internet-ka iyo xirmooyinka adeegga. Luuqadaha: Af-Soomaali sugan iyo Ingiriis fudud.",
+            "date_posted": "2026-10-03",
+            "job_type": "Full-time",
+            "category": "sales"
+        },
+        # 4. Sales & Marketing
+        {
+            "site": "SomaliJobs",
+            "title": "Sales & Corporate Marketing Executive",
+            "company": "Telesom Company",
+            "location": "Hargeysa & Burco, Soomaaliya",
+            "job_url": "https://www.telesom.com/careers/sales-executive",
+            "description": "Telesom waxay raadinaysaa saraakiil iib iyo suuqgeyn oo dardargeliya iibka xirmooyinka ganacsiga (Enterprise internet & Zaad). Waxaa loo baahan yahay shakhsi firfircoon oo leh xirfad xiriir iyo qancin macaamiil.",
+            "date_posted": "2026-10-01",
+            "job_type": "Full-time",
+            "category": "sales"
+        },
+        # 5. Healthcare & Nutrition (NGO)
+        {
+            "site": "ReliefWeb",
+            "title": "Public Health & Nutrition Field Officer",
+            "company": "Save the Children Somalia",
+            "location": "Baydhabo & Muqdisho, Soomaaliya",
+            "job_url": "https://somalia.savethechildren.net/careers/health-nutrition-officer",
+            "description": "Kormeerka xarumaha daryeelka hooyada iyo dhallaanka, bixinta dawooyinka iyo nafaqada degdegga ah, iyo diyaarinta xogta caafimaadka bulshada ee deegaannada Koonfur-Galbeed iyo Banaadir.",
+            "date_posted": "2026-10-02",
+            "job_type": "Contract",
+            "category": "health"
+        },
+        # 6. Humanitarian Project Officer
+        {
+            "site": "ReliefWeb",
+            "title": "Project Officer – Community Resilience & Youth Support",
+            "company": "Somali Red Crescent Society (SRCS)",
+            "location": "Garoowe & Hargeysa, Soomaaliya",
+            "job_url": "https://www.srcs.org.so/careers/project-officer",
+            "description": "Hoggaaminta barnaamijyada taakuleynta bulshada, tababarrada farsamada gacanta ee dhalinyarada, iyo isku-xirka laamaha dowladda iyo hay'adaha gargaarka.",
+            "date_posted": "2026-10-01",
+            "job_type": "Full-time",
+            "category": "health"
+        },
+        # 7. Education & Teaching
+        {
+            "site": "SomaliJobs",
+            "title": "Secondary School English & Mathematics Teacher",
+            "company": "Kulan Education Network",
+            "location": "Muqdisho & Kismaayo, Soomaaliya",
+            "job_url": "https://kulan.edu.so/careers/teachers-2026",
+            "description": "Bixinta casharrada maadooyinka Ingiriisiga iyo Xisaabta ee ardayda fasallada sare (Form 1 - Form 4), diyaarinta casharrada, iyo saxidda imtixaanaadka.",
+            "date_posted": "2026-10-02",
+            "job_type": "Full-time",
+            "category": "education"
+        },
+        # 8. Logistics & Procurement
+        {
+            "site": "UNJobs",
+            "title": "Logistics & Procurement Assistant",
+            "company": "UN World Food Programme (WFP Somalia)",
+            "location": "Muqdisho & Berbera, Soomaaliya",
+            "job_url": "https://www.wfp.org/careers/somalia-logistics-assistant",
+            "description": "Dabagalka maraakiibta iyo shixnadaha gargaarka, maareynta bakhaarada kaydka, xiriirinta shirkadaha gaadiidka, iyo hubinta badqabka agabka cuntada.",
+            "date_posted": "2026-10-03",
+            "job_type": "Contract",
+            "category": "logistics"
+        },
+        # 9. IT Support & Systems
         {
             "site": "SomaliTech",
             "title": "IT Support & Network Technician",
-            "company": "Hormuud Telecom",
+            "company": "Premier Bank",
             "location": "Muqdisho, Soomaaliya",
-            "job_url": "https://www.hormuud.com/careers/it-support-network-technician",
-            "description": "Hormuud Telecom is seeking a motivated IT Support & Network Technician to join our central technology team in Mogadishu. Responsibilities include troubleshooting hardware/software, configuring routers/switches, supporting internal staff, and maintaining network uptime across corporate branches. Qualifications: Degree or diploma in Computer Science, IT, or equivalent.",
+            "job_url": "https://premierbank.so/careers/it-support-technician",
+            "description": "Xallinta cilladaha kombuyuutarrada xarumaha bangiga, habeynta LAN/WAN routers, iyo taageerada shaqaalaha xagga software-ka iyo amniga nidaamka.",
             "date_posted": "2026-10-02",
-            "job_type": "Full-time"
+            "job_type": "Full-time",
+            "category": "tech"
         },
-        {
-            "site": "SomaliTech",
-            "title": "Junior Database & Systems Administrator",
-            "company": "Dahabshiil Bank International",
-            "location": "Hargeysa, Soomaaliya",
-            "job_url": "https://www.dahabshiil.com/careers/systems-administrator",
-            "description": "Dahabshiil Bank is hiring a Junior Database & Systems Administrator in Hargeisa. Key duties include monitoring core banking servers, executing SQL database queries, performing daily backups, user access management, and ensuring high system availability. Strong understanding of SQL and IT security required.",
-            "date_posted": "2026-10-01",
-            "job_type": "Full-time"
-        },
+        # 10. Web & Software Development
         {
             "site": "SomaliTech",
             "title": "Web & Software Developer (Full Stack)",
-            "company": "Premier Bank",
-            "location": "Muqdisho, Soomaaliya",
-            "job_url": "https://premierbank.so/careers/web-software-developer-2026",
-            "description": "Premier Bank is looking for a creative Full-Stack Web Developer to build and maintain modern banking portals and digital services. Proficiency in HTML5, CSS3, JavaScript/React, Python/Node.js, and RESTful APIs. Must be proactive, innovative, and passionate about fintech in Somalia.",
-            "date_posted": "2026-10-02",
-            "job_type": "Full-time"
+            "company": "Dahabshiil Bank International",
+            "location": "Hargeysa, Soomaaliya",
+            "job_url": "https://www.dahabshiil.com/careers/software-developer",
+            "description": "Dhisidda iyo dayactirka bogagga internet-ka iyo adeegyada fintech. Xirfadaha: HTML, CSS, JavaScript/React, Python/Node.js, iyo maamulka SQL databases.",
+            "date_posted": "2026-10-01",
+            "job_type": "Full-time",
+            "category": "tech"
         },
-        {
-            "site": "SomaliTech",
-            "title": "ICT Field Officer & Systems Support",
-            "company": "UN / IOM Somalia Mission",
-            "location": "Muqdisho & Garoowe, Soomaaliya",
-            "job_url": "https://somalia.iom.int/careers/ict-officer-support-2026",
-            "description": "The International Organization for Migration (IOM) in Somalia invites applications for an ICT Field Officer. The role involves managing office IT equipment, VSAT and LAN/WAN connections, user helpdesk, and IT asset tracking across field offices in Somalia.",
-            "date_posted": "2026-10-03",
-            "job_type": "Contract"
-        },
+        # 11. Digital Marketing & Content Creation (Remote)
         {
             "site": "RemoteGlobal",
-            "title": "AI Automation & Chatbot Specialist (Remote)",
-            "company": "Somalilab Tech & Innovations",
+            "title": "Digital Marketing & Social Media Specialist (Remote)",
+            "company": "Isbar Media & Tech Hub",
             "location": "Remote (Soomaaliya & Global)",
-            "job_url": "https://somalilab.tech/careers/ai-automation-specialist",
-            "description": "Join our fast-growing innovation lab as an AI Automation Specialist. Build no-code and low-code chatbots using Typebot, N8n, Botpress, Manychat, and OpenAI APIs. Work from anywhere in Somalia or East Africa on high-impact automation projects.",
+            "job_url": "https://isbar-ai.com/#jobsSection",
+            "description": "Maareynta baraha bulshada (Facebook, TikTok, LinkedIn), abuurista qoraallada xayeysiiska, naqshadeynta boorarka digital-ka ah, iyo kordhinta macaamiisha.",
             "date_posted": "2026-10-03",
-            "job_type": "Remote / Full-time"
+            "job_type": "Remote / Full-time",
+            "category": "sales"
         },
+        # 12. East Africa Regional (Kenya)
         {
             "site": "EastAfricaJobs",
-            "title": "Junior Cloud & Systems Engineer",
+            "title": "Customer Operations & Junior Analyst",
             "company": "Safaricom Tech Hub",
             "location": "Nairobi, Kenya",
-            "job_url": "https://safaricom.co.ke/careers/cloud-systems-engineer",
-            "description": "Exciting opportunity for East African tech graduates to work on large-scale cloud infrastructure, DevOps pipelines, and mobile money integrations at Safaricom Nairobi.",
+            "job_url": "https://safaricom.co.ke/careers/operations-analyst",
+            "description": "Falanqaynta xogta macaamiisha, soo saarista warbixinnada suuqa, iyo taageerada adeegyada lacag-dirista ee gobolka Bariga Afrika.",
             "date_posted": "2026-10-02",
-            "job_type": "Full-time"
-        },
-        {
-            "site": "EastAfricaJobs",
-            "title": "IT Project & Systems Coordinator",
-            "company": "East Africa Relief & Development",
-            "location": "Addis Ababa & Jigjiga, Ethiopia",
-            "job_url": "https://reliefweb.int/job/east-africa-it-coordinator",
-            "description": "Coordinate technical field infrastructure, student computer labs, and digital data reporting across Somali Region (Jigjiga) and Addis Ababa.",
-            "date_posted": "2026-10-01",
-            "job_type": "Full-time"
-        },
-        {
-            "site": "Indeed",
-            "title": "Youth Literacy & Computer Coordinator",
-            "company": "P.A.L.S. - Project Adult Literacy Society",
-            "location": "Edmonton, AB, Canada",
-            "job_url": "https://ca.indeed.com/viewjob?jk=e9e4c49bfb924d13",
-            "description": "Support youth and new immigrants aged 18-25 in developing foundational digital literacy, office tools, and career readiness in Edmonton.",
-            "date_posted": "2026-10-01",
-            "job_type": "Full-time"
+            "job_type": "Full-time",
+            "category": "finance"
         }
     ]
 
     matched = []
+    category_map = {
+        "finance": ["finance", "xisaab", "accounting", "admin", "hr", "maamul", "bank"],
+        "sales": ["sales", "marketing", "iib", "suuqgeyn", "customer", "call center"],
+        "health": ["health", "caafimaad", "nutrition", "ngo", "project officer", "gargaar"],
+        "education": ["teacher", "education", "waxbarasho", "tababar", "school", "macallin"],
+        "logistics": ["logistics", "procurement", "supply", "gaadiid", "bakhaar"],
+        "tech": ["it", "developer", "software", "network", "tech", "cloud", "engineer", "computer"]
+    }
+
+    selected_cats = []
+    for cat, kws in category_map.items():
+        if any(k in term_l for k in kws):
+            selected_cats.append(cat)
+
     for j in all_jobs:
         j_loc = j["location"].lower()
-        if any(k in loc_l for k in ["soomaaliya", "somalia", "muqdisho", "hargeisa", "garoowe"]):
-            if "soomaaliya" in j_loc or "remote" in j_loc:
-                matched.append(j)
+        j_cat = j.get("category", "")
+        j_title = j["title"].lower()
+        j_desc = j["description"].lower()
+
+        # Location matching
+        loc_ok = True
+        if any(k in loc_l for k in ["muqdisho", "mogadishu", "banaadir"]):
+            loc_ok = "muqdisho" in j_loc or "remote" in j_loc
+        elif any(k in loc_l for k in ["hargeysa", "hargeisa", "puntland", "garoowe", "burco"]):
+            loc_ok = any(c in j_loc for c in ["hargeysa", "garoowe", "burco", "remote"])
         elif any(k in loc_l for k in ["kenya", "nairobi"]):
-            if "kenya" in j_loc or "remote" in j_loc:
-                matched.append(j)
-        elif any(k in loc_l for k in ["ethiopia", "itoobiya", "jigjiga", "addis"]):
-            if "ethiopia" in j_loc or "remote" in j_loc:
-                matched.append(j)
+            loc_ok = "kenya" in j_loc or "nairobi" in j_loc or "remote" in j_loc
         elif "remote" in loc_l or is_remote:
-            if "remote" in j_loc:
-                matched.append(j)
-        elif any(k in loc_l for k in ["canada", "edmonton", "toronto"]):
-            if "canada" in j_loc or "remote" in j_loc:
-                matched.append(j)
-        else:
+            loc_ok = "remote" in j_loc
+
+        # Category/term matching
+        term_ok = True
+        if selected_cats:
+            term_ok = (j_cat in selected_cats)
+        elif term_l and term_l not in ["dhammaan", "all", "shaqo", "jobs"]:
+            term_ok = (term_l in j_title or term_l in j_desc or term_l in j["company"].lower())
+
+        if loc_ok and term_ok:
             matched.append(j)
 
-    return matched if matched else all_jobs[:5]
+    return matched if matched else all_jobs[:6]
 
 def generate_tailored_materials(job, client=None, user_profile=None):
     company = job.get('company', 'Hiring Organization')
@@ -350,11 +435,22 @@ def get_career_ai_response(user_message: str) -> str:
 
     if client:
         system_instruction = """
-Waxaad tahay 'Kaaliyaha AI ee Shaqo Baahiye' (Somali IT Youth Career & Academy AI).
-Waxaad si gaar ah u caawisaa dhalinyarada iyo ardayda Soomaaliyeed ee bartay Culuumta IT-ga, Computer Science-ka, iyo AI Automation-ka.
-Goobaha aad taageerto: Soomaaliya (Muqdisho, Hargeysa, Garoowe, Kismaayo), Bariga Afrika (Kenya - Nairobi, Itoobiya - Jigjiga), Shaqooyinka Guriga (Remote Tech), iyo Kanada.
+Waxaad tahay 'Kaaliyaha AI ee Shaqo Baahiye' (Dhammaan Fursadaha Shaqo & Akadeemiyada Casriga ah).
 
-Aasaasaha: Mohamed Yasin (Dynamic IT Educator, AI Automation Trainer).
+MUHIIMADDA KOOWAAD: Shaqo Baahiye KUMA KOOBNA IT-GA KALIYA!
+Wuxuu u heellan yahay DHAMMAAN NOOCYADA SHAQOOYINKA ee Soomaaliya, Bariga Afrika (Kenya, Itoobiya), Shaqooyinka Guriga (Remote), iyo Dibadda:
+1. Maamulka, Maaliyadda & Xisaabaadka (Finance, HR, Accounting, Banking, Management).
+2. Caafimaadka, Nafaqada & NGO-yada (Public Health, Nutrition, Humanitarian Aid, Community Development).
+3. Suuqgeynta, Iibka & Customer Service (Sales, Marketing, Call Center, Telesales).
+4. Waxbarashada & Tababarka (Teaching, Education, Schools, Training).
+5. Gaadiidka, Logistics & Procurement (Supply Chain, Warehouse, Fleet).
+6. Farsamada & IT-ga (Computer Support, Software, Web Dev, Networking, AI Automation).
+7. Shaqooyinka Guriga (Remote Jobs).
+
+HADDII QOFKU SHAQO RAADSANAYO AMA GARAN WAAYO:
+U soo bandhig doorashooyin cadcad ama qaab Quiz fudud ah (Xirfaddiisa, Magaalada uu joogo, iyo Khibraddiisa) si loogu helo fursadda ku habboon!
+
+Aasaasaha: Mohamed Yasin (Dynamic Career Educator, AI Automation Trainer).
 
 Waxaad haysataa aqoon buuxda oo ku saabsan:
 1. BUUGAAGTA CASRIGA AH EE ISBAR (Qore/Editor: Yahye Cabdirahmaan & Mohamed Yasin):
@@ -453,16 +549,40 @@ Qofkii raba inuu barto sida loo dhiso loona shubo (deploy) codsiyada casriga ah 
 2. 📰 **Somalilibrary Substack (Fursadaha Shaqada & AI-ga):**
    🔗 [somalilibrary.substack.com](https://somalilibrary.substack.com/)"""
 
-    elif any(k in user_lower for k in ["shaqo", "it", "soomaaliya", "somalia", "muqdisho", "hargeysa", "kenya", "nairobi"]):
-        return """💼 **Fursadaha Shaqo ee Dhalinyarada IT-ga Soomaaliyeed:**
+    elif any(k in user_lower for k in ["quiz", "quize", "xirfad", "ii raadi", "dooro"]):
+        return """🎯 **Quiz: Ii Raadi Shaqada Ku Habboon (Career Matching Quiz) 🧭**
 
-Nidaamku wuxuu si toos ah isku xiraa:
-1. 🇸🇴 **Soomaaliya:** IT Support, Network, & Web Dev (Hormuud, Dahabshiil, Premier Bank, Telesom).
-2. 🇰🇪 **East Africa:** Cloud, Data & Systems (Safaricom Nairobi, NGO projects Jigjiga & Addis).
-3. 🌐 **Remote Global:** AI Automation Specialists, Virtual IT Helpdesk.
-4. 🇨🇦 **Canada & Diaspora:** Computer Instruction, Technical Support Edmonton & Toronto.
+Si aan kuugu helo shaqada kugu habboon, fadlan ka dooro 3-dan su'aalood:
 
-*Guji qeybta 'Shaqooyinka' si aad u hesho warqad codsi (Cover Letter) diyaarsan!*"""
+1. 💼 **Qeybta aad rabto:**
+   • 📊 Maamul & Xisaabaad
+   • 📞 Customer Care & Iib
+   • 🏥 Caafimaad & NGO
+   • 📚 Waxbarasho & Macallin
+   • 💻 IT & Farsamo
+   • 📦 Logistics & Gaadiid
+
+2. 📍 **Goobta aad joogto:**
+   • 🇸🇴 Muqdisho | 🇸🇴 Hargeysa & Puntland
+   • 🇰🇪 Nairobi | 🌐 Remote (Guriga)
+
+3. 🎓 **Khibraddaada:**
+   • 🌱 Ku cusub (Entry/Graduate) | 💼 1-3 Sano | 🏆 3+ Sano
+
+*Ii soo qor tusaale: "Maamul, Muqdisho, Ku cusub", waxaana si toos ah kuugu soo saari doonaa shaqooyinka bannaan!* 🚀"""
+
+    elif any(k in user_lower for k in ["shaqo", "jobs", "soomaaliya", "somalia", "muqdisho", "hargeysa", "kenya", "nairobi"]):
+        return """💼 **Fursadaha Shaqo ee Dhammaan Qeybaha (All Careers in Somalia & East Africa):**
+
+Shaqo Baahiye wuxuu kuu raadinayaa dhammaan noocyada shaqooyinka:
+1. 📊 **Maamulka & Xisaabaadka:** Finance Officer, HR Assistant, Accountant (Dahabshiil, Salaam Somali Bank).
+2. 📞 **Customer Care & Iibka:** Call Center & EVC Plus Support (Hormuud Telecom, Telesom).
+3. 🏥 **Caafimaadka & NGO-yada:** Health Field Officer, Project Assistant (Save the Children, SRCS, UN).
+4. 📚 **Waxbarashada:** Macallimiinta Dugsiyada & Jaamacadaha (English, Math, Science).
+5. 💻 **IT-ga & Farsamada:** IT Support, Web Developer, AI Automation, Junior Cloud Engineer.
+6. 🌐 **Shaqooyinka Guriga (Remote):** Customer Support, Digital Marketing, Data Entry.
+
+🎯 **Ma hubtid shaqada kugu habboon?** Qor `quiz` si aad uga jawaabto 3 su'aalood oo kooban oo shaqo kugu habboon lagugu helo!"""
 
     elif any(k in user_lower for k in ["booking", "ballan", "xiriir", "contact", "la kulan", "caawin", "mentorship"]):
         return """📅 **Ballan Live ah & Xiriir Toos ah (Live Booking):**
@@ -481,13 +601,14 @@ Waxaad si toos ah ula xiriiri kartaa **Mohamed Yasin**:
         return """Salamaat walaal! 👋 Waxaan ahay **Kaaliyaha AI ee Shaqo Baahiye**.
 
 Waxaan diyaar kuugu ahay inaan kaa caawiyo:
-1. 💻 **Shaqooyinka IT-ga ee Soomaaliya (Muqdisho, Hargeysa), East Africa & Remote**
-2. 📚 **Buugaagta Isbar** (Subscribe dheh [dhegeysobuug.substack.com](https://dhegeysobuug.substack.com/) waxaad helaysaa 2 buug oo bilaash ah oo si automatic ah inbox-kaaga ugu soo dhacaya!)
-3. 🤖 **Koorsooyinka AI Automation & Chatbots (WhatsApp, Telegram, N8n, Typebot)**
-4. ⭐ **Open Source Repo** (Baro sida loo dhiso loona shubo iyadoo AI la adeegsanayo)
-5. 📅 **Live Booking & Mentorship 1-on-1 ah la yeelo Mohamed Yasin**
+1. 💼 **Dhammaan Fursadaha Shaqo (Maamul, Caafimaad, Iib, NGO, IT & Remote)**
+2. 🎯 **Quiz: Ii Raadi Shaqadayda (Hagaha shaqo-helidda oo kooban)**
+3. 📚 **Buugaagta Isbar** (Subscribe dheh [dhegeysobuug.substack.com](https://dhegeysobuug.substack.com/) waxaad helaysaa 2 buug oo bilaash ah oo si automatic ah inbox-kaaga ugu soo dhacaya!)
+4. 🤖 **Koorsooyinka AI Automation & Chatbots (WhatsApp, Telegram, N8n, Typebot)**
+5. ⭐ **Open Source Repo** (100% Free & Open Source)
+6. 📅 **Live Booking & Mentorship 1-on-1 ah la yeelo Mohamed Yasin**
 
-*Ii soo qor su'aashaada gaarka ah! (Fadlan qoraal kaliya soo dir - sawirrada lama ogola)* 🚀"""
+*Ii soo qor su'aashaada gaarka ah ama qor 'quiz' si aad shaqo u raadsato!* 🚀"""
 
 @app.route("/")
 def index():

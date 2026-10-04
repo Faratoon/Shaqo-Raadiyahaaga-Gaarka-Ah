@@ -184,6 +184,29 @@ def answer_callback_query(callback_query_id, text=None):
     except Exception:
         pass
 
+FIELD_NAMES = {
+    "finance": "📊 Maamul & Xisaabaad",
+    "sales": "📞 Customer Care & Iib",
+    "health": "🏥 Caafimaad & NGO",
+    "edu": "📚 Waxbarasho & Macallin",
+    "tech": "💻 IT & Farsamo",
+    "logistics": "📦 Logistics & Gaadiid"
+}
+
+LOCATION_NAMES = {
+    "muqdisho": "🇸🇴 Muqdisho",
+    "hargeysa": "🇸🇴 Hargeysa & Puntland",
+    "nairobi": "🇰🇪 Nairobi (Kenya)",
+    "remote": "🌐 Remote (Online Guriga)",
+    "canada": "🇨🇦 Diaspora (Canada & Global)"
+}
+
+EXP_NAMES = {
+    "entry": "🌱 Ku cusub / Qalin-jabin (Entry)",
+    "mid": "💼 1 ilaa 3 Sano oo Khibrad ah",
+    "senior": "🏆 3+ Sano (Khibrad Sare)"
+}
+
 def get_main_keyboard():
     return {
         "inline_keyboard": [
@@ -191,14 +214,15 @@ def get_main_keyboard():
             [
                 {"text": "🚀 Fur Web App-ka (isbar-ai.com)", "web_app": {"url": WEB_APP_URL}}
             ],
-            # Row 2: 2-column Career & CV Actions
+            # Row 2: Prominent Interactive Quiz & All Jobs
             [
-                {"text": "💼 Fursadaha Shaqada 🔥", "callback_data": "menu_jobs"},
-                {"text": "⚡ Dhis CV (ATS)", "callback_data": "menu_cv"}
+                {"text": "🎯 Quiz: Ii Raadi Shaqadayda 🧭", "callback_data": "quiz_q1"},
+                {"text": "💼 Dhammaan Shaqooyinka 🔥", "callback_data": "menu_jobs"}
             ],
-            # Row 3: Special Full-width Telegram Management (Groups & Channels)
+            # Row 3: Tools & Telegram Management
             [
-                {"text": "🤖 Maamulka Telegram (Fasallada/Channels)", "callback_data": "menu_tg_admin"}
+                {"text": "⚡ Dhis CV (ATS)", "callback_data": "menu_cv"},
+                {"text": "🤖 Maamulka Telegram", "callback_data": "menu_tg_admin"}
             ],
             # Row 4: 2-column Learning & Mentorship
             [
@@ -220,9 +244,9 @@ def get_main_keyboard():
 def handle_start(chat_id, first_name):
     welcome_text = f"""🦅 <b>Shaqo Baahiye (@Baahiyebot)</b>
 
-Ku soo dhowow <b>{first_name}</b>! Madal u heellan fursadaha shaqada oo dhan, iyadoo ahmiyad gaar ah iyo showcase siinaysa dhalinyarada bartay IT-ga & CS-ka, diyaarinta CV ATS ah, iyo buugaagta casriga ah ee Isbar.
+Ku soo dhowow <b>{first_name}</b>! Madal u heellan dhammaan fursadaha shaqo (Maamul, Xisaabaad, Caafimaad, Iib, Waxbarasho, NGO, IT & Remote), diyaarinta CV ATS ah, iyo buugaagta casriga ah ee Isbar.
 
-<i>Dooro adeegga aad u baahan tahay hoos:</i>"""
+🎯 <b>Ma hubtid shaqada kugu habboon?</b> Guji <i>'🎯 Quiz: Ii Raadi Shaqadayda'</i> si laguu caawiyo!"""
 
     banner_path = BASE_DIR / "assets" / "shaqo_baahiye_banner.png"
     if banner_path.exists():
@@ -232,25 +256,147 @@ Ku soo dhowow <b>{first_name}</b>! Madal u heellan fursadaha shaqada oo dhan, iy
 
 def handle_jobs(chat_id):
     jobs = get_curated_somali_it_jobs()
-    text = """💼 <b>Fursadaha Shaqada (All Careers & IT Showcase):</b>
+    text = """💼 <b>Dhammaan Fursadaha Shaqada (All Careers in Somalia & East Africa):</b>
 
-Nidaamku wuxuu kuu raadinayaa dhammaan noocyada shaqooyinka (IT Support, Software, Data, Customer Care, Management) ee Soomaaliya (Muqdisho & Hargeysa), Bariga Afrika (Kenya, Itoobiya), Shaqooyinka Guriga (Global Remote), iyo Kanada.
+Shaqo Baahiye kuma koobna IT-ga kaliya! Wuxuu kuu raadinayaa dhammaan noocyada shaqooyinka:
+• 📊 <b>Maamulka & Xisaabaadka</b> (Banking, Finance, HR)
+• 📞 <b>Customer Care & Iibka</b> (Call Center, Sales, Marketing)
+• 🏥 <b>Caafimaadka & NGO-yada</b> (Health, Nutrition, Relief)
+• 📚 <b>Waxbarashada & Tababarka</b> (Teaching, Schools)
+• 💻 <b>IT & Farsamada</b> (Software, Networks, Support, AI)
+• 🌐 <b>Shaqooyinka Guriga</b> (Remote Online Jobs)
 
-<b>Fursadaha Ugu Dambeeyay ee Tooska ah:</b>\n\n"""
+<b>Fursadaha Bannaan ee Tooska ah:</b>\n\n"""
     
-    for idx, j in enumerate(jobs[:4], 1):
+    for idx, j in enumerate(jobs[:5], 1):
         text += f"<b>{idx}. {j['title']}</b>\n"
         text += f"🏢 {j['company']} &bull; 📍 {j['location']}\n"
         text += f"🔗 <a href='{j['job_url']}'>Codsashada Tooska ah</a>\n\n"
 
     markup = {
         "inline_keyboard": [
+            [{"text": "🎯 Quiz: Ii Raadi Shaqadayda 🧭", "callback_data": "quiz_q1"}],
             [{"text": "📱 Baadh Dhammaan Shaqooyinka (Web App)", "web_app": {"url": f"{WEB_APP_URL}#jobsSection"}}],
             [
                 {"text": "🇸🇴 Soomaaliya & Bariga Afrika", "web_app": {"url": f"{WEB_APP_URL}#jobsSection"}},
                 {"text": "🌐 Remote & Canada", "web_app": {"url": f"{WEB_APP_URL}#jobsSection"}}
             ],
-            [{"text": "📤 Share garee Shaqooyinka", "url": f"https://t.me/share/url?url=https://t.me/Baahiyebot&text={SHARE_TEXT}"}],
+            [{"text": "🔙 Ku noqo Menu-ga", "callback_data": "menu_main"}]
+        ]
+    }
+    send_message(chat_id, text, markup)
+
+def handle_quiz_step1(chat_id):
+    text = """🎯 <b>Quiz: Ii Raadi Shaqada Ku Habboon (Tallaabada 1/3)</b> 🧭
+
+Dooro xirfadda ama qeybta aad ugu jeceshahay inaad ka shaqeyso:"""
+    markup = {
+        "inline_keyboard": [
+            [
+                {"text": "📊 Maamul & Xisaabaad", "callback_data": "quiz_f_finance"},
+                {"text": "📞 Customer Care & Iib", "callback_data": "quiz_f_sales"}
+            ],
+            [
+                {"text": "🏥 Caafimaad & NGO", "callback_data": "quiz_f_health"},
+                {"text": "📚 Waxbarasho & Macallin", "callback_data": "quiz_f_edu"}
+            ],
+            [
+                {"text": "💻 IT & Farsamo", "callback_data": "quiz_f_tech"},
+                {"text": "📦 Logistics & Gaadiid", "callback_data": "quiz_f_logistics"}
+            ],
+            [
+                {"text": "🔙 Ku noqo Menu-ga", "callback_data": "menu_main"}
+            ]
+        ]
+    }
+    send_message(chat_id, text, markup)
+
+def handle_quiz_step2(chat_id, field):
+    f_name = FIELD_NAMES.get(field, "Qeybta aad dooratay")
+    text = f"""📍 <b>Quiz: Goobta aad Joogto ama Doonayso (Tallaabada 2/3)</b> 🌍
+
+Doorka aad xiiseyso: <b>{f_name}</b>
+Hadda dooro goobta aad shaqada ka raadinayso:"""
+    markup = {
+        "inline_keyboard": [
+            [
+                {"text": "🇸🇴 Muqdisho", "callback_data": f"quiz_l_{field}_muqdisho"},
+                {"text": "🇸🇴 Hargeysa & Puntland", "callback_data": f"quiz_l_{field}_hargeysa"}
+            ],
+            [
+                {"text": "🇰🇪 Nairobi (Kenya)", "callback_data": f"quiz_l_{field}_nairobi"},
+                {"text": "🌐 Remote (Online Guriga)", "callback_data": f"quiz_l_{field}_remote"}
+            ],
+            [
+                {"text": "🇨🇦 Diaspora (Canada & Global)", "callback_data": f"quiz_l_{field}_canada"}
+            ],
+            [
+                {"text": "🔙 Dib u noqo", "callback_data": "quiz_q1"}
+            ]
+        ]
+    }
+    send_message(chat_id, text, markup)
+
+def handle_quiz_step3(chat_id, field, location):
+    f_name = FIELD_NAMES.get(field, "Qeybta")
+    l_name = LOCATION_NAMES.get(location, "Goobta")
+    text = f"""🎓 <b>Quiz: Heerka Khibraddaada (Tallaabada 3/3)</b> 💼
+
+Doorka: <b>{f_name}</b> | Goobta: <b>{l_name}</b>
+Intee in le'eg ayay le'eg tahay khibraddaadu?"""
+    markup = {
+        "inline_keyboard": [
+            [
+                {"text": "🌱 Ku cusub / Qalin-jabin (Entry)", "callback_data": f"quiz_r_{field}_{location}_entry"}
+            ],
+            [
+                {"text": "💼 1 ilaa 3 Sano oo Khibrad ah", "callback_data": f"quiz_r_{field}_{location}_mid"}
+            ],
+            [
+                {"text": "🏆 3+ Sano (Khibrad Sare)", "callback_data": f"quiz_r_{field}_{location}_senior"}
+            ],
+            [
+                {"text": "🔙 Dib u noqo", "callback_data": f"quiz_f_{field}"}
+            ]
+        ]
+    }
+    send_message(chat_id, text, markup)
+
+def handle_quiz_result(chat_id, field, location, exp):
+    f_name = FIELD_NAMES.get(field, field)
+    l_name = LOCATION_NAMES.get(location, location)
+    e_name = EXP_NAMES.get(exp, exp)
+
+    loc_query = "Muqdisho" if location == "muqdisho" else ("Hargeysa" if location == "hargeysa" else ("Nairobi" if location == "nairobi" else "Remote"))
+    matched = get_curated_somali_it_jobs(term=field, location=loc_query)
+
+    if exp == "entry":
+        exp_tip = "💡 <b>Talo Qalin-jabiyaha:</b> CV-gaaga ku caddee maadooyinka aad ugu fiicnayd jaamacadda, mashruucyadii aad qabatay, tababarrada (internships), iyo luuqadaha."
+    elif exp == "mid":
+        exp_tip = "💡 <b>Talo Khibradda Dhexe:</b> CV-gaaga ku cabbir natiijooyin la taaban karo oo tiro leh (tusaale: 'Waxaan maareeyay xisaabaadka 100+ macaamiil ah')."
+    else:
+        exp_tip = "💡 <b>Talo Khibradda Sare:</b> Muuji hoggaamintaada, maaraynta kooxaha shaqada, iyo xallinta dhibaatooyinka waaweyn ee ganacsiga."
+
+    text = f"""🎉 <b>Natiijada Quiz-kaaga Shaqo! 🧭</b>
+
+• Doorka: <b>{f_name}</b>
+• Goobta: <b>{l_name}</b>
+• Khibradda: <b>{e_name}</b>
+
+{exp_tip}
+
+🔥 <b>Fursadaha Kuugu Habboon ee Hadda Bannaan:</b>\n\n"""
+
+    for idx, j in enumerate(matched[:3], 1):
+        text += f"<b>{idx}. {j['title']}</b>\n"
+        text += f"🏢 {j['company']} &bull; 📍 {j['location']}\n"
+        text += f"🔗 <a href='{j['job_url']}'>Codsashada Tooska ah</a>\n\n"
+
+    markup = {
+        "inline_keyboard": [
+            [{"text": "⚡ Dhis CV Ku Habboon (ATS)", "callback_data": "menu_cv"}],
+            [{"text": "📅 Qabso Ballan Live ah (Mentorship)", "callback_data": "menu_booking"}],
+            [{"text": "🔄 Dib u bilaaw Quiz-ka", "callback_data": "quiz_q1"}],
             [{"text": "🔙 Ku noqo Menu-ga", "callback_data": "menu_main"}]
         ]
     }
@@ -621,6 +767,19 @@ def process_callback_query(callback_query):
 
     if data == "menu_main":
         send_message(chat_id, "🦅 <b>Dooro adeegga aad u baahan tahay:</b>", get_main_keyboard())
+    elif data == "quiz_q1":
+        handle_quiz_step1(chat_id)
+    elif data.startswith("quiz_f_"):
+        field = data.replace("quiz_f_", "")
+        handle_quiz_step2(chat_id, field)
+    elif data.startswith("quiz_l_"):
+        parts = data.split("_")
+        if len(parts) >= 4:
+            handle_quiz_step3(chat_id, parts[2], parts[3])
+    elif data.startswith("quiz_r_"):
+        parts = data.split("_")
+        if len(parts) >= 5:
+            handle_quiz_result(chat_id, parts[2], parts[3], parts[4])
     elif data == "menu_jobs":
         handle_jobs(chat_id)
     elif data == "menu_cv":
@@ -735,6 +894,9 @@ def process_message(message):
             elif param in ["channel_admin", "channels"]:
                 handle_tg_channels(chat_id)
                 return
+            elif param in ["quiz", "quize"]:
+                handle_quiz_step1(chat_id)
+                return
             elif param == "ref":
                 handle_tg_referral(chat_id, user_id)
                 return
@@ -744,6 +906,8 @@ def process_message(message):
 
     elif text_lower in ["start", "bilaaw", "menu", "hi", "halo", "sxb", "salaam", "asc"]:
         handle_start(chat_id, first_name)
+    elif text_lower in ["/quiz", "quiz", "quize", "shaqo raadi", "ii raadi shaqo", "ii raadi", "dooro", "xirfad"]:
+        handle_quiz_step1(chat_id)
     elif text_lower in ["/admin", "/tg_admin", "maamul", "maamulka", "telegram", "fasal", "channel"]:
         handle_tg_admin(chat_id, user_id)
     elif text_lower in ["/ref", "referral", "keen", "share", "40 cisho"]:

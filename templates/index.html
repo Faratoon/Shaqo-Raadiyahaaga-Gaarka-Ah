@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Shaqo Baahiye | Madasha Culuumta IT-ga, Koorsooyinka & Fursadaha Shaqada</title>
+    <title>Shaqo Baahiye | Madasha Fursadaha Shaqada, Koorsooyinka & Hagidda Xirfadda</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Telegram Mini App WebApp SDK -->
@@ -1880,6 +1880,25 @@
             color: #ffffff;
             border-bottom-right-radius: 4px;
         }
+        .quiz-btn {
+            background: #ffffff;
+            border: 1.5px solid #cbd5e1;
+            color: #0f172a;
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-size: 12.5px;
+            font-weight: 700;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .quiz-btn:hover {
+            background: #0284c7;
+            color: #ffffff;
+            border-color: #0284c7;
+            transform: translateX(3px);
+        }
         .chat-warning-alert {
             background: #fee2e2;
             border: 1px solid #fca5a5;
@@ -2169,16 +2188,16 @@
                                 <div class="hero-service-icon-box" style="background: rgba(16, 185, 129, 0.15); color: #34d399;">🔍</div>
                                 <div>
                                     <div class="hero-service-tag">Adeegga 4-aad</div>
-                                    <div class="hero-service-heading">Isku-Xirka Shaqooyinka IT-ga</div>
+                                    <div class="hero-service-heading">Isku-Xirka Dhammaan Shaqooyinka</div>
                                 </div>
                             </div>
                             <p class="hero-service-desc">
-                                Fursadaha ugu dambeeya ee shirkadaha Soomaaliya (Hormuud, Dahabshiil, Telesom), Bariga Afrika (Kenya, Itoobiya), Remote caalami ah, iyo Kanada.
+                                Fursadaha Maamulka, Xisaabaadka, Iibka, Caafimaadka, Waxbarashada, Farsamada & IT-ga ee shirkadaha Soomaaliya, NGO-yada, Bariga Afrika iyo Remote.
                             </p>
                         </div>
                         <div class="hero-service-action-row">
-                            <span class="hero-service-action-link">🔎 Baadh 15+ Shaqo &rarr;</span>
-                            <span class="hero-service-meta-badge">Soomaaliya & East Africa</span>
+                            <span class="hero-service-action-link">🔎 Baadh Dhammaan Shaqooyinka &rarr;</span>
+                            <span class="hero-service-meta-badge">Dhammaan Qeybaha & Remote</span>
                         </div>
                     </a>
 
@@ -2233,29 +2252,30 @@
                 <span class="section-badge">Shaqooyinka Tooska ah</span>
                 <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
                     <h3 class="section-title">
-                        <span>🔍</span> <span id="jobsSectionTitle">Shaqooyinka IT-ga ee Soomaaliya, East Africa & Remote</span>
+                        <span>🔍</span> <span id="jobsSectionTitle">Shaqooyinka Soomaaliya, Bariga Afrika & Remote (Dhammaan Qeybaha)</span>
                     </h3>
                     <div style="font-size:12.5px; font-weight:700; background:#f1f5f9; padding:5px 12px; border-radius:14px; color:#0f766e;" id="quotaDisplay">
                         Quota: 5 Codsi oo Diyaarsan Maalintii
                     </div>
                 </div>
-                <p class="section-subtitle" id="jobsSectionSub">Shaqooyin tayo leh oo wata Cover Letter diyaarsan oo toos loogu codsan karo.</p>
+                <p class="section-subtitle" id="jobsSectionSub">Shaqooyin tayo leh oo ku saabsan Maamulka, Iibka, Caafimaadka, Waxbarashada iyo IT-ga oo wata Cover Letter diyaarsan.</p>
             </div>
 
             <div class="search-panel">
                 <div class="quick-actions">
-                    <button class="btn-quick active" onclick="quickFilter(this, 'IT Support', 'Soomaaliya (Muqdisho & Hargeysa)', false)">🇸🇴 Muqdisho & Hargeysa (IT Support)</button>
-                    <button class="btn-quick" onclick="quickFilter(this, 'software developer', 'Soomaaliya', false)">💻 Soomaaliya (Software & Web)</button>
-                    <button class="btn-quick" onclick="quickFilter(this, 'AI automation', 'Remote', true)">🤖 Remote (AI Automation Specialist)</button>
-                    <button class="btn-quick" onclick="quickFilter(this, 'cloud engineer', 'Nairobi, Kenya', false)">🇰🇪 Kenya (Nairobi Tech Hub)</button>
-                    <button class="btn-quick" onclick="quickFilter(this, 'IT coordinator', 'Jigjiga, Ethiopia', false)">🇪🇹 Jigjiga & Addis (IT Coordinator)</button>
-                    <button class="btn-quick" onclick="quickFilter(this, 'computer instructor', 'Edmonton, AB', false)">🇨🇦 Canada (Edmonton, AB)</button>
+                    <button class="btn-quick active" onclick="quickFilter(this, '', 'Soomaaliya', false)">🇸🇴 Dhammaan Shaqooyinka</button>
+                    <button class="btn-quick" onclick="quickFilter(this, 'Finance', 'Muqdisho', false)">💼 Maamul & Xisaabaad</button>
+                    <button class="btn-quick" onclick="quickFilter(this, 'Sales', 'Hargeysa', false)">🤝 Iibka & Customer Care</button>
+                    <button class="btn-quick" onclick="quickFilter(this, 'Health', 'Soomaaliya', false)">🏥 Caafimaad & NGO</button>
+                    <button class="btn-quick" onclick="quickFilter(this, 'Teacher', 'Puntland', false)">📚 Waxbarasho & Macallin</button>
+                    <button class="btn-quick" onclick="quickFilter(this, 'IT Support', 'Muqdisho', false)">💻 IT & Farsamo</button>
+                    <button class="btn-quick" onclick="quickFilter(this, '', 'Remote', true)">🌐 Remote (Online Guriga)</button>
                 </div>
 
                 <div class="search-inputs">
                     <div class="input-group">
-                        <label>Ereyga Shaqada (IT Role / Keyword):</label>
-                        <input type="text" id="searchTerm" value="IT Support">
+                        <label>Ereyga Shaqada (Job Title / Qaybta):</label>
+                        <input type="text" id="searchTerm" value="" placeholder="Tusaale: Finance, Sales, IT, Nurse...">
                     </div>
                     <div class="input-group">
                         <label>Magaalada / Dalka (Location):</label>
@@ -3294,7 +3314,7 @@ python portal_app.py</code></pre>
                     <span class="bot-sticker-anim" style="font-size:20px;">🤖</span>
                 </div>
                 <div class="chat-title">
-                    <h3>Kaaliyaha IT-ga & Koorsooyinka</h3>
+                    <h3>Kaaliyaha Shaqo Baahiye</h3>
                     <p>🟢 Online &bull; Qoraal kaliya</p>
                 </div>
             </div>
@@ -3309,17 +3329,16 @@ python portal_app.py</code></pre>
                 Salamaat! 👋 Waxaan ahay **Kaaliyaha AI ee Shaqo Baahiye**.
                 <br><br>
                 Waxaan diyaar kuugu ahay:
-                <br>• 💻 Shaqooyinka IT-ga ee Soomaaliya, Kenya, Itoobiya & Remote
-                <br>• 📚 Buugaagta Isbar (Ku biir <a href="https://dhegeysobuug.substack.com/" target="_blank" style="color:#38bdf8; text-decoration:underline;">dhegeysobuug.substack.com</a> waxaad helaysaa <b>2 Buug oo Free ah</b> oo si automatic ah inbox-kaaga ugu soo dhacaya!)
-                <br>• 🤖 Koorsooyinka AI Automation & Chatbots
-                <br>• ⭐ Open Source Repo & sida AI loogu dhiso
-                <br>• 📅 Ballan Live ah la yeelashada Mohamed Yasin
+                <br>• 🧭 **Quiz Gaar ah**: Guji badhanka hoose si aan 3 su'aalood oo kooban kuugu raadiyo shaqada kugu habboon!
+                <br>• 💼 **Dhammaan Shaqooyinka**: Maamulka, Xisaabaadka, Iibka, Caafimaadka, Waxbarashada iyo IT-ga (Soomaaliya & Remote)
+                <br>• 📚 **Buugaagta Isbar**: Ku biir <a href="https://dhegeysobuug.substack.com/" target="_blank" style="color:#38bdf8; text-decoration:underline;">dhegeysobuug.substack.com</a> waxaad helaysaa <b>2 Buug oo Free ah</b> oo toos kuugu soo dhacaya!
+                <br>• 📅 **Ballan Live ah**: Mentorship toos ah oo Google Meet ah Mohamed Yasin
             </div>
 
             <div class="chat-quick-chips">
-                <span class="quick-chip" onclick="askQuickPrompt('Shaqooyinka IT-ga ee Soomaaliya i tus')">💼 Shaqooyinka Soomaaliya</span>
-                <span class="quick-chip" onclick="askQuickPrompt('Sideen ku helaa buugaagta Isbar?')">📚 Hel Buugaagta</span>
-                <span class="quick-chip" onclick="askQuickPrompt('Sidee loo sameeyay madashan?')">⭐ Sida Loo Dhisay</span>
+                <span class="quick-chip" style="background:#0284c7; color:#fff; border-color:#38bdf8; font-weight:700;" onclick="startChatQuiz()">🎯 Quiz: Ii Raadi Shaqadayda</span>
+                <span class="quick-chip" onclick="askQuickPrompt('Shaqooyinka Maamulka, Iibka, Caafimaadka iyo IT i tus')">💼 Dhammaan Shaqooyinka</span>
+                <span class="quick-chip" onclick="askQuickPrompt('Sideen ku helaa 2-da buug ee free-ga ah?')">📚 Hel 2 Buug Free</span>
                 <span class="quick-chip" onclick="askQuickPrompt('Sideen ballan live ah u qabsadaa?')">📅 Ballan Qabso</span>
             </div>
         </div>
@@ -3347,7 +3366,7 @@ python portal_app.py</code></pre>
             <div class="footer-col">
                 <h4 style="color:#38bdf8;">🦅 Shaqo Baahiye & Isbar</h4>
                 <p style="font-size:12.5px; line-height:1.6; margin-bottom:12px;">
-                    Madal casri ah oo u heellan dhalinyarada iyo ardayda Soomaaliyeed ee bartay Culuumta IT-ga iyo Teknoolajiyadda. Waxaan isku xirnaa fursadaha shaqo ee Soomaaliya, Bariga Afrika, Remote-ka, iyo caalamka.
+                    Madal casri ah oo u heellan dhalinyarada iyo xirfadlayaasha Soomaaliyeed ee dhammaan takhasusaadka (Maamulka, Iibka, Caafimaadka, Waxbarashada, IT-ga, iyo Farsamada). Waxaan isku xirnaa fursadaha shaqo ee Soomaaliya, Bariga Afrika, Remote-ka, iyo caalamka.
                 </p>
                 <div style="font-size:12px; color:#cbd5e1;">
                     📍 Soomaaliya, East Africa & Edmonton, AB 🇨🇦
@@ -3947,6 +3966,115 @@ python portal_app.py</code></pre>
         function askQuickPrompt(text) {
             document.getElementById("chatInput").value = text;
             sendChatMessage();
+        }
+
+        // ========================================================
+        // Interactive Career Finder Quiz in Chatbot
+        // ========================================================
+        let quizState = {
+            field: null,
+            fieldTitle: '',
+            location: null,
+            locTitle: '',
+            experience: null,
+            expTitle: ''
+        };
+
+        function startChatQuiz() {
+            quizState = { field: null, fieldTitle: '', location: null, locTitle: '', experience: null, expTitle: '' };
+            const chatBody = document.getElementById("chatBody");
+            
+            const botDiv = document.createElement("div");
+            botDiv.className = "chat-msg bot";
+            botDiv.innerHTML = `
+                🧭 <b>Tallaabada 1/3: Dooro Xirfaddaada ama Qaybta aad rabto:</b>
+                <div style="display:flex; flex-direction:column; gap:6px; margin-top:10px;">
+                    <button class="quiz-btn" onclick="chooseQuizField('finance', '💼 Maamul & Xisaabaad')">💼 Maamul & Xisaabaad (Finance/Accounting)</button>
+                    <button class="quiz-btn" onclick="chooseQuizField('sales', '🤝 Iibka & Customer Care')">🤝 Iibka & Customer Care (Sales/Support)</button>
+                    <button class="quiz-btn" onclick="chooseQuizField('health', '🏥 Caafimaad & Gargaar')">🏥 Caafimaad & Gargaar (Health/NGO)</button>
+                    <button class="quiz-btn" onclick="chooseQuizField('education', '📚 Waxbarasho & Tababar')">📚 Waxbarasho & Tababar (Teaching)</button>
+                    <button class="quiz-btn" onclick="chooseQuizField('tech', '💻 IT & Farsamo')">💻 IT & Farsamo (Tech/Software)</button>
+                    <button class="quiz-btn" onclick="chooseQuizField('remote', '🌐 Shaqooyinka Online (Remote)')">🌐 Shaqooyinka Online (Remote Kaliya)</button>
+                </div>
+            `;
+            chatBody.appendChild(botDiv);
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+
+        function chooseQuizField(key, title) {
+            quizState.field = key;
+            quizState.fieldTitle = title;
+
+            const chatBody = document.getElementById("chatBody");
+            const userDiv = document.createElement("div");
+            userDiv.className = "chat-msg user";
+            userDiv.innerText = `Doortay: ${title}`;
+            chatBody.appendChild(userDiv);
+
+            const botDiv = document.createElement("div");
+            botDiv.className = "chat-msg bot";
+            botDiv.innerHTML = `
+                📍 <b>Tallaabada 2/3: Halkee ayaad ku sugan tahay ama doonaysaa inaad ka shaqeyso?</b>
+                <div style="display:flex; flex-direction:column; gap:6px; margin-top:10px;">
+                    <button class="quiz-btn" onclick="chooseQuizLoc('Muqdisho', '🇸🇴 Muqdisho')">🇸🇴 Muqdisho</button>
+                    <button class="quiz-btn" onclick="chooseQuizLoc('Hargeysa', '🇸🇴 Hargeysa / Puntland')">🇸🇴 Hargeysa / Puntland</button>
+                    <button class="quiz-btn" onclick="chooseQuizLoc('Nairobi', '🇰🇪 Nairobi, Kenya')">🇰🇪 Nairobi, Kenya</button>
+                    <button class="quiz-btn" onclick="chooseQuizLoc('Remote', '🌐 Remote (Guriga/Online)')">🌐 Remote (Guriga/Online)</button>
+                    <button class="quiz-btn" onclick="chooseQuizLoc('Qurba-joog', '🌍 Meel kale / Qurba-joog')">🌍 Meel kale / Qurba-joog</button>
+                </div>
+            `;
+            chatBody.appendChild(botDiv);
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+
+        function chooseQuizLoc(key, title) {
+            quizState.location = key;
+            quizState.locTitle = title;
+
+            const chatBody = document.getElementById("chatBody");
+            const userDiv = document.createElement("div");
+            userDiv.className = "chat-msg user";
+            userDiv.innerText = `Goobta: ${title}`;
+            chatBody.appendChild(userDiv);
+
+            const botDiv = document.createElement("div");
+            botDiv.className = "chat-msg bot";
+            botDiv.innerHTML = `
+                ⭐ <b>Tallaabada 3/3: Waa maxay heerkaga khibradda shaqo?</b>
+                <div style="display:flex; flex-direction:column; gap:6px; margin-top:10px;">
+                    <button class="quiz-btn" onclick="finishQuiz('entry', '🎓 Fresh Graduate / Bilow')">🎓 Fresh Graduate / Bilow (0-1 sano)</button>
+                    <button class="quiz-btn" onclick="finishQuiz('mid', '🚀 1 - 3 Sano oo Khibrad ah')">🚀 1 - 3 Sano oo Khibrad ah</button>
+                    <button class="quiz-btn" onclick="finishQuiz('senior', '🏆 3+ Sano (Khibrad Sare)')">🏆 3+ Sano (Khibrad Sare)</button>
+                </div>
+            `;
+            chatBody.appendChild(botDiv);
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+
+        function finishQuiz(key, title) {
+            quizState.experience = key;
+            quizState.expTitle = title;
+
+            const promptMsg = `Waxaan dhammeeyay Quiz-ka: Xirfaddu waa ${quizState.fieldTitle}, Goobtu waa ${quizState.locTitle}, Khibraddu waa ${quizState.expTitle}. Ii soo saar shaqooyinka ugu habboon iyo talooyin kooban.`;
+            
+            const fieldTerms = {
+                'finance': 'Finance',
+                'sales': 'Sales',
+                'health': 'Health',
+                'education': 'Teacher',
+                'tech': 'IT',
+                'remote': ''
+            };
+            const term = fieldTerms[quizState.field] || '';
+            const loc = (quizState.location === 'Remote' || quizState.location === 'Qurba-joog') ? '' : quizState.location;
+            const isRem = (quizState.location === 'Remote' || quizState.field === 'remote');
+
+            document.getElementById("searchTerm").value = term;
+            document.getElementById("searchLocation").value = loc;
+            document.getElementById("searchRemote").checked = isRem;
+            triggerSearch();
+
+            askQuickPrompt(promptMsg);
         }
 
         async function sendChatMessage() {
