@@ -76,24 +76,35 @@ def save_tg_data(data):
     except Exception as e:
         print(f"[!] Error saving tg data: {e}", flush=True)
 
-def get_user_record(user_id, referrer_id=None):
+USER_STATES = {}  # In-memory user state machine: uid -> {"state": "...", ...}
+
+def get_user_record(user_id, referrer_id=None, first_name=None):
     data = load_tg_data()
     uid = str(user_id)
     now = time.time()
+    current_week = int(now / (7 * 86400))
     
     if uid not in data["users"]:
         data["users"][uid] = {
+            "name": first_name or f"User_{uid[-4:]}",
             "created_at": now,
             "referrals": [],
-            "unlocked_permanent": False
+            "unlocked_permanent": False,
+            "points": 20,  # Welcome bonus points
+            "weekly_posts_used": 0,
+            "last_week_reset": current_week,
+            "channels": [],
+            "groups": [],
+            "schedule": {"morning": True, "noon": False, "evening": True}
         }
         
         # Credit referrer if valid
         if referrer_id and str(referrer_id) != uid:
             ref_uid = str(referrer_id)
             if ref_uid in data["users"]:
-                if uid not in data["users"][ref_uid]["referrals"]:
+                if uid not in data["users"][ref_uid].setdefault("referrals", []):
                     data["users"][ref_uid]["referrals"].append(uid)
+                    data["users"][ref_uid]["points"] = data["users"][ref_uid].get("points", 20) + 25
                     if len(data["users"][ref_uid]["referrals"]) >= 10:
                         data["users"][ref_uid]["unlocked_permanent"] = True
                     save_tg_data(data)
@@ -101,28 +112,107 @@ def get_user_record(user_id, referrer_id=None):
                     try:
                         ref_count = len(data["users"][ref_uid]["referrals"])
                         if ref_count >= 10:
-                            send_message(int(ref_uid), "🌟 <b>HAMBALYO HEER SARE AH!</b>\n\nWaxaad keentay <b>10 qof</b>! Waxaa laguu furay <b>Maamulka Telegram Fasax Buuxa oo Bilaash ah (Lifetime Permanent Free Access)</b>!")
+                            send_message(int(ref_uid), "🌟 <b>HAMBALYO HEER SARE AH!</b>\n\nWaxaad keentay <b>10 qof</b>! Waxaa laguu furay <b>VIP Lifetime Partner (Multi-Posting & Auto-Schedules Bilaash ah)</b>!")
                         else:
-                            send_message(int(ref_uid), f"🎉 <b>Qof cusub ayaa ku soo biiray link-gaaga!</b>\n\nWaxaad keentay: <b>{ref_count}/10 qof</b>. Markaad gaarto 10 qof waxaad helaysaa Fasax Joogto ah oo Bilaash ah!")
+                            send_message(int(ref_uid), f"🎉 <b>Qof cusub ayaa ku soo biiray link-gaaga! (+25 dhibcood)</b>\n\nWaxaad keentay: <b>{ref_count}/10 qof</b>. Markaad gaarto 10 qof waxaad helaysaa VIP Permanent Access!")
                     except Exception:
                         pass
         save_tg_data(data)
 
     user = data["users"][uid]
+    if first_name and (not user.get("name") or user.get("name").startswith("User_")):
+        user["name"] = first_name
+        save_tg_data(data)
+
+    # Weekly quota reset
+    if user.get("last_week_reset") != current_week:
+        user["weekly_posts_used"] = 0
+        user["last_week_reset"] = current_week
+        save_tg_data(data)
+
     elapsed_days = int((now - user.get("created_at", now)) / 86400)
     days_left = max(0, 40 - elapsed_days)
     referrals_count = len(user.get("referrals", []))
-    is_permanent = user.get("unlocked_permanent", False) or (referrals_count >= 10)
-    is_active = is_permanent or (days_left > 0)
+    points = user.get("points", 20)
+    is_vip = user.get("unlocked_permanent", False) or (referrals_count >= 10) or (points >= 250)
+    is_active = is_vip or (days_left > 0)
+
+    if is_vip:
+        rank = "👑 VIP Lifetime Partner"
+        limit = 9999
+    elif referrals_count >= 5 or points >= 100:
+        rank = "🚀 Team Leader"
+        limit = 10
+    else:
+        rank = "⭐ Ambassador"
+        limit = 5
+
+    posts_used = user.get("weekly_posts_used", 0)
+    posts_left = "Unlimited (∞)" if is_vip else max(0, limit - posts_used)
 
     return {
         "user_id": uid,
+        "name": user.get("name", first_name or f"User_{uid[-4:]}"),
         "days_left": days_left,
         "referrals_count": referrals_count,
-        "is_permanent": is_permanent,
+        "points": points,
+        "rank": rank,
+        "is_permanent": is_vip,
         "is_active": is_active,
+        "weekly_posts_used": posts_used,
+        "weekly_posts_limit": limit,
+        "posts_left": posts_left,
+        "channels": user.get("channels", []),
+        "groups": user.get("groups", []),
+        "schedule": user.get("schedule", {"morning": True, "noon": False, "evening": True}),
         "referral_link": f"https://t.me/Baahiyebot?start=ref_{uid}"
     }
+
+def record_user_post(user_id):
+    data = load_tg_data()
+    uid = str(user_id)
+    if uid in data["users"]:
+        data["users"][uid]["weekly_posts_used"] = data["users"][uid].get("weekly_posts_used", 0) + 1
+        data["users"][uid]["points"] = data["users"][uid].get("points", 20) + 5
+        save_tg_data(data)
+
+def add_user_channel(user_id, channel_name):
+    data = load_tg_data()
+    uid = str(user_id)
+    if uid in data["users"]:
+        chans = data["users"][uid].setdefault("channels", [])
+        if channel_name not in chans:
+            chans.append(channel_name)
+            save_tg_data(data)
+            return True
+    return False
+
+def toggle_user_schedule(user_id, slot):
+    data = load_tg_data()
+    uid = str(user_id)
+    if uid in data["users"]:
+        sched = data["users"][uid].setdefault("schedule", {"morning": True, "noon": False, "evening": True})
+        sched[slot] = not sched.get(slot, False)
+        save_tg_data(data)
+        return sched[slot]
+    return False
+
+def get_leaderboard_data():
+    data = load_tg_data()
+    all_users = []
+    for uid, u in data.get("users", {}).items():
+        ref_count = len(u.get("referrals", []))
+        pts = u.get("points", 20)
+        name = u.get("name", f"Ambassador_{uid[-4:]}")
+        all_users.append({
+            "uid": uid,
+            "name": name,
+            "referrals": ref_count,
+            "points": pts,
+            "is_vip": u.get("unlocked_permanent", False) or ref_count >= 10 or pts >= 250
+        })
+    all_users.sort(key=lambda x: (x["referrals"], x["points"]), reverse=True)
+    return all_users[:10]
 
 def delete_message(chat_id, message_id):
     url = f"{API_URL}/deleteMessage"
@@ -458,21 +548,128 @@ Ku biir warsidaha <a href="https://dhegeysobuug.substack.com/">dhegeysobuug.subs
     }
     send_message(chat_id, text, markup)
 
+BOOKING_SERVICES = {
+    "ai": {
+        "title": "AI & Chatbots Coaching",
+        "duration": "45 Daqiiqo",
+        "badge": "🚀 Live 1-on-1 Coaching",
+        "desc": "Baro dhismaha nidaamyada AI Automation (n8n, Python Bots, Make, OpenAI API). Sida aad ugu dhisi lahayd bots Telegram iyo WhatsApp ganacsiyada iyo waxbarashada.",
+        "icon": "🚀",
+        "wa_text": "Salamaat Mohamed, waxaan rabaa ballan Live ah oo ku saabsan AI & Chatbots Coaching."
+    },
+    "cv": {
+        "title": "CV ATS & Interview Prep",
+        "duration": "30 Daqiiqo",
+        "badge": "📄 1-on-1 Mentorship",
+        "desc": "Dib-u-eegis toos ah oo CV-gaaga ah si uu u dhaafo nidaamyada ATS. Tababarka wareysiyada shaqada adag (STAR Method) iyo diyaarinta LinkedIn.",
+        "icon": "📄",
+        "wa_text": "Salamaat Mohamed, waxaan rabaa ballan Live ah oo ku saabsan CV ATS Review & Tababarka Wareysiga."
+    },
+    "career": {
+        "title": "Career Roadmapping & Shaqo",
+        "duration": "30 Daqiiqo",
+        "badge": "🧭 Istaraatiijiyadda Shaqada",
+        "desc": "Qorshaha shaqo raadinta (Soomaaliya, Bariga Afrika, Remote iyo Canada). Shahaadooyinka la rabo iyo khariidadda guusha ee qalin-jabiyaha.",
+        "icon": "🧭",
+        "wa_text": "Salamaat Mohamed, waxaan rabaa ballan Live ah oo ku saabsan Career Roadmapping & Mentorship."
+    }
+}
+
 def handle_booking(chat_id):
-    text = """📅 <b>Ballan Live ah & Mentorship (1-on-1):</b>
+    text = """╔═══════════════════════════════════════╗
+   📅  XARUNTA BALLAMAHA & MENTORSHIP-KA
+   👨‍🏫  Mohamed Yasin (Direct 1-on-1)
+╚═══════════════════════════════════════╝
 
-Kulan toos ah (Google Meet / Zoom) oo aad la yeelanayso <b>Mohamed Yasin</b>:
-• ✅ La-talin jihada shaqada & xirfadda
-• ✅ Dib-u-eegista CV-gaaga & Tababarka Wareysiga
-• ✅ Hagidda Koorsooyinka AI Automation
+✨ <b>Dooro Kaarka Adeegga aad u baahan tahay (Interactive Cards):</b>
+Kulan toos ah oo 1-on-1 ah (Google Meet, Zoom, ama WhatsApp Audio) oo aad toos ula yeelanayso <b>Mohamed Yasin</b> (Edmonton, Canada 🇨🇦 & Global).
 
-📍 <b>Edmonton, Canada 🇨🇦 & Online Global</b>"""
+1️⃣ 🚀 <b>AI & Chatbots Coaching (45 Min)</b>
+• n8n, Make & Python Bots
+• Isku xirka Telegram, WhatsApp & APIs
+
+2️⃣ 📄 <b>CV ATS & Interview Prep (30 Min)</b>
+• Hagaajinta CV-gaaga heerka ATS
+• Tababarka wareysiyada adag (STAR Method)
+
+3️⃣ 🧭 <b>Career Roadmapping & Shaqo (30 Min)</b>
+• Istaraatiijiyadda fursadaha shaqo (Somalia & Global)
+• Hagidda shahaadooyinka Google, AWS & Coursera
+
+<i>Guji mid ka mid ah kaadhadhka hoose si aad u doorato waqtigaaga:</i>"""
 
     markup = {
         "inline_keyboard": [
-            [{"text": "📅 Qabso Ballan Live ah (Web App)", "web_app": {"url": f"{WEB_APP_URL}#bookingSection"}}],
-            [{"text": "💬 WhatsApp Toos ah (+1 587-306-4137)", "url": "https://wa.me/15873064137?text=Salamaat%20Mohamed,%20waxaan%20rabaa%20ballan%20live%20ah"}],
+            [
+                {"text": "🚀 1. Card: AI & Chatbots", "callback_data": "book_card_ai"},
+                {"text": "📄 2. Card: CV ATS & Wareysi", "callback_data": "book_card_cv"}
+            ],
+            [
+                {"text": "🧭 3. Card: Career Mentorship", "callback_data": "book_card_career"}
+            ],
+            [
+                {"text": "📱 Foomka Web App (isbar-ai.com)", "web_app": {"url": f"{WEB_APP_URL}#bookingSection"}},
+                {"text": "💬 WhatsApp Toos ah", "url": "https://wa.me/15873064137?text=Salamaat%20Mohamed,%20waxaan%20rabaa%20ballan%20mentorship"}
+            ],
             [{"text": "🔙 Ku noqo Menu-ga", "callback_data": "menu_main"}]
+        ]
+    }
+    send_message(chat_id, text, markup)
+
+def handle_booking_card(chat_id, service_key):
+    s = BOOKING_SERVICES.get(service_key, BOOKING_SERVICES["career"])
+    text = f"""┌───────────────────────────────────────┐
+   {s['icon']} <b>KAARKA: {s['title'].upper()}</b>
+   Muddada: {s['duration']} | Online 1-on-1
+└───────────────────────────────────────┘
+
+✨ <b>Maxaa ku jira kulankan?</b>
+{s['desc']}
+
+🕒 <b>Dooro Waqtiga kugu habboon maanta:</b>"""
+
+    wa_link = f"https://wa.me/15873064137?text={urllib.parse.quote(s['wa_text'])}"
+
+    markup = {
+        "inline_keyboard": [
+            [
+                {"text": "🌅 Subax: 10:00 AM", "callback_data": f"book_slot_{service_key}_10am"},
+                {"text": "☀️ Galab: 02:00 PM", "callback_data": f"book_slot_{service_key}_2pm"}
+            ],
+            [
+                {"text": "🌙 Habeen: 08:00 PM", "callback_data": f"book_slot_{service_key}_8pm"}
+            ],
+            [
+                {"text": "📲 Xaqiiji WhatsApp (+1 587-306-4137)", "url": wa_link}
+            ],
+            [
+                {"text": "🔙 Dib ugu noqo Kaadhadhka", "callback_data": "menu_booking"}
+            ]
+        ]
+    }
+    send_message(chat_id, text, markup)
+
+def handle_booking_slot_confirm(chat_id, service_key, time_slot):
+    s = BOOKING_SERVICES.get(service_key, BOOKING_SERVICES["career"])
+    slot_label = "10:00 AM Subaxnimo" if time_slot == "10am" else ("02:00 PM Galabnimo" if time_slot == "2pm" else "08:00 PM Habeennimo")
+    
+    confirm_msg = f"Salamaat Mohamed, waxaan doortay ballanta '{s['title']}' waqtiga: {slot_label}. Fadlan ii xaqiiji."
+    wa_url = f"https://wa.me/15873064137?text={urllib.parse.quote(confirm_msg)}"
+
+    text = f"""🎉 <b>BALLANKAAGA WAA LA DOORTAY!</b>
+
+• 📌 <b>Adeegga:</b> {s['title']}
+• ⏱️ <b>Muddada:</b> {s['duration']}
+• 🕒 <b>Waqtiga:</b> {slot_label}
+• 👨‍🏫 <b>Khubaro:</b> Mohamed Yasin
+
+Guji badhanka hoose si aad WhatsApp-ka Mohamed Yasin ugu dirto xaqiijinta tooska ah:"""
+
+    markup = {
+        "inline_keyboard": [
+            [{"text": "💬 Dir Xaqiijinta WhatsApp (1-Tap)", "url": wa_url}],
+            [{"text": "📱 Ku Buuxi Foomka isbar-ai.com", "web_app": {"url": f"{WEB_APP_URL}#bookingSection"}}],
+            [{"text": "🔙 Kaadhadhka Kale", "callback_data": "menu_booking"}]
         ]
     }
     send_message(chat_id, text, markup)
@@ -486,7 +683,7 @@ Dooro nooca caawinaad ee aad doonayso:
 Wuxuu si toos ah kaaga caawinayaa raadinta shaqooyinka, talooyinka CV-ga, iyo buugaagta. Halkan toos ugu qor su'aashaada!
 
 👤 <b>2. Qof Dhab ah (Human Support):</b>
-Haddii aad u baahan tahay qof kula hadla, kala xidhiidh <b>Mohamed Yasin</b> toos:
+Kala xidhiidh <b>Mohamed Yasin</b> toos:
 👉 <b>Telegram:</b> @MFARATOON
 👉 <b>WhatsApp:</b> +1 (587) 306-4137
 
@@ -512,35 +709,466 @@ Haddii aad u baahan tahay qof kula hadla, kala xidhiidh <b>Mohamed Yasin</b> too
     }
     send_message(chat_id, text, markup)
 
-def handle_tg_admin(chat_id, user_id=None):
+# ========================================================
+# 2. MANAGERS HUB: PROFILE, LEADERBOARD, MULTIPOSTING, AUTOMATION
+# ========================================================
+
+def handle_tg_admin(chat_id, user_id=None, first_name=None):
     uid = user_id or chat_id
-    rec = get_user_record(uid)
-    status_text = "⭐ <b>Fasax Joogto ah (Bilaash Weligaa!)</b>" if rec["is_permanent"] else f"⏳ <b>40 Cisho Free Trial ({rec['days_left']} Maalmood baa haray)</b>"
+    rec = get_user_record(uid, first_name=first_name)
+    status_badge = "👑 VIP Lifetime" if rec["is_permanent"] else f"⏳ {rec['days_left']} Maalmood"
+    
+    text = f"""╔═══════════════════════════════════════╗
+   👑  MAAMULKA TELEGRAM (MANAGERS HUB)
+   👤  {rec['name']} | {rec['rank']}
+╚═══════════════════════════════════════╝
 
-    text = f"""🤖 <b>Maamulka Fasalada & Channels-ka Telegram:</b>
+📊 <b>Xaaladdaada & Dhibcahaaga:</b>
+• 🎖️ Darajada: <b>{rec['rank']}</b>
+• 👥 Referrals: <b>{rec['referrals_count']}/10 qof</b> ({status_badge})
+• 🏆 Dhibcaha: <b>{rec['points']} pts</b> (+25 pt referral, +5 pt post)
+• 📝 Post Quota: <b>{rec['posts_left']}</b> (Todobaadkan)
+• 📢 Channels & Groups ku xiran: <b>{len(rec['channels'])} channel, {len(rec['groups'])} group</b>
 
-{status_text} | 👥 Referral: <b>{rec['referrals_count']}/10 qof</b>
-
-• 🛡️ <b>Fasalada & Groups:</b> Soo dhoweyn, ilaalinta anshaxa, word filter & kaaliyaha <code>/ask</code>.
-• 📢 <b>Channels-ka:</b> Casharrada English Tutor & fursadaha shaqo.
-• 🎁 <b>Fasaxa:</b> Keen 10 qof oo fur Fasax Joogto ah weligaa!"""
+🚀 <b>Aaladaha Maamulaha:</b> Dooro adeegga aad doonayso:"""
 
     markup = {
         "inline_keyboard": [
             [
-                {"text": "🛡️ Maamulka Fasalada & Groups", "callback_data": "tg_groups"},
-                {"text": "📢 Channels & English Tutor", "callback_data": "tg_channels"}
+                {"text": "📢 Multi-Posting & Badhamo", "callback_data": "tg_multipost"},
+                {"text": "⏰ Jadwalka & Automation", "callback_data": "tg_schedule"}
             ],
             [
-                {"text": "🎁 Xaaladdaada & Referral Link", "callback_data": "tg_referral"},
-                {"text": "🤝 Xallinta Khilaafaadka", "callback_data": "tg_conflict"}
+                {"text": "🎓 3-da Fasalka English Tutor (AI)", "callback_data": "tg_channels"},
+                {"text": "💡 AI Generator (2 Tusaale / Manhaj)", "callback_data": "tg_ai_gen"}
             ],
             [
-                {"text": "📚 Soo Dir Manhaj / Custom Docs", "callback_data": "tg_docs"}
+                {"text": "👤 Profile & Quota", "callback_data": "tg_profile"},
+                {"text": "🏆 Ambassador Leaderboard", "callback_data": "tg_leaderboard"}
+            ],
+            [
+                {"text": "➕ Ku Xir Channel/Group", "callback_data": "tg_add_channel"},
+                {"text": "🛡️ Classroom Shield (Groups)", "callback_data": "tg_groups"}
             ],
             [
                 {"text": "🔙 Ku noqo Menu-ga Weyn", "callback_data": "menu_main"}
             ]
+        ]
+    }
+    send_message(chat_id, text, markup)
+
+def handle_tg_profile(chat_id, user_id=None):
+    uid = user_id or chat_id
+    rec = get_user_record(uid)
+    
+    text = f"""╔═══════════════════════════════════════╗
+   👤  PROFILE-KA AMBASSADOR / MANAGER
+╚═══════════════════════════════════════╝
+
+• <b>Magaca:</b> {rec['name']}
+• <b>ID:</b> <code>{uid}</code>
+• <b>Darajada:</b> {rec['rank']}
+• <b>Dhibcaha:</b> {rec['points']} Dhibcood
+• <b>Dadka aad keentay:</b> {rec['referrals_count']} qof (10 qof = VIP Lifetime)
+• <b>Post Quota (Weekly):</b> {rec['posts_left']}
+• <b>Channels ku xiran:</b> {', '.join(rec['channels']) if rec['channels'] else 'Ma jiraan (Guji Ku Xir Channel)'}
+
+🎁 <b>Faa'iidada Team-ka & Share-ka:</b>
+Qof kasta oo share gareeya wuxuu toddobaadkii helayaa <b>5 Post oo Bilaash ah</b> oo uu channels-ka ugu baahiyo! Markaad keento 10 qof waxaad noqonaysaa <b>👑 VIP Lifetime</b> (Unlimited Posts & Auto-Schedule)!
+
+🔗 <b>Link-gaaga gaarka ah ee Referral-ka:</b>
+<code>{rec['referral_link']}</code>"""
+
+    share_url = f"https://t.me/share/url?url={urllib.parse.quote(rec['referral_link'])}&text={urllib.parse.quote('🚀 Ku biir Shaqo Baahiye (@Baahiyebot) - Hel shaqooyinka, CV ATS ah, iyo maamulka Telegram!')}"
+
+    markup = {
+        "inline_keyboard": [
+            [{"text": "📤 Share Link-gaaga (Hel Dhibco & VIP)", "url": share_url}],
+            [{"text": "🏆 Eeg Leaderboard-ka", "callback_data": "tg_leaderboard"}],
+            [{"text": "🔙 Ku noqo Maamulka", "callback_data": "menu_tg_admin"}]
+        ]
+    }
+    send_message(chat_id, text, markup)
+
+def handle_tg_leaderboard(chat_id, current_user_id=None):
+    c_uid = str(current_user_id or chat_id)
+    leaders = get_leaderboard_data()
+    
+    text = """╔═══════════════════════════════════════╗
+   🏆  SHAXDA HORYAALKA (AMBASSADORS)
+   Top Promoters & Team Managers
+╚═══════════════════════════════════════╝\n\n"""
+
+    badges = ["🥇", "🥈", "🥉", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣", "🔟"]
+    
+    for i, u in enumerate(leaders):
+        badge = badges[i] if i < len(badges) else f"{i+1}."
+        vip_tag = "👑 VIP" if u["is_vip"] else "⭐ Amb"
+        you_tag = " 👉 <i>(Adiga)</i>" if u["uid"] == c_uid else ""
+        text += f"{badge} <b>{u['name']}</b> ({vip_tag}): {u['referrals']} Referrals | {u['points']} pts{you_tag}\n"
+
+    text += "\n💡 <b>Sida aad Safka Hore ugu Soo Gali karto:</b>\nShare-garee link-gaaga referral-ka si aad u hesho <b>+25 pts</b> qof kasta, una furato VIP Lifetime!"
+
+    markup = {
+        "inline_keyboard": [
+            [{"text": "📤 Share Link-gaaga Hadda", "callback_data": "tg_profile"}],
+            [{"text": "🔙 Ku noqo Maamulka", "callback_data": "menu_tg_admin"}]
+        ]
+    }
+    send_message(chat_id, text, markup)
+
+# ========================================================
+# 3. MULTI-POSTING ENGINE (WITH BUTTONS & LINKS)
+# ========================================================
+
+def handle_tg_multipost(chat_id, user_id=None):
+    uid = user_id or chat_id
+    rec = get_user_record(uid)
+    
+    if not rec["is_permanent"] and rec["weekly_posts_used"] >= rec["weekly_posts_limit"]:
+        text = f"""⚠️ <b>Xadka Post-yada Todobaadkan Waa Buuxsamay:</b>
+
+Waxaad isticmaashay <b>{rec['weekly_posts_used']}/{rec['weekly_posts_limit']}</b> posts ee bilaashka ahaa todobaadkan.
+
+🚀 <b>Sida loo kordhiyo:</b>
+• Share-garee link-gaaga si aad u hesho <b>Post-yo dheeraad ah</b>.
+• Ama keen 10 qof si aad u furato <b>👑 VIP Lifetime (Unlimited Posts)</b>!"""
+        markup = {
+            "inline_keyboard": [
+                [{"text": "🎁 Share-garee & Fur Posts Dheeraad ah", "callback_data": "tg_profile"}],
+                [{"text": "🔙 Ku noqo Maamulka", "callback_data": "menu_tg_admin"}]
+            ]
+        }
+        send_message(chat_id, text, markup)
+        return
+
+    text = f"""📢 <b>Xarunta Multi-Posting-ka & Badhamada Casriga ah:</b>
+
+• Quota: <b>{rec['posts_left']}</b> post baa kuu haray
+• Channels ku xiran: <b>{len(rec['channels'])}</b> ({', '.join(rec['channels']) if rec['channels'] else 'Ma jiraan - Default Mode'})
+
+Dooro nooca post-ka aad rabto inaad u diyaariso kanaaladaada:"""
+
+    markup = {
+        "inline_keyboard": [
+            [
+                {"text": "📣 1. Ogeysiis Degdeg ah (Announcement)", "callback_data": "tg_mp_quick"},
+                {"text": "💼 2. Fursad Shaqo (Job Post)", "callback_data": "tg_mp_job"}
+            ],
+            [
+                {"text": "📚 3. Cashar / Manhaj (Lesson Post)", "callback_data": "tg_mp_lesson"},
+                {"text": "✍️ 4. Qor Qoraal Gaar ah (Custom)", "callback_data": "tg_mp_custom"}
+            ],
+            [
+                {"text": "➕ Ku Xir Channel Cusub", "callback_data": "tg_add_channel"}
+            ],
+            [
+                {"text": "🔙 Ku noqo Maamulka", "callback_data": "menu_tg_admin"}
+            ]
+        ]
+    }
+    send_message(chat_id, text, markup)
+
+def handle_tg_multipost_preview(chat_id, user_id, post_type):
+    if post_type == "quick":
+        post_text = """📣 <b>OGEYSIIS MUHIIM AH:</b>
+
+Waxaa dhammaan xubnaha lagu wargelinayaa in fursado shaqo oo cusub, koorsooyinka AI Automation-ka, iyo 2 buug oo bilaash ah laga heli karo madashayada rasmiga ah!
+
+Ka faa'iideyso fursadaha maanta ka hor intaysan dhicin."""
+    elif post_type == "job":
+        post_text = """💼 <b>FURSAD SHAQO OO CUSUB:</b>
+
+🏢 <b>Shirkadda:</b> Somali Tech Hub & Partner NGOs
+📍 <b>Goobta:</b> Muqdisho / Hargeysa / Remote
+🎓 <b>Doorka:</b> IT Support & Administrative Coordinator
+📅 <b>Xilliga:</b> Waqti Buuxa (Full-time)
+
+🚀 Codso hadda adoo adeegsanaya link-ga hoose:"""
+    elif post_type == "lesson":
+        post_text = """🇬🇧 <b>DAILY ENGLISH LESSON:</b>
+
+📚 <b>Word of the Day:</b> 'Streamline' (Habayn iyo Fududeyn)
+<i>"We use AI tools to streamline our daily communication."</i>
+(Waxaan u adeegsannaa aaladaha AI si aan u fududeyno wada-xiriirka maalinlaha ah).
+
+🎯 <b>Practice Question:</b>
+Sidee Ingiriis ahaan loogu dhahaa: <i>'Shaqadaydu waa computer support'</i>?
+👉 <i>"My job is computer support."</i>"""
+    else:
+        post_text = "Qoraalkaaga gaarka ah."
+
+    preview_wrapper = f"""👁️ <b>HOR-DHAC (POST PREVIEW):</b>
+<i>Sidan ayuu post-ku ugu muuqan doonaa channel-kaaga:</i>
+━━━━━━━━━━━━━━━━━━━━━
+{post_text}
+━━━━━━━━━━━━━━━━━━━━━
+
+Badhamada ku lifaaqan:
+[ 🌐 Booqo Link-ga ] | [ 📱 Ka Qaybgal ]"""
+
+    markup = {
+        "inline_keyboard": [
+            [{"text": "🚀 Baahi Hadda (Broadcast to Channels)", "callback_data": f"tg_mp_send_{post_type}"}],
+            [{"text": "🔙 Ka Noqo", "callback_data": "tg_multipost"}]
+        ]
+    }
+    send_message(chat_id, preview_wrapper, markup)
+
+def handle_tg_multipost_send(chat_id, user_id, post_type):
+    uid = user_id or chat_id
+    rec = get_user_record(uid)
+    
+    if not rec["is_permanent"] and rec["weekly_posts_used"] >= rec["weekly_posts_limit"]:
+        send_message(chat_id, "⚠️ Quota-daadii waa buuxsantay todobaadkan! Keen dad dheeraad ah si aad u hesho posts bilaash ah.")
+        return
+
+    if post_type == "quick":
+        content = "📣 <b>OGEYSIIS MUHIIM AH:</b>\n\nFursado shaqo oo cusub, koorsooyin AI ah iyo 2 buug oo bilaash ah ka hel madashayada rasmiga ah!"
+        markup = {"inline_keyboard": [[{"text": "🌐 Booqo isbar-ai.com", "url": PRIMARY_DOMAIN}], [{"text": "📱 @Baahiyebot", "url": "https://t.me/Baahiyebot"}]]}
+    elif post_type == "job":
+        content = "💼 <b>FURSAD SHAQO OO CUSUB:</b>\n\nIT Support, Admin & Remote roles ka raadi Shaqo Baahiye!"
+        markup = {"inline_keyboard": [[{"text": "🚀 Codso Hadda", "url": f"{PRIMARY_DOMAIN}#jobsSection"}]]}
+    else:
+        content = "🇬🇧 <b>DAILY ENGLISH LESSON:</b>\n\nKu baro af Ingiriisiga heer kasta bot-ka @Baahiyebot!"
+        markup = {"inline_keyboard": [[{"text": "📖 Ka Qaybgal", "url": "https://t.me/Baahiyebot?start=channels"}]]}
+
+    success_count = 0
+    channels_to_send = rec["channels"]
+    
+    if channels_to_send:
+        for ch in channels_to_send:
+            res = send_message(ch, content, markup)
+            if res and res.get("ok"):
+                success_count += 1
+    else:
+        send_message(chat_id, f"📢 <b>[SIMULATION TEST POST]</b>\n\n{content}", markup)
+        success_count = 1
+
+    record_user_post(uid)
+    
+    send_message(chat_id, f"""✅ <b>BAAHINTII WAA LA GUULEYSTAY!</b>
+
+• Post-ka waxaa loo diray: <b>{success_count}</b> goobood
+• Dhibco laguugu daray: <b>+5 Points</b> 🏆
+• Quota haray: <b>{get_user_record(uid)['posts_left']}</b>""", {
+        "inline_keyboard": [
+            [{"text": "📢 Samee Post Kale", "callback_data": "tg_multipost"}],
+            [{"text": "🔙 Ku noqo Maamulka", "callback_data": "menu_tg_admin"}]
+        ]
+    })
+
+# ========================================================
+# 4. JADWALKA & AUTOMATION (SCHEDULE POSTS)
+# ========================================================
+
+def handle_tg_schedule(chat_id, user_id=None):
+    uid = user_id or chat_id
+    rec = get_user_record(uid)
+    sched = rec["schedule"]
+    
+    m_icon = "✅" if sched.get("morning") else "❌"
+    n_icon = "✅" if sched.get("noon") else "❌"
+    e_icon = "✅" if sched.get("evening") else "❌"
+
+    text = f"""⏰ <b>Jadwalka & Posting Automation ee Channels-ka:</b>
+
+Bot-ku wuxuu si otomaatig ah channels-kaaga ugu baahin karaa casharro iyo ogeysiisyada waqtiyada aad doorato:
+
+1. 🌅 <b>Subaxdii (08:00 AM):</b> {m_icon} Daily English Lesson & Tech Tip
+2. ☀️ <b>Duhurdii (01:00 PM):</b> {n_icon} Fursadaha Shaqada & Ogeysiis
+3. 🌙 <b>Habeenkii (08:00 PM):</b> {e_icon} Interactive Quiz & Su'aalaha Fasalada
+
+<i>Guji badhamada hoose si aad u shido (ON) ama u damiso (OFF) waqtiyada:</i>"""
+
+    markup = {
+        "inline_keyboard": [
+            [
+                {"text": f"{m_icon} Subax 08:00 AM", "callback_data": "tg_sched_toggle_morning"},
+                {"text": f"{n_icon} Duhur 01:00 PM", "callback_data": "tg_sched_toggle_noon"}
+            ],
+            [
+                {"text": f"{e_icon} Habeen 08:00 PM", "callback_data": "tg_sched_toggle_evening"}
+            ],
+            [
+                {"text": "🔙 Ku noqo Maamulka", "callback_data": "menu_tg_admin"}
+            ]
+        ]
+    }
+    send_message(chat_id, text, markup)
+
+# ========================================================
+# 5. AUTONOMOUS 3-LEVEL ENGLISH CLASSES (AI TUTOR)
+# ========================================================
+
+CLASS_LEVELS = {
+    "1": {
+        "name": "Fasalka 1aad: Beginners (Aasaaska)",
+        "badge": "🟢 Heerka 1aad",
+        "title": "Salaanta, Erayada Maalinlaha ah & Wadahadalka Fudud",
+        "vocab": [("Good morning", "Subax wanaagsan"), ("How are you?", "Sidee tahay?"), ("I want to learn", "Waxaan rabaa inaan barto")],
+        "dialogue": "A: 'Hello Ahmed, how are you today?'\nB: 'I am doing great, thank you!'",
+        "quiz_q": "Dooro jawaabta saxda ah ee 'Subax wanaagsan':",
+        "quiz_opts": [("A. Good morning", "correct"), ("B. Good night", "wrong"), ("C. Goodbye", "wrong")]
+    },
+    "2": {
+        "name": "Fasalka 2aad: Intermediate (Dhexe)",
+        "badge": "🟡 Heerka 2aad",
+        "title": "Naxwaha (Grammar), Tenses & Khaladaadka Badan",
+        "vocab": [("Troubleshoot", "Xallinta ciladaha"), ("Improve", "Hagaajin / Kordhin"), ("Coordinate", "Isku-dubarid")],
+        "dialogue": "A: 'Have you finished the computer certificate?'\nB: 'Yes, I finished it yesterday.'",
+        "quiz_q": "Buuxi meesha bannaan: 'She _____ in Hargeisa for two years.'",
+        "quiz_opts": [("A. has lived", "correct"), ("B. live", "wrong"), ("C. is live", "wrong")]
+    },
+    "3": {
+        "name": "Fasalka 3aad: Advanced & Career (Sare)",
+        "badge": "🔵 Heerka 3aad",
+        "title": "Wareysiyada Shaqada (Job Interviews) & STAR Method",
+        "vocab": [("Collaborate", "Wada-shaqayn kooxeed"), ("Implement", "Hirgelin nidaam cusub"), ("Streamline", "Fududeyn iyo hufnaan")],
+        "dialogue": "'In my previous role, I collaborated with the tech team to resolve 50+ network issues.'",
+        "quiz_q": "Maxay tahay ujeeddada STAR Method ee wareysiyada shaqada?",
+        "quiz_opts": [("A. Situation, Task, Action, Result", "correct"), ("B. Simple, True, Active, Real", "wrong"), ("C. System, Tech, App, Run", "wrong")]
+    }
+}
+
+def handle_tg_channels(chat_id):
+    text = """🎓 <b>3-da Fasalka Luuqadda Ingiriisiga (Autonomous AI Tutor):</b>
+
+Bot-ka <b>@Baahiyebot</b> ayaa si buuxda ula wareegaya maamulka iyo baridda 3-da fasal:
+
+🟢 <b>Fasalka 1aad (Beginners):</b> Aasaaska, erayada, iyo wadahadalka maalinlaha ah.
+🟡 <b>Fasalka 2aad (Intermediate):</b> Naxwaha, Tenses-ka, iyo qaladaadka caadiga ah.
+🔵 <b>Fasalka 3aad (Advanced & Career):</b> Wareysiyada shaqada, STAR method, iyo erayada xirfadeed.
+
+<i>Guji fasalka aad rabto inaad casharkiisa eegto ama u dirto channel-ka:</i>"""
+
+    markup = {
+        "inline_keyboard": [
+            [{"text": "🟢 Fasalka 1aad: Beginners", "callback_data": "tg_class_1"}],
+            [{"text": "🟡 Fasalka 2aad: Intermediate", "callback_data": "tg_class_2"}],
+            [{"text": "🔵 Fasalka 3aad: Advanced & Career", "callback_data": "tg_class_3"}],
+            [{"text": "🔙 Ku noqo Maamulka", "callback_data": "menu_tg_admin"}]
+        ]
+    }
+    send_message(chat_id, text, markup)
+
+def handle_tg_class_detail(chat_id, level_id):
+    lvl = CLASS_LEVELS.get(level_id, CLASS_LEVELS["1"])
+    
+    text = f"""╔═══════════════════════════════════════╗
+   {lvl['badge']}: {lvl['name'].upper()}
+╚═══════════════════════════════════════╝
+
+📚 <b>Mowduuca:</b> {lvl['title']}
+
+📖 <b>Erayo Muhiim ah (Vocabulary):</b>\n"""
+    for en, so in lvl["vocab"]:
+        text += f"• <b>{en}:</b> {so}\n"
+
+    text += f"""\n💬 <b>Wadahadal (Dialogue):</b>\n<i>{lvl['dialogue']}</i>\n
+🎯 <b>Interactive Quiz:</b>
+{lvl['quiz_q']}"""
+
+    quiz_row = []
+    for opt_text, status in lvl["quiz_opts"]:
+        quiz_row.append({"text": opt_text.split('.')[0], "callback_data": f"tg_quiz_ans_{level_id}_{status}"})
+
+    markup = {
+        "inline_keyboard": [
+            quiz_row,
+            [
+                {"text": "⚡ AI: Diyaari Cashar Cusub", "callback_data": f"tg_class_refresh_{level_id}"},
+                {"text": "📢 U Dir Channel-ka (Post)", "callback_data": f"tg_class_broadcast_{level_id}"}
+            ],
+            [
+                {"text": "🔙 Fasalada Kale", "callback_data": "tg_channels"}
+            ]
+        ]
+    }
+    send_message(chat_id, text, markup)
+
+# ========================================================
+# 6. AI KNOWLEDGE BASE & 2-EXAMPLES CONTENT GENERATOR
+# ========================================================
+
+def generate_ai_content(prompt_text):
+    clean_prompt = prompt_text.strip()
+    if OpenAI and os.environ.get("OPENAI_API_KEY"):
+        try:
+            client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+            sys_msg = "Waxaad tahay Khubaro AI ah oo channels-ka iyo fasalada Telegram u diyaariya casharro iyo qoraallo waxbarasho oo heer sare ah. Isticmaal Af-Soomaali xarrago leh, cinwaanno cadcad, emojis, iyo layli gaaban."
+            resp = client.chat.completions.create(
+                model="gpt-4o-mini",
+                messages=[
+                    {"role": "system", "content": sys_msg},
+                    {"role": "user", "content": f"Diyaari qoraal channel ku saabsan: {clean_prompt}"}
+                ],
+                max_tokens=650,
+                temperature=0.7
+            )
+            return resp.choices[0].message.content.strip()
+        except Exception:
+            pass
+    # Intelligent fallback
+    return f"""📢 <b>Cashar & Nuxur: {clean_prompt.capitalize()}</b>
+
+✨ <b>Fahamka Guud:</b>
+Barashada iyo fahamka <b>{clean_prompt}</b> waxay aasaas u tahay guushaada xirfadeed iyo horumarinta ganacsiga ama fasalkaaga.
+
+🔍 <b>Laba Tusaale oo La Taaban Karo:</b>
+1. <b>Tusaalaha 1aad:</b> Hirgelinta nidaam otomaatig ah oo badbaadiya 5+ saacadood oo shaqo maalinle ah.
+2. <b>Tusaalaha 2aad:</b> Xiriir hufan oo la la yeesho macaamiisha ama ardayda adoo adeegsanaya aaladaha casriga ah.
+
+🎯 <b>Layli Gaaban:</b>
+Sidee baad nuxurkan ugu dabaqi kartaa shaqadaada maanta?
+
+⭐ <i>Waxaa diyaariyay Kaaliyaha AI ee @Baahiyebot | isbar-ai.com</i>"""
+
+def handle_tg_ai_generator(chat_id, user_id=None):
+    text = """💡 <b>AI Content Generator (Manhaj & 2 Tusaale):</b>
+
+Bot-ku wuxuu awood u leeyahay inuu qoraal ama cashar buuxa ka soo saaro laba tusaale oo aad siiso ama mowduuca fasalkaaga ka hadlayo:
+
+1️⃣ <b>Laba Tusaale (2 Real Examples):</b>
+Sii 2 tusaale (tusaale: <i>'Customer care bangi'</i> iyo <i>'Customer care dukaanka online'</i>), wuxuuna ka dhigayaa cashar nidaamsan oo layli leh!
+
+2️⃣ <b>Mowduuc Toos ah (Topic Generator):</b>
+Qor mowduuc kasta (IT, Xisaabaad, English, AI), isla markiiba post diyaar ah ayuu kuu soo saarayaa!
+
+<i>Dooro mid ka mid ah fursadaha hoose:</i>"""
+
+    markup = {
+        "inline_keyboard": [
+            [
+                {"text": "💡 1. Sii 2 Tusaale (Generate)", "callback_data": "tg_ai_gen_ex"},
+                {"text": "📝 2. Qor Mowduuc (Topic)", "callback_data": "tg_ai_gen_topic"}
+            ],
+            [
+                {"text": "📚 Manhajka Koorsooyinka Isbar", "callback_data": "tg_docs"}
+            ],
+            [
+                {"text": "🔙 Ku noqo Maamulka", "callback_data": "menu_tg_admin"}
+            ]
+        ]
+    }
+    send_message(chat_id, text, markup)
+
+def handle_tg_add_channel(chat_id, user_id=None):
+    uid = str(user_id or chat_id)
+    USER_STATES[uid] = {"state": "waiting_channel"}
+
+    text = """➕ <b>Ku Xir Channel-kaaga ama Group-kaaga:</b>
+
+Si bot-ku uu ugu shubo casharrada, qoraallada, iyo multi-posting-ka:
+
+1. 👑 <b>Ku dar Bot-ka:</b> Ku dar <code>@Baahiyebot</code> channel-kaaga ama group-kaaga adoo ka dhigaya <b>Admin</b> (oo leh rukhsadda <i>Post Messages</i>).
+2. ✍️ <b>Qor Username-ka Channel-ka:</b> Halkan hadda toos ugu soo qor username-ka channel-ka (tusaale: <code>@channelkayga</code>).
+
+<i>Fadlan hadda qor username-ka channel-ka:</i>"""
+
+    markup = {
+        "inline_keyboard": [
+            [{"text": "🔙 Ka Noqo / Cancel", "callback_data": "menu_tg_admin"}]
         ]
     }
     send_message(chat_id, text, markup)
@@ -567,142 +1195,15 @@ Sida aad ugu xirayso bot-ka fasalkaaga ama group-kaaga:
     }
     send_message(chat_id, text, markup)
 
-def handle_tg_channels(chat_id):
-    text = """📢 <b>Channels-ka & Casharrada English Tutor:</b>
-
-Bot-ku wuxuu diyaarin karaa oo channels-kaaga ugu baahin karaa casharro heerarkoodu kala duwan yihiin:
-
-🟢 <b>Heerka 1aad (Beginners):</b> Salaanta, erayada maalinlaha ah, iyo wada-hadalka fudud.
-🟡 <b>Heerka 2aad (Intermediate):</b> Naxwaha (Grammar), xilliyada (Tenses), iyo qaladaadka caadiga ah.
-🔵 <b>Heerka 3aad (Advanced & Career):</b> Erayada xirfadeed ee wareysiyada shaqada (Job Interviews) iyo idioms.
-💻 <b>IT Daily Tips:</b> Qoraallo maalinle ah oo ku saabsan Programming, AI, iyo fursadaha shaqo.
-
-<i>Guji mid ka mid ah hoos si aad u eegto tusaale cashar diyaarsan:</i>"""
-    markup = {
-        "inline_keyboard": [
-            [
-                {"text": "🟢 Heerka 1: Beginners", "callback_data": "tg_lesson_beg"},
-                {"text": "🟡 Heerka 2: Intermediate", "callback_data": "tg_lesson_int"}
-            ],
-            [
-                {"text": "🔵 Heerka 3: Job & Tech", "callback_data": "tg_lesson_adv"},
-                {"text": "💻 IT Daily Tip", "callback_data": "tg_lesson_it"}
-            ],
-            [
-                {"text": "🔙 Ku noqo Maamulka", "callback_data": "menu_tg_admin"}
-            ]
-        ]
-    }
-    send_message(chat_id, text, markup)
-
-def handle_tg_lesson(chat_id, level):
-    if level == "beginner":
-        text = """🇬🇧 <b>Casharka 1aad (Beginners): Salaanta & Erayada Maalinlaha ah</b>
-
-📚 <b>Erayo Muhiim ah (Vocabulary):</b>
-• <b>Good morning:</b> Subax wanaagsan
-• <b>How are you doing?</b> Sidee tahay / xaaladaadu sidee tahay?
-• <b>I am learning English:</b> Waxaan baranayaa af Ingiriisiga
-• <b>Thank you very much:</b> Aad iyo aad baad u mahadsan tahay
-• <b>Have a wonderful day:</b> Maalin cajiib ah qaado
-
-💬 <b>Wada-sheekeysi Fudud (Dialogue):</b>
-A: <i>"Good morning, Ahmed! How is your study going?"</i>
-B: <i>"Good morning! Everything is going great, thank you."</i>
-
-🎯 <b>Layli (Quick Task):</b>
-Sidee Ingiriis ahaan loogu dhahaa: <i>"Waxaan rabaa inaan shaqo helo"</i>?
-👉 <b>Jawaabta saxda ah:</b> <i>"I want to find a job."</i>"""
-    elif level == "intermediate":
-        text = """🇬🇧 <b>Casharka 2aad (Intermediate): Present Perfect vs Past Simple</b>
-
-📚 <b>Xeerka Naxwaha (Grammar Rule):</b>
-• <b>Past Simple:</b> Wax dhacay waqti hore oo dhamaaday (Specific finished time).
-  Tusaale: <i>"I completed the IT certificate yesterday."</i> (Shalay ayaan dhameeyay shahaadada).
-• <b>Present Perfect:</b> Wax dhacay oo saameyntoodu wali taagan tahay ama waqtiga aan la cayimin.
-  Tusaale: <i>"I have built three AI bots."</i> (Waxaan dhisay saddex bot oo AI ah).
-
-💬 <b>Qaladka Badan ee La Sameeyo:</b>
-❌ <i>"I have seen him yesterday."</i> (Khalad!)
-✅ <i>"I saw him yesterday."</i> (Sax!).
-
-🎯 <b>Layli (Quiz):</b>
-Buuxi meesha bannaan: <i>"She _____ (work) in Mogadishu for two years."</i>
-👉 <b>Jawaabta:</b> <i>"has worked"</i> ama <i>"worked"</i>."""
-    elif level == "advanced":
-        text = """🇬🇧 <b>Casharka 3aad (Advanced & Tech Careers): Wareysiyada Shaqada (Job Interviews)</b>
-
-📚 <b>Erayada Awoodda Leh ee CV-ga & Wareysiga (Power Verbs):</b>
-• <b>Collaborate:</b> Wada-shaqeyn kooxeed yeelasho.
-• <b>Troubleshoot:</b> Baaris iyo xallinta cilladaha farsamo.
-• <b>Implement:</b> Hirgelinta nidaam ama qorshe cusub.
-• <b>Streamline:</b> Fududeynta iyo habeynta howl socotay.
-
-💬 <b>Tusaalaha Jawaab Wareysi (STAR Method):</b>
-<i>"In my previous project, I collaborated with the tech team to troubleshoot networking issues and streamline customer support."</i>
-(Mashruucii hore, waxaan la shaqeeyay kooxda farsamada si aan u xalliyo cilladaha network-ka una fududeeyo adeegga macaamiisha).
-
-💡 <b>Talo Dahabi ah:</b> Had iyo jeer natiijada la taaban karo ku muuji tiro (tusaale: 'improved efficiency by 30%')."""
-    else: # IT tip
-        text = """💻 <b>Talo Maalinle ah ee IT-ga & AI Automation:</b>
-
-🚀 <b>Maxay tahay sababta Python & API ay muhiim ugu yihiin dhalinta shaqo doonka ah?</b>
-Shirkadaha casriga ah maanta ma shaqaaleeyaan qof hawlaha gacanta ku qabta kaliya; waxay raadinayaan qof fahamsan sida loo otomaatigyeeyo (automate) shaqooyinka soo noqnoqda.
-
-🛠️ <b>Aaladaha ugu muhiimsan ee maanta la rabo:</b>
-1. <b>N8n & Make:</b> Isku xirka WhatsApp, Telegram, iyo CRM.
-2. <b>OpenAI API:</b> Dhisidda chatbots caqliyeed oo macaamiisha u jawaaba 24/7.
-3. <b>FastAPI / Flask:</b> Dhisidda adeegyo fudud oo online ah.
-
-⭐ Repository-ga mashruucan waa 100% Free & Open Source oo qof kasta wuu ka baran karaa!"""
-
-    markup = {
-        "inline_keyboard": [
-            [{"text": "📢 Baahi Casharkan (Share)", "url": f"https://t.me/share/url?url=https://t.me/Baahiyebot&text={urllib.parse.quote(text[:300])}"}],
-            [{"text": "🔙 Ku noqo Channels-ka", "callback_data": "tg_channels"}]
-        ]
-    }
-    send_message(chat_id, text, markup)
-
-def handle_tg_referral(chat_id, user_id=None):
-    uid = user_id or chat_id
-    rec = get_user_record(uid)
-    ref_link = rec["referral_link"]
-    status_str = "⭐ <b>Fasax Buuxa oo Bilaash ah (Permanent Free)</b>" if rec["is_permanent"] else f"⏳ <b>40 Cisho Free Trial ({rec['days_left']} Maalmood baa kuu haray)</b>"
-
-    text = f"""🎁 <b>Xaaladdaada Fasaxa & Referral-ka:</b>
-
-{status_str}
-👥 Dadka aad keentay: <b>{rec['referrals_count']}/10 qof</b>
-
-🚀 <b>Sidee ku helaysaa Fasax Joogto ah oo Bilaash ah?</b>
-Haddii aad link-gaaga u share-gareyso asxaabtaada ama group-yada, <b>10 qof</b> oo kasta oo ku soo biirta, waxaad helaysaa Fasax Buuxa oo Bilaash ah oo aad weligaa ku maamulan karto bot-kan!
-
-🔗 <b>Link-gaaga gaarka ah ee Referral-ka:</b>
-<code>{ref_link}</code>"""
-
-    share_url = f"https://t.me/share/url?url={urllib.parse.quote(ref_link)}&text={urllib.parse.quote('🚀 Ku biir Shaqo Baahiye (@Baahiyebot) - Hel shaqooyinka IT-ga, CV ATS ah, iyo maamulka fasalada Telegram!')}"
-    markup = {
-        "inline_keyboard": [
-            [{"text": "📤 Share-garee Link-gaaga (1-Click)", "url": share_url}],
-            [{"text": "🔙 Ku noqo Maamulka", "callback_data": "menu_tg_admin"}]
-        ]
-    }
-    send_message(chat_id, text, markup)
-
 def handle_tg_conflict(chat_id):
     text = """🤝 <b>Xallinta Khilaafaadka & Ilaalinta Anshaxa Fasalada:</b>
 
-Fasalada iyo group-yada Telegram marka arday badani isugu timaado, waxaa muhiim ah in loo maamulo si xirfadaysan:
+Fasalada iyo group-yada Telegram marka arday badani isugu timaado:
 
-1. ⚖️ <b>Xeerka Dhexdhexaadnimada:</b>
-   • Ha qaadan dhinac go'an haddii ardaydu is-qabtaan; ku hagi ujeedka waxbarashada iyo casharka.
-2. 🚫 <b>Digniin Shakhsi ah (Private Warning):</b>
-   • Qofka anshax-xumada la yimaada, fariintiisa waa la tirtirayaa waxaana loo dirayaa digniin shakhsi ah intaan laga saarin group-ka.
-3. 🕊️ <b>Qoraal Nabadeyn ah (Mediation Message):</b>
-   • Bot-ku wuxuu si toos ah u dirayaa fariin dejin ah: <i>"Walaalayaal, fasalkan waxaa loo furay barasho iyo horumar, fadlan aan is-dhowrno oo wada-hadalka ku ekeyno casharka."</i>
-4. 🔇 <b>Xaddidaadda Qoraalka (Mute):</b>
-   • Hadii dooddu sii kululaato, admin-ku wuxuu xiri karaa qoraalka muddo 15 daqiiqo ah si jawigu u qaboobo."""
+1. ⚖️ <b>Xeerka Dhexdhexaadnimada:</b> Ha qaadan dhinac go'an haddii ardaydu is-qabtaan; ku hagi ujeedka waxbarashada.
+2. 🚫 <b>Digniin Shakhsi ah:</b> Qofka anshax-xumada la yimaada, fariintiisa waa la tirtirayaa waxaana loo dirayaa digniin shakhsi ah.
+3. 🕊️ <b>Qoraal Nabadeyn ah:</b> Bot-ku wuxuu si toos ah u dirayaa fariin dejin ah si jawiga waxbarashadu u ahaado mid deggan.
+4. 🔇 <b>Xaddidaadda Qoraalka (Mute):</b> Hadii dooddu kululaato, admin-ku wuxuu xiri karaa qoraalka muddo 15 daqiiqo ah."""
     markup = {
         "inline_keyboard": [
             [{"text": "🛡️ Maamulka Groups-ka", "callback_data": "tg_groups"}],
@@ -716,14 +1217,11 @@ def handle_tg_docs(chat_id):
 
 Ma rabtaa in bot-ka <b>@Baahiyebot</b> uu si gaar ah ardaydaada ugu sharaxo casharradaada iyo manhajkaaga?
 
-1. 📄 <b>Noocyada Xogta La Ogolyahay:</b>
-   • Qoraal toos ah (Syllabus, Casharro, Su'aalo & Jawaabo).
-   • Faylal PDF ama Text ah oo ku saabsan koorsadaada.
+1. 📄 <b>Noocyada Xogta:</b> Qoraal toos ah, syllabus, su'aalo & jawaabo, ama PDF.
 2. 📩 <b>Sida Loo Soo Diro:</b>
-   • Toos ugu soo dir email-ka rasmiga ah: <code>Suxufi34@gmail.com</code>
-   • Ama WhatsApp toos ah: <code>+1 (587) 306-4137</code> (Mohamed Yasin)
-3. ⚡ <b>Dhaqangelinta:</b>
-   • Waxaan xogtaada toos ugu xiraynaa AI-ga bot-ka si ardaydaada fasalka kaliya loogu siiyo jawaabo ku saleysan manhajkaaga!"""
+   • Email: <code>Suxufi34@gmail.com</code>
+   • WhatsApp: <code>+1 (587) 306-4137</code> (Mohamed Yasin)
+3. ⚡ <b>Dhaqangelinta:</b> Waxaan manhajkaaga toos ugu lifaaqaynaa AI-ga bot-ka si uu ardaydaada fasalka ugu baro!"""
     markup = {
         "inline_keyboard": [
             [{"text": "💬 WhatsApp Toos ah (Mohamed Yasin)", "url": "https://wa.me/15873064137?text=Salamaat%20Mohamed,%20waxaan%20rabaa%20inaan%20soo%20diro%20manhajka%20fasalkayga"}],
@@ -777,28 +1275,83 @@ def process_callback_query(callback_query):
         handle_cv(chat_id)
     elif data == "menu_tg_admin":
         handle_tg_admin(chat_id, user_id)
+    elif data == "tg_profile":
+        handle_tg_profile(chat_id, user_id)
+    elif data == "tg_leaderboard":
+        handle_tg_leaderboard(chat_id, user_id)
+    elif data == "tg_multipost":
+        handle_tg_multipost(chat_id, user_id)
+    elif data in ["tg_mp_quick", "tg_mp_job", "tg_mp_lesson"]:
+        p_type = data.replace("tg_mp_", "")
+        handle_tg_multipost_preview(chat_id, user_id, p_type)
+    elif data.startswith("tg_mp_send_"):
+        p_type = data.replace("tg_mp_send_", "")
+        handle_tg_multipost_send(chat_id, user_id, p_type)
+    elif data == "tg_mp_custom":
+        USER_STATES[str(user_id)] = {"state": "waiting_custom_post"}
+        send_message(chat_id, "✍️ <b>Qor Qoraalkaaga Gaarka ah:</b>\n\nFadlan halkan toos ugu soo qor fariinta aad rabto inaad u baahiso kanaaladaada.\n<i>(Tusaale: 'Waxaan bilownay fasal cusub oo bilaash ah...')</i>", {
+            "inline_keyboard": [[{"text": "🔙 Ka Noqo / Cancel", "callback_data": "tg_multipost"}]]
+        })
+    elif data == "tg_schedule":
+        handle_tg_schedule(chat_id, user_id)
+    elif data.startswith("tg_sched_toggle_"):
+        slot = data.replace("tg_sched_toggle_", "")
+        toggle_user_schedule(user_id, slot)
+        handle_tg_schedule(chat_id, user_id)
     elif data == "tg_groups":
         handle_tg_groups(chat_id)
     elif data == "tg_channels":
         handle_tg_channels(chat_id)
+    elif data in ["tg_class_1", "tg_class_2", "tg_class_3"]:
+        lvl_num = data.replace("tg_class_", "")
+        handle_tg_class_detail(chat_id, lvl_num)
+    elif data.startswith("tg_class_refresh_"):
+        lvl_num = data.replace("tg_class_refresh_", "")
+        send_message(chat_id, "⚡ <i>AI-gu wuxuu diyaarinayaa cashar cusub...</i>")
+        handle_tg_class_detail(chat_id, lvl_num)
+    elif data.startswith("tg_class_broadcast_"):
+        lvl_num = data.replace("tg_class_broadcast_", "")
+        handle_tg_multipost_send(chat_id, user_id, "lesson")
+    elif data.startswith("tg_quiz_ans_"):
+        parts = data.split("_")
+        status = parts[-1] if len(parts) >= 4 else "wrong"
+        if status == "correct":
+            answer_callback_query(cq_id, "🎉 HAMBALYO! Jawaabtaadu waa sax! 🌟")
+            send_message(chat_id, "🎉 <b>HAMBALYO!</b> Jawaabtaadu waa 100% sax! Horay u soco! 🌟")
+        else:
+            answer_callback_query(cq_id, "❌ Ma saxna. Isku day mar kale! 💪")
+            send_message(chat_id, "❌ <b>Ma saxna!</b> Isku day mar kale adoo akhrinaya casharka kore. 💪")
+    elif data == "tg_ai_gen":
+        handle_tg_ai_generator(chat_id, user_id)
+    elif data == "tg_ai_gen_ex":
+        USER_STATES[str(user_id)] = {"state": "waiting_examples"}
+        send_message(chat_id, "💡 <b>Sii 2 Tusaale oo AI-gu Cashar ka Dhigo:</b>\n\nHalkan hadda toos ugu qor laba tusaale oo dhab ah (tusaale: <i>'1. Sidee loo qoraa email codsi shaqo' iyo '2. Sidee looga jawaabaa su'aasha adag ee wareysiga'</i>):", {
+            "inline_keyboard": [[{"text": "🔙 Ka Noqo", "callback_data": "tg_ai_gen"}]]
+        })
+    elif data == "tg_ai_gen_topic":
+        USER_STATES[str(user_id)] = {"state": "waiting_topic"}
+        send_message(chat_id, "📝 <b>Qor Mowduuca aad Rabto (Topic):</b>\n\nHalkan toos ugu qor mowduuc kasta oo aad rabto in AI-gu kuu diyaariyo (tusaale: <i>'Xisaabaadka ganacsiga yar yar'</i> ama <i>'Barashada Python'</i>):", {
+            "inline_keyboard": [[{"text": "🔙 Ka Noqo", "callback_data": "tg_ai_gen"}]]
+        })
+    elif data == "tg_add_channel":
+        handle_tg_add_channel(chat_id, user_id)
     elif data == "tg_referral":
-        handle_tg_referral(chat_id, user_id)
+        handle_tg_profile(chat_id, user_id)
     elif data == "tg_conflict":
         handle_tg_conflict(chat_id)
     elif data == "tg_docs":
         handle_tg_docs(chat_id)
-    elif data == "tg_lesson_beg":
-        handle_tg_lesson(chat_id, "beginner")
-    elif data == "tg_lesson_int":
-        handle_tg_lesson(chat_id, "intermediate")
-    elif data == "tg_lesson_adv":
-        handle_tg_lesson(chat_id, "advanced")
-    elif data == "tg_lesson_it":
-        handle_tg_lesson(chat_id, "it")
     elif data == "menu_academy":
         handle_academy(chat_id)
     elif data == "menu_booking":
         handle_booking(chat_id)
+    elif data.startswith("book_card_"):
+        s_key = data.replace("book_card_", "")
+        handle_booking_card(chat_id, s_key)
+    elif data.startswith("book_slot_"):
+        parts = data.split("_")
+        if len(parts) >= 4:
+            handle_booking_slot_confirm(chat_id, parts[2], parts[3])
     elif data == "menu_contact":
         handle_contact(chat_id)
     elif data == "contact_ai_chat":
@@ -817,6 +1370,35 @@ def process_message(message):
     text = message.get("text", "").strip()
     first_name = chat.get("first_name", "Walaal")
     user_id = message.get("from", {}).get("id") or chat_id
+    uid_str = str(user_id)
+
+    # Check Active Multi-step User States
+    if uid_str in USER_STATES and not is_group and text:
+        state = USER_STATES[uid_str].get("state")
+        del USER_STATES[uid_str]
+        
+        if state == "waiting_channel":
+            clean_ch = text.strip()
+            if not clean_ch.startswith("@") and not clean_ch.startswith("-100"):
+                clean_ch = "@" + clean_ch
+            add_user_channel(uid_str, clean_ch)
+            send_message(chat_id, f"🎉 <b>Channel-ka {clean_ch} si guul leh baa loogu xiray nidaamka!</b>\n\nHadda waxaad u diri kartaa Multi-Posting iyo casharro otomaatig ah!", {
+                "inline_keyboard": [
+                    [{"text": "📢 Samee Post Hadda", "callback_data": "tg_multipost"}],
+                    [{"text": "🔙 Ku noqo Maamulka", "callback_data": "menu_tg_admin"}]
+                ]
+            })
+            return
+        elif state in ["waiting_examples", "waiting_topic", "waiting_custom_post"]:
+            send_message(chat_id, "⏳ <i>AI-gu wuxuu diyaarinayaa nuxurka iyo casharkaaga...</i>")
+            generated_content = generate_ai_content(text)
+            send_message(chat_id, f"📝 <b>Qoraalkii Diyaarsanaa (Preview):</b>\n\n{generated_content}", {
+                "inline_keyboard": [
+                    [{"text": "🚀 Baahi Hadda (Broadcast)", "callback_data": "tg_mp_send_quick"}],
+                    [{"text": "🔙 Ku noqo Maamulka", "callback_data": "menu_tg_admin"}]
+                ]
+            })
+            return
 
     # 1. Handle New Chat Members in Groups (Classroom Welcome)
     if "new_chat_members" in message:
