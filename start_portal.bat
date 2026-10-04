@@ -6,6 +6,6 @@ echo    Mohamed Yasin Mohamoud - Localhost Job Portal UI
 echo    Opening http://localhost:5050 in your browser...
 echo ================================================================
 echo.
-call .\venv\Scripts\activate.bat
+call .\venv_portal\Scripts\activate.bat
 python portal_app.py
 pause
