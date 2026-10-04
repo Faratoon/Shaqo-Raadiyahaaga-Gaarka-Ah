@@ -23,6 +23,24 @@ app = Flask(__name__)
 
 BASE_DIR = Path(__file__).resolve().parent
 
+def load_env_file():
+    env_path = BASE_DIR / ".env"
+    if env_path.exists():
+        try:
+            with open(env_path, "r", encoding="utf-8") as f:
+                for line in f:
+                    line = line.strip()
+                    if line and not line.startswith("#") and "=" in line:
+                        k, v = line.split("=", 1)
+                        k = k.strip()
+                        v = v.strip().strip("'\"")
+                        if k and k not in os.environ:
+                            os.environ[k] = v
+        except Exception:
+            pass
+
+load_env_file()
+
 IS_VERCEL = bool(os.environ.get("VERCEL"))
 if IS_VERCEL:
     OUTPUT_FOLDER = Path("/tmp/output")

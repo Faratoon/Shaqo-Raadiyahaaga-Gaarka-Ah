@@ -164,3 +164,7 @@ mono_crash.*
 data_folder/secrets.yaml
 .vercel
 venv_portal/
+telegram_management_data.json
+.env
+.env.*
+*.env
