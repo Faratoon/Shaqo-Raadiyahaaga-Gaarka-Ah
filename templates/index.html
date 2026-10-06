@@ -2041,14 +2041,110 @@
             justify-content: space-between;
         }
 
-        /* Public Footer */
+        /* Public Footer & Collapsible Sections */
         .site-footer {
             background: #0b132b;
             color: #94a3b8;
-            padding: 48px 20px 24px;
+            padding: 32px 20px 24px;
             margin-top: 60px;
             border-top: 1px solid rgba(255,255,255,0.08);
         }
+        .footer-compact-bar {
+            max-width: 1180px;
+            margin: 0 auto 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .footer-brand-mini {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .footer-quick-chips {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .footer-chip {
+            background: rgba(255, 255, 255, 0.06);
+            color: #cbd5e1;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.2s;
+        }
+        .footer-chip:hover {
+            background: rgba(56, 189, 248, 0.15);
+            color: #38bdf8;
+            border-color: rgba(56, 189, 248, 0.3);
+        }
+        .btn-toggle-expand {
+            background: linear-gradient(135deg, #0284c7, #0369a1);
+            color: white;
+            border: none;
+            padding: 7px 16px;
+            border-radius: 20px;
+            font-size: 12.5px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+            box-shadow: 0 2px 8px rgba(2, 132, 199, 0.3);
+        }
+        .btn-toggle-expand:hover {
+            background: linear-gradient(135deg, #0369a1, #075985);
+            transform: translateY(-1px);
+        }
+
+        .collapsible-container {
+            transition: max-height 0.4s ease, opacity 0.3s ease;
+            overflow: hidden;
+        }
+        .collapsible-container.collapsed {
+            max-height: 0 !important;
+            opacity: 0 !important;
+            margin-top: 0 !important;
+            margin-bottom: 0 !important;
+            pointer-events: none;
+        }
+        .collapsible-container.expanded {
+            max-height: 2500px !important;
+            opacity: 1 !important;
+            pointer-events: auto;
+        }
+
+        /* Inline Text Expand/Collapse */
+        .inline-toggle-btn {
+            background: rgba(2, 132, 199, 0.12);
+            color: #0284c7;
+            border: 1px solid rgba(2, 132, 199, 0.25);
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 11.5px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            margin-left: 6px;
+            transition: all 0.2s;
+        }
+        .inline-toggle-btn:hover {
+            background: #0284c7;
+            color: #ffffff;
+        }
+
         .footer-content {
             max-width: 1180px;
             margin: 0 auto;
@@ -2180,7 +2276,9 @@
             </h2>
 
             <p id="heroSubtitle">
-                Madal furan (Open-Source) oo u heellan dhalinyarada iyo ardayda Soomaaliyeed ee bartay Culuumta IT-ga iyo Computer Science-ka. Ka raadi fursadaha shaqo ee Soomaaliya (Muqdisho, Hargeysa), Bariga Afrika (Kenya, Itoobiya), Remote-ka caalamiga ah, iyo Kanada adigoo hal guji ku helaya CV ATS-friendly ah iyo warqadda codsiga (Cover Letter).
+                Madal furan oo u heellan dhalinyarada iyo bahda IT-ga Soomaaliyeed si ay shaqo ugu helaan.
+                <button class="inline-toggle-btn" id="btnHeroSubToggle" onclick="toggleHeroSub()"><span id="txtHeroSubToggle">▾ Faahfaahin (More)</span></button>
+                <span id="heroSubMore" style="display:none;"> Ka raadi fursadaha shaqo ee Soomaaliya (Muqdisho, Hargeysa), Bariga Afrika (Kenya, Itoobiya), Remote-ka caalamiga ah, iyo Kanada adigoo hal guji ku helaya CV ATS-friendly ah iyo warqadda codsiga (Cover Letter).</span>
             </p>
 
             <div class="hero-actions">
@@ -2205,7 +2303,7 @@
                         <span>💼</span>
                         <span id="txtHeroServicesTitle">Adeegyada Shaqo Tagista ee Dhalinyarada IT-ga</span>
                     </div>
-                    <span class="hero-services-badge" id="badgeHeroServices">🚀 6 Adeeg oo Diyaar ah</span>
+                    <span class="hero-services-badge" id="badgeHeroServices" style="cursor:pointer;" onclick="toggleServicesGrid()" title="Guji si aad u furto ama u soo koobto">🚀 6 Adeeg oo Diyaar ah <span id="iconServicesToggle">🔽</span></span>
                 </div>
                 <p class="hero-services-subtitle" id="txtHeroServicesSub">
                     Xirmo dhammaystiran oo loogu talagalay ardayda iyo qalin-jabiyayaasha Soomaaliyeed ee IT-ga si ay si kalsooni leh ugu galaan suuqa shaqada maxalliga ah iyo midka caalamiga ah:
@@ -3490,55 +3588,83 @@ python portal_app.py</code></pre>
     </div>
 
     <!-- ========================================================
-         9. PUBLIC FOOTER LINKS
+    <!-- ========================================================
+         9. PUBLIC FOOTER LINKS (COMPACT & EXPANDABLE)
          ======================================================== -->
     <footer class="site-footer">
-        <div class="footer-content">
-            <div class="footer-col">
-                <h4 style="color:#38bdf8;">🦅 Shaqo Baahiye & Isbar</h4>
-                <p style="font-size:12.5px; line-height:1.6; margin-bottom:12px;">
-                    Madal casri ah oo u heellan dhalinyarada iyo xirfadlayaasha Soomaaliyeed ee dhammaan takhasusaadka (Maamulka, Iibka, Caafimaadka, Waxbarashada, IT-ga, iyo Farsamada). Waxaan isku xirnaa fursadaha shaqo ee Soomaaliya, Bariga Afrika, Remote-ka, iyo caalamka.
-                </p>
-                <div style="font-size:12px; color:#cbd5e1;">
-                    📍 Soomaaliya, East Africa & Edmonton, AB 🇨🇦
+        <div class="footer-compact-bar">
+            <div class="footer-brand-mini">
+                <span style="font-size: 24px;">🦅</span>
+                <div>
+                    <h4 style="color:#ffffff; font-size:15px; margin:0; line-height:1.2;">Shaqo Baahiye &amp; Isbar AI</h4>
+                    <p style="font-size:11.5px; color:#94a3b8; margin:0;">Fursadaha Shaqada, Buugaagta &amp; Koorsooyinka Casriga ah</p>
                 </div>
             </div>
 
-            <div class="footer-col">
-                <h4>Buugaagta & Koorsooyinka</h4>
-                <ul class="footer-links">
-                    <li><a href="#coursesHubSection" onclick="switchHubTab('tabBooks')">📚 ISBAR COMPUTER ($5)</a></li>
-                    <li><a href="#coursesHubSection" onclick="switchHubTab('tabBooks')">👨‍💻 ISBAR PROGRAMMING ($5)</a></li>
-                    <li><a href="#coursesHubSection" onclick="switchHubTab('tabBooks')">🧠 ISBAR AI BASIC ($7)</a></li>
-                    <li><a href="#coursesHubSection" onclick="switchHubTab('tabBooks')">🤖 ISBAR ChatGPT Prompts (Free)</a></li>
-                    <li><a href="#coursesHubSection" onclick="switchHubTab('tabCourses')">🎓 AI Video & Bot Automation</a></li>
-                    <li><a href="#coursesHubSection" onclick="switchHubTab('tabPlatforms')">🛠️ 11-ka Platform ee Chatbots-ka</a></li>
-                </ul>
+            <div class="footer-quick-chips">
+                <a href="#jobsSection" class="footer-chip">🔍 Shaqooyinka IT-ga</a>
+                <a href="#coursesHubSection" class="footer-chip">📚 Buugaagta Isbar</a>
+                <a href="#bookingSection" class="footer-chip">📅 Ballan Live ah</a>
+                <a href="/download/resume" target="_blank" class="footer-chip">📄 CV (PDF)</a>
+                <a href="https://t.me/Baahiyebot" target="_blank" class="footer-chip" style="color:#38bdf8; border-color:rgba(56,189,248,0.4);">🤖 @Baahiyebot</a>
             </div>
 
-            <div class="footer-col">
-                <h4>Fursadaha & Warsidaha</h4>
-                <ul class="footer-links">
-                    <li><a href="https://t.me/Baahiyebot" target="_blank" style="color:#38bdf8; font-weight:700;">📱 Telegram Mini App (@Baahiyebot)</a></li>
-                    <li><a href="#heroServices">💼 Adeegyada Shaqo Tagista</a></li>
-                    <li><a href="#assessSection">⚡ AI Career Assessment</a></li>
-                    <li><a href="#jobsSection">🔍 Shaqooyinka IT-ga ee Soomaaliya</a></li>
-                    <li><a href="#substackSection">📬 Somalilibrary Substack</a></li>
-                    <li><a href="/download/resume" target="_blank">📄 Soo Degso Resume (PDF)</a></li>
-                    <li><a href="#bookingSection">📅 Ballan Live ah (1-on-1)</a></li>
-                </ul>
+            <div>
+                <button class="btn-toggle-expand" id="btnToggleFooter" onclick="toggleFooterDetails()">
+                    <span id="iconToggleFooter">🔽</span>
+                    <span id="txtToggleFooter">Faahfaahinta Xiriirrada (Show All Links)</span>
+                </button>
             </div>
+        </div>
 
-            <div class="footer-col">
-                <h4>Xiriirka & Xafiiska</h4>
-                <ul class="footer-links">
-                    <li><a href="https://t.me/Baahiyebot" target="_blank" style="color:#38bdf8; font-weight:700;">📱 Telegram: @Baahiyebot</a></li>
-                    <li><a href="https://wa.me/15873064137" target="_blank">📱 WhatsApp: (587) 306-4137</a></li>
-                    <li><a href="mailto:Suxufi34@gmail.com">📧 Suxufi34@gmail.com</a></li>
-                    <li><a href="https://somalilibrary.substack.com" target="_blank">📬 somalilibrary.substack.com</a></li>
-                    <li><a href="https://www.linkedin.com/in/mfaratoon" target="_blank">🔗 LinkedIn: /in/mfaratoon</a></li>
-                    <li><a href="https://www.youtube.com/@Mfaratoon" target="_blank">📺 YouTube: @Mfaratoon</a></li>
-                </ul>
+        <div class="collapsible-container collapsed" id="footerCollapsible">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <h4 style="color:#38bdf8;">🦅 Shaqo Baahiye &amp; Isbar</h4>
+                    <p style="font-size:12.5px; line-height:1.6; margin-bottom:12px;">
+                        Madal casri ah oo u heellan dhalinyarada iyo xirfadlayaasha Soomaaliyeed ee dhammaan takhasusaadka (Maamulka, Iibka, Caafimaadka, Waxbarashada, IT-ga, iyo Farsamada). Waxaan isku xirnaa fursadaha shaqo ee Soomaaliya, Bariga Afrika, Remote-ka, iyo caalamka.
+                    </p>
+                    <div style="font-size:12px; color:#cbd5e1;">
+                        📍 Soomaaliya, East Africa &amp; Edmonton, AB 🇨🇦
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Buugaagta &amp; Koorsooyinka</h4>
+                    <ul class="footer-links">
+                        <li><a href="#coursesHubSection" onclick="switchHubTab('tabBooks')">📚 ISBAR COMPUTER ($5)</a></li>
+                        <li><a href="#coursesHubSection" onclick="switchHubTab('tabBooks')">👨‍💻 ISBAR PROGRAMMING ($5)</a></li>
+                        <li><a href="#coursesHubSection" onclick="switchHubTab('tabBooks')">🧠 ISBAR AI BASIC ($7)</a></li>
+                        <li><a href="#coursesHubSection" onclick="switchHubTab('tabBooks')">🤖 ISBAR ChatGPT Prompts (Free)</a></li>
+                        <li><a href="#coursesHubSection" onclick="switchHubTab('tabCourses')">🎓 AI Video &amp; Bot Automation</a></li>
+                        <li><a href="#coursesHubSection" onclick="switchHubTab('tabPlatforms')">🛠️ 11-ka Platform ee Chatbots-ka</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Fursadaha &amp; Warsidaha</h4>
+                    <ul class="footer-links">
+                        <li><a href="https://t.me/Baahiyebot" target="_blank" style="color:#38bdf8; font-weight:700;">📱 Telegram Mini App (@Baahiyebot)</a></li>
+                        <li><a href="#heroServices">💼 Adeegyada Shaqo Tagista</a></li>
+                        <li><a href="#assessSection">⚡ AI Career Assessment</a></li>
+                        <li><a href="#jobsSection">🔍 Shaqooyinka IT-ga ee Soomaaliya</a></li>
+                        <li><a href="#substackSection">📬 Somalilibrary Substack</a></li>
+                        <li><a href="/download/resume" target="_blank">📄 Soo Degso Resume (PDF)</a></li>
+                        <li><a href="#bookingSection">📅 Ballan Live ah (1-on-1)</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Xiriirka &amp; Xafiiska</h4>
+                    <ul class="footer-links">
+                        <li><a href="https://t.me/Baahiyebot" target="_blank" style="color:#38bdf8; font-weight:700;">📱 Telegram: @Baahiyebot</a></li>
+                        <li><a href="https://wa.me/15873064137" target="_blank">📱 WhatsApp: (587) 306-4137</a></li>
+                        <li><a href="mailto:Suxufi34@gmail.com">📧 Suxufi34@gmail.com</a></li>
+                        <li><a href="https://somalilibrary.substack.com" target="_blank">📬 somalilibrary.substack.com</a></li>
+                        <li><a href="https://www.linkedin.com/in/mfaratoon" target="_blank">🔗 LinkedIn: /in/mfaratoon</a></li>
+                        <li><a href="https://www.youtube.com/@Mfaratoon" target="_blank">📺 YouTube: @Mfaratoon</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
 
@@ -4348,6 +4474,56 @@ python portal_app.py</code></pre>
                 .replace(/>/g, "&gt;")
                 .replace(/"/g, "&quot;")
                 .replace(/'/g, "&#039;");
+        }
+
+        // ========================================================
+        // Collapsible UI Sections (Footer, Hero, Services, Setup)
+        // ========================================================
+        function toggleFooterDetails() {
+            const footerCollapsible = document.getElementById("footerCollapsible");
+            const icon = document.getElementById("iconToggleFooter");
+            const text = document.getElementById("txtToggleFooter");
+            if (!footerCollapsible) return;
+
+            const isCollapsed = footerCollapsible.classList.contains("collapsed");
+            if (isCollapsed) {
+                footerCollapsible.classList.remove("collapsed");
+                footerCollapsible.classList.add("expanded");
+                if (icon) icon.innerText = "🔼";
+                if (text) text.innerText = "Soo Koob Xiriirrada (Show Less)";
+            } else {
+                footerCollapsible.classList.remove("expanded");
+                footerCollapsible.classList.add("collapsed");
+                if (icon) icon.innerText = "🔽";
+                if (text) text.innerText = "Faahfaahinta Xiriirrada (Show All Links)";
+            }
+        }
+
+        function toggleHeroSub() {
+            const moreSpan = document.getElementById("heroSubMore");
+            const txt = document.getElementById("txtHeroSubToggle");
+            if (!moreSpan) return;
+
+            if (moreSpan.style.display === "none" || !moreSpan.style.display) {
+                moreSpan.style.display = "inline";
+                if (txt) txt.innerText = "▴ Soo koob (Less)";
+            } else {
+                moreSpan.style.display = "none";
+                if (txt) txt.innerText = "▾ Faahfaahin (More)";
+            }
+        }
+
+        function toggleServicesGrid() {
+            const grid = document.querySelector(".hero-services-grid");
+            const icon = document.getElementById("iconServicesToggle");
+            if (!grid) return;
+            if (grid.style.display === "none") {
+                grid.style.display = "grid";
+                if (icon) icon.innerText = "🔼";
+            } else {
+                grid.style.display = "none";
+                if (icon) icon.innerText = "🔽";
+            }
         }
     </script>
 </body>
