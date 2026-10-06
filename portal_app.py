@@ -8,7 +8,16 @@ import urllib.parse
 import shutil
 from datetime import datetime
 from pathlib import Path
+import requests
 from flask import Flask, render_template, request, jsonify, send_file, send_from_directory
+
+if hasattr(sys.stdout, 'reconfigure'):
+    try:
+        sys.stdout.reconfigure(encoding='utf-8', errors='replace')
+        sys.stderr.reconfigure(encoding='utf-8', errors='replace')
+    except Exception:
+        pass
+
 try:
     from jobspy import scrape_jobs
 except ImportError:
@@ -175,7 +184,7 @@ def check_session_limit(session_id: str) -> tuple[bool, int, int]:
     remaining = max(0, MAX_SESSION_MESSAGES - current)
     return True, remaining, current
 
-def get_curated_somali_it_jobs(term="Dhammaan", location="Muqdisho, Soomaaliya", is_remote=False):
+def get_curated_somali_it_jobs(term="Dhammaan", location="Dhammaan", is_remote=False):
     loc_l = location.lower() if location else ""
     term_l = term.lower() if term else ""
 
@@ -445,61 +454,309 @@ Phone: {contact_phone} | Email: {contact_email}"""
     }
 
 # -------------------------------------------------------------
-# AI Career & Course Chatbot Engine
+# AI Career & Course Chatbot Engine (Multi-AI & Smart Search)
 # -------------------------------------------------------------
+def query_gemini_api(user_message: str, system_prompt: str) -> str:
+    gemini_key = os.getenv("GEMINI_API_KEY")
+    if not gemini_key:
+        return None
+    try:
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={gemini_key}"
+        payload = {
+            "contents": [
+                {
+                    "role": "user",
+                    "parts": [{"text": f"{system_prompt}\n\nFadlan u jawaab fariintan ardayga/shaqadoonka:\n{user_message}"}]
+                }
+            ],
+            "generationConfig": {
+                "temperature": 0.6,
+                "maxOutputTokens": 800
+            }
+        }
+        resp = requests.post(url, json=payload, timeout=12)
+        if resp.status_code == 200:
+            data = resp.json()
+            candidates = data.get("candidates", [])
+            if candidates:
+                parts = candidates[0].get("content", {}).get("parts", [])
+                if parts:
+                    return parts[0].get("text", "").strip()
+    except Exception:
+        pass
+    return None
+
+def query_groq_api(user_message: str, system_prompt: str) -> str:
+    groq_key = os.getenv("GROQ_API_KEY")
+    if not groq_key:
+        return None
+    try:
+        url = "https://api.groq.com/openai/v1/chat/completions"
+        headers = {
+            "Authorization": f"Bearer {groq_key}",
+            "Content-Type": "application/json"
+        }
+        payload = {
+            "model": "llama-3.3-70b-versatile",
+            "messages": [
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_message}
+            ],
+            "max_tokens": 800,
+            "temperature": 0.6
+        }
+        resp = requests.post(url, headers=headers, json=payload, timeout=12)
+        if resp.status_code == 200:
+            data = resp.json()
+            return data["choices"][0]["message"]["content"].strip()
+    except Exception:
+        pass
+    return None
+
+def get_job_portals_directory() -> str:
+    return """🌐 **Hagaha Bogagga & Xiriirrada Tooska ah ee Shaqo Raadinta (Job Portals & Direct Links):**
+
+🇸🇴 **1. Soomaaliya & Bariga Afrika:**
+• 🔗 [SomaliJobs (somalijobs.com)](https://somalijobs.com) — Madasha 1-aad ee shirkadaha Soomaalida (Dahabshiil, Hormuud, Premier Bank, Telesom).
+• 🔗 [Shafaf Jobs (shafaf.net)](https://shafaf.net) — Shaqooyinka dawladda, NGO-yada iyo mashaariicda gargaarka.
+• 🔗 [ReliefWeb Somalia](https://reliefweb.int/jobs?country=216) — Shaqooyinka hay'adaha caalamiga ah (Save the Children, DRC, NRC, IRC).
+• 🔗 [UN Jobs Somalia](https://unjobs.org/duty_stations/somalia) — Fursadaha tooska ah ee Qaramada Midoobay (WFP, UNICEF, WHO, UNDP).
+
+🌍 **2. Shaqooyinka Online-ka ah ee Guriga (Remote):**
+• 🔗 [RemoteOK (remoteok.com)](https://remoteok.com) — Shaqooyinka remote-ka ah ee caalamka (Developer, Customer Support, Marketing).
+• 🔗 [We Work Remotely](https://weworkremotely.com) — Shaqooyin la aamini karo oo adduunka oo dhan laga qabto.
+• 🔗 [LinkedIn Jobs](https://www.linkedin.com/jobs) — Fursadaha caalamiga ah & xiriirka shaqo-bixiyeyaasha.
+
+🇨🇦 **3. Kanada & Gobolka Alberta (Edmonton):**
+• 🔗 [Indeed Canada (ca.indeed.com)](https://ca.indeed.com) — Shaqooyinka Edmonton, Calgary & guud ahaan Canada.
+• 🔗 [Job Bank Canada (jobbank.gc.ca)](https://www.jobbank.gc.ca) — Xariirka rasmiga ah ee Dawladda Federaalka Canada.
+
+📱 **4. Madasha Shaqo Baahiye & Isbar AI:**
+• 🔗 [Shaqo Baahiye Live Portal (isbar-ai.com)](https://isbar-ai.com/#jobsSection) — Raadi shaqooyinka tooska ah.
+• 🤖 [Telegram Bot: @Baahiyebot](https://t.me/Baahiyebot) — Kaaliyaha 24/7 ee Telegram.
+• 📄 [Soo Degso ATS Resume (PDF)](/download/resume) — CV-gaaga oo PDF diyaar ah."""
+
+def smart_local_career_engine(user_message: str) -> str:
+    user_lower = user_message.lower().strip()
+
+    # 1. Job Portals & Links Directory Request
+    if any(k in user_lower for k in [
+        "link", "links", "goob", "goobaha", "website", "websites", "web",
+        "portal", "portals", "xagee", "halkee", "meelaha", "bogagga", "bog",
+        "url", "internetyada", "site", "sites"
+    ]):
+        return get_job_portals_directory()
+
+    # 2. ATS Resume / CV Guidance & Direct Download
+    if any(k in user_lower for k in ["cv", "resume", "ats", "warqad", "codsi", "cover letter", "warqadda"]):
+        return """📄 **Hagaha Diyaarinta CV ATS ah & Soo Dejinta Resume-ga:**
+
+Si CV-gaagu ugu gudbo shaandhada casriga ah ee shirkadaha (Applicant Tracking System - ATS):
+1. **Qaab Fudud (Clean Layout):** Isticmaal font-yo cadcad (sida Arial, Calibri, ama Inter), kana fogow columns-ka is-dul-saaran.
+2. **Keywords-ka Shaqada:** Ku dar ereyada muhiimka ah ee shaqo-bixiyuhu ku xusay xayeysiiska (Job Description).
+3. **Natiijooyin Cad:** Ku cabbir guulahaaga tirooyin (tusaale: *"Waxaan xalliyay 90%+ cabashooyinka macaamiisha"*).
+
+📥 **Soo Degso CV ATS ah oo Diyaarsan:**
+• 👉 [Soo Degso Resume ATS ah (PDF)](/download/resume)
+• ⚡ [Dhis CV-gaaga Bogga (AI Assessment)](#assessSection)
+• 📅 Hadii aad rabto dib-u-eegis toos ah oo 1-on-1 ah, [Qabso Ballan Live ah](#bookingSection) ama WhatsApp: `+1 (587) 306-4137`."""
+
+    # 3. Books & Substack
+    if any(k in user_lower for k in ["buug", "book", "isbar", "qiimaha", "pages", "bogag", "soo dir", "dhegeyso", "buugaag"]):
+        return """📚 **Buugaagta Casriga ah ee 'Isbar' (Macallin La'aan):**
+
+1. 💻 **ISBAR COMPUTER** ($5 Kaliya | 89 Pages) • Qore: Yahye Cabdirahmaan • Editor: Mohamed Yasin
+2. 👨‍💻 **ISBAR PROGRAMMING** ($5 Kaliya | 177 Pages) • Qore: Yahye Abdirahmaan • Editor: Mohamed Yasin
+3. 🧠 **ISBAR AI BASIC** ($7 Kaliya | 189 Pages) • Qore: Yahye Abdirahmaan / Mohamed Yasin
+4. 🤖 **ISBAR ChatGPT Prompts** (🎁 FREE / 100% Bilaash! | 87 Pages) • Qore: Mohamed Yasin • Editor: Yahye Abdirahman
+
+📬 **Sidee ku helaysaa Buugaagta Bilaashka ah?**
+Qof kasta oo ku biira (subscribe gareeya) warsidaha **Dhegeyso Buug** wuxuu helayaa **2 Buug oo Bilaash ah (Free)** oo si toos ah (automatic ah) ugu soo dhacaya email-kiisa!
+👉 **Ku biir halkan si aad 2-da buug u hesho:** [dhegeysobuug.substack.com](https://dhegeysobuug.substack.com/)"""
+
+    # 4. Open Source & Repo
+    if any(k in user_lower for k in ["sida loo", "sidee loo", "sameeyaa", "repo", "source code", "shubo", "deploy", "dhis", "github"]):
+        return """⭐ **Madashan waa 100% Open Source (Bilaash):**
+
+Repository-ga rasmiga ah ee mashruucan waa bilaash qof kasta ayaana ka faa'iideysan kara:
+🔗 **GitHub:** [github.com/Faratoon/Shaqo-Raadiyahaaga-Gaarka-Ah](https://github.com/Faratoon/Shaqo-Raadiyahaaga-Gaarka-Ah)
+
+🚀 **Ma rabtaa inaad barato sida nidaamkan oo kale loogu shubo loona dhiso iyadoo AI la adeegsanayo?**
+• Waxaad dooran kartaa **'Ballan Qabso'** (Live 1-on-1 Mentorship oo toos ah oo aad la yeelanayso **Mohamed Yasin**).
+• 📅 Qabso Ballan Live ah bogga ama toos WhatsApp: `+1 (587) 306-4137`."""
+
+    # 5. Courses & Automation
+    if any(k in user_lower for k in ["koorso", "course", "automation", "data writing", "video editing", "whatsapp", "telegram", "bilaash"]):
+        return """🎓 **Koorsooyinka AI Automation & Xirfadaha Casriga ah:**
+
+🔹 **Paid Course (Qiimo-dhimis Gaar ah):**
+• **AI ChatGPT – Data Writing 📝**: Baro curinta nuxurka, ganacsiga, iyo qorista shaqooyinka.
+  - Waqtiga: 4–5 Maalmood | Qiimaha: $24 (Ardayda: **$10 Kaliya!**)
+
+🎓 **Free Courses (100% Bilaash Ardayda Sanadkan):**
+• 🎥 **AI Video Editing**: Habaynta video-yada adoo adeegsanaya AI tools (4–5 Maalmood).
+• 📱 **WhatsApp Automation Business Bot**: Chatbot ganacsi oo 24/7 shaqeeya.
+• 📞 **Telegram Automation Business Bot**: Bot wata flowchart iyo database.
+• 🌐 **Web Design with AI Tools**: Dhis website casri ah adoo adeegsanaya AI (Free!).
+
+📅 *Dooro koorsadaada oo ku dhufo [Ballan Qabso](#bookingSection) si aad toos ugu biirto!*"""
+
+    # 6. Booking & Contact
+    if any(k in user_lower for k in ["booking", "ballan", "xiriir", "contact", "la kulan", "caawin", "mentorship", "mohamed"]):
+        return """📅 **Ballan Live ah & Xiriir Toos ah (Live Booking):**
+
+Waxaad si toos ah ula xiriiri kartaa **Mohamed Yasin**:
+• 📅 **Live Booking Form:** Guji tab-ka [Ballan Live ah](#bookingSection) ee bogga si aad u doorato taariikhda iyo waqtiga.
+• 📱 **WhatsApp:** [+1 (587) 306-4137](https://wa.me/15873064137)
+• 📧 **Email:** `Suxufi34@gmail.com`
+• 📍 **Goobta:** Edmonton, Alberta, Canada 🇨🇦 & Online Global
+• 🔗 **LinkedIn:** [linkedin.com/in/mfaratoon](https://www.linkedin.com/in/mfaratoon)
+• 📺 **YouTube:** [youtube.com/@Mfaratoon](https://www.youtube.com/@Mfaratoon)"""
+
+    # 7. Career Quiz
+    if any(k in user_lower for k in ["quiz", "quize", "xirfad", "ii raadi", "dooro", "talo", "i haga"]):
+        return """🎯 **Quiz: Ii Raadi Shaqada Ku Habboon (Career Matching Quiz) 🧭**
+
+Si aan kuugu helo shaqada kugu habboon, fadlan ka dooro 3-dan su'aalood:
+
+1. 💼 **Qeybta aad rabto:**
+   • 📊 Maamul & Xisaabaad | 📞 Customer Care & Iib | 🏥 Caafimaad & NGO
+   • 📚 Waxbarasho & Macallin | 💻 IT & Farsamo | 📦 Logistics & Gaadiid
+
+2. 📍 **Goobta aad joogto:**
+   • 🇸🇴 Muqdisho | 🇸🇴 Hargeysa & Puntland | 🇰🇪 Nairobi | 🌐 Remote (Guriga)
+
+3. 🎓 **Khibraddaada:**
+   • 🌱 Ku cusub (Fresh Graduate) | 💼 1-3 Sano | 🏆 3+ Sano
+
+*Ii soo qor tusaale: "Maamul, Muqdisho, Ku cusub", waxaana si toos ah kuugu soo saari doonaa shaqooyinka bannaan!* 🚀"""
+
+    # 8. Dynamic Search Across Curated Live Jobs
+    all_jobs = get_curated_somali_it_jobs()
+    matched_jobs = []
+
+    # Category and keyword matching
+    keywords_found = []
+    category_tokens = {
+        "tech": ["it", "developer", "software", "web", "python", "react", "code", "network", "cyber", "cloud", "support", "farsamo", "computer", "technician"],
+        "finance": ["finance", "accounting", "xisaab", "maaliyad", "bank", "dahabshiil", "salaam", "admin", "hr", "maamul"],
+        "sales": ["sales", "marketing", "iib", "customer", "call center", "hormuud", "telesom", "suuqgeyn"],
+        "health": ["health", "nurse", "doctor", "nutrition", "nafaqo", "caafimaad", "ngo", "gargaar", "save the children", "srcs"],
+        "education": ["teacher", "education", "macallin", "school", "dugsi", "waxbarasho", "kulan"],
+        "logistics": ["logistics", "procurement", "warehouse", "gaadiid", "supply chain", "wfp", "badeecad"],
+        "remote": ["remote", "online", "guriga"],
+        "canada": ["canada", "edmonton", "calgary", "toronto"],
+        "somalia": ["muqdisho", "hargeysa", "garoowe", "puntland", "kismaayo", "berbera", "baydhabo", "soomaaliya"]
+    }
+
+    matched_categories = []
+    for cat, tokens in category_tokens.items():
+        if any(t in user_lower for t in tokens):
+            matched_categories.append(cat)
+            keywords_found.append(cat)
+
+    scored_jobs = []
+    if matched_categories or any(w in user_lower for w in ["shaqo", "shaqooyin", "jobs", "fursad", "raadi", "fursado"]):
+        for j in all_jobs:
+            j_cat = j.get("category", "")
+            j_title = j.get("title", "").lower()
+            j_desc = j.get("description", "").lower()
+            j_company = j.get("company", "").lower()
+            j_loc = j.get("location", "").lower()
+
+            score = 0
+            for word in user_lower.split():
+                cleaned_word = re.sub(r'[^a-zA-Z0-9]', '', word)
+                if len(cleaned_word) >= 3 and cleaned_word in j_title:
+                    score += 25
+                elif len(cleaned_word) >= 3 and cleaned_word in j_company:
+                    score += 10
+
+            for cat in matched_categories:
+                for tok in category_tokens.get(cat, []):
+                    if tok in j_title:
+                        score += 15
+                    if tok in j_company:
+                        score += 5
+                    if tok in j_desc:
+                        score += 2
+                if j_cat == cat:
+                    score += 10
+
+            if "remote" in user_lower and "remote" in j_loc:
+                score += 10
+            if "muqdisho" in user_lower and "muqdisho" in j_loc:
+                score += 10
+            if "hargeysa" in user_lower and "hargeysa" in j_loc:
+                score += 10
+            if "kenya" in user_lower and "kenya" in j_loc:
+                score += 10
+            if "canada" in user_lower and "canada" in j_loc:
+                score += 10
+
+            if not matched_categories:
+                score = 1
+
+            if score > 0:
+                scored_jobs.append((score, j))
+
+        scored_jobs.sort(key=lambda x: x[0], reverse=True)
+        matched_jobs = [item[1] for item in scored_jobs]
+
+    if matched_jobs:
+        selected_jobs = matched_jobs[:3]
+        results_text = "💼 **Fursadaha Shaqo ee Ku Habboon Codsigaaga:**\n\n"
+        for idx, j in enumerate(selected_jobs, 1):
+            results_text += f"{idx}. 🏢 **{j.get('title')}** — *{j.get('company')}*\n"
+            results_text += f"   📍 **Goobta:** {j.get('location')} | ⏱️ {j.get('job_type', 'Full-time')}\n"
+            desc = j.get('description', '')
+            if len(desc) > 130:
+                desc = desc[:130] + "..."
+            results_text += f"   📝 {desc}\n"
+            results_text += f"   👉 [Codso Shaqadan (Direct Link)]({j.get('job_url')})\n\n"
+
+        results_text += "🔗 **Bogagga & Xiriirrada Dheeraadka ah:**\n"
+        results_text += "• [SomaliJobs (somalijobs.com)](https://somalijobs.com) | [ReliefWeb Somalia](https://reliefweb.int/jobs?country=216) | [Indeed Canada](https://ca.indeed.com)\n"
+        results_text += "• 📱 [Eeg Dhammaan Shaqooyinka ee Boggan](#jobsSection) | [Soo Degso CV ATS ah (PDF)](/download/resume)\n\n"
+        results_text += "💡 *Qor magac shaqo oo kale ama qor 'links' si aad u hesho dhammaan bogagga shaqada!*"
+        return results_text
+
+    # 9. Smart Conversational Guidance (NEVER repeats the greeting loop!)
+    featured_jobs = all_jobs[:3]
+    reply = "Salamaat walaal! Waxaan ahay **Kaaliyaha Shaqo Baahiye & Isbar AI** 🚀\n\n"
+    reply += "Waxaan diyaar kuugu ahay inaan toos kuugu raadiyo shaqooyin, kugu xiro shirkadaha bannaan, ama kugu caawiyo diyaarinta CV ATS ah.\n\n"
+    reply += "✨ **Fursadaha Maanta Ugu Caansan ee Diyaar ah:**\n"
+    for idx, j in enumerate(featured_jobs, 1):
+        reply += f"{idx}. 💼 **{j.get('title')}** ({j.get('company')}) — [Codso Halkan]({j.get('job_url')})\n"
+    
+    reply += "\n💡 **Si degdeg ah wax u baaro:**\n"
+    reply += "• Qor xirfaddaada (tusaale: *IT, Maamul, Caafimaad, Iib, Remote*) si aad shaqooyin u hesho.\n"
+    reply += "• Qor *'links'* si aad u hesho dhammaan bogagga shaqooyinka laga raadsado.\n"
+    reply += "• Qor *'cv'* si aad u hesho talooyinka ATS iyo PDF Resume-gaaga.\n"
+    reply += "• Qor *'quiz'* si nidaamku kuugu doorto shaqada kugu habboon."
+    return reply
+
 def get_career_ai_response(user_message: str) -> str:
     user_lower = user_message.lower().strip()
+    
+    system_instruction = """Waxaad tahay 'Kaaliyaha AI ee Shaqo Baahiye' (Dhammaan Fursadaha Shaqo, Bogagga Shaqada & Akadeemiyada Isbar).
+Waxaad caawisaa dhalinyarada Soomaaliyeed ee raadinaya shaqooyinka (Soomaaliya, Bariga Afrika, Remote, iyo Kanada).
+Marka aad shaqooyin xusayso, sii xiriirrada tooska ah (links) sida SomaliJobs, ReliefWeb, UNJobs, Indeed, iyo isbar-ai.com.
+U jawaab si kooban, dhiirrigelin leh, oo waxtar leh."""
+
+    # 1. Try Gemini API first (Generous Free Tier)
+    gemini_reply = query_gemini_api(user_message, system_instruction)
+    if gemini_reply:
+        return gemini_reply
+
+    # 2. Try Groq API (Fast Llama 3)
+    groq_reply = query_groq_api(user_message, system_instruction)
+    if groq_reply:
+        return groq_reply
+
+    # 3. Try OpenAI API
     client = get_openai_client()
-
     if client:
-        system_instruction = """
-Waxaad tahay 'Kaaliyaha AI ee Shaqo Baahiye' (Dhammaan Fursadaha Shaqo & Akadeemiyada Casriga ah).
-
-MUHIIMADDA KOOWAAD: Shaqo Baahiye KUMA KOOBNA IT-GA KALIYA!
-Wuxuu u heellan yahay DHAMMAAN NOOCYADA SHAQOOYINKA ee Soomaaliya, Bariga Afrika (Kenya, Itoobiya), Shaqooyinka Guriga (Remote), iyo Dibadda:
-1. Maamulka, Maaliyadda & Xisaabaadka (Finance, HR, Accounting, Banking, Management).
-2. Caafimaadka, Nafaqada & NGO-yada (Public Health, Nutrition, Humanitarian Aid, Community Development).
-3. Suuqgeynta, Iibka & Customer Service (Sales, Marketing, Call Center, Telesales).
-4. Waxbarashada & Tababarka (Teaching, Education, Schools, Training).
-5. Gaadiidka, Logistics & Procurement (Supply Chain, Warehouse, Fleet).
-6. Farsamada & IT-ga (Computer Support, Software, Web Dev, Networking, AI Automation).
-7. Shaqooyinka Guriga (Remote Jobs).
-
-HADDII QOFKU SHAQO RAADSANAYO AMA GARAN WAAYO:
-U soo bandhig doorashooyin cadcad ama qaab Quiz fudud ah (Xirfaddiisa, Magaalada uu joogo, iyo Khibraddiisa) si loogu helo fursadda ku habboon!
-
-Aasaasaha: Mohamed Yasin (Dynamic Career Educator, AI Automation Trainer).
-
-Waxaad haysataa aqoon buuxda oo ku saabsan:
-1. BUUGAAGTA CASRIGA AH EE ISBAR (Qore/Editor: Yahye Cabdirahmaan & Mohamed Yasin):
-   - ISBAR COMPUTER: 89 pages, $5. (Computer Basics, Software/Hardware, Windows 11, Mac OS, MS Office, Photoshop, OBS Studio).
-   - ISBAR PROGRAMMING: 177 pages, $5. (Basics of Programming, Web Dev Basics, Programming Languages, Database, Code Editor & IDE).
-   - ISBAR AI (Artificial Intelligence) BASIC: 189 pages, $7. (Taariikhda AI, AI & Waxbarashada, AI & Shaqooyinka, AI & Graphic Design, AI & Ganacsiga).
-   - ISBAR ChatGPT - Prompts Basic: 87 pages, FREE ($0!). (Waa maxay ChatGPT?, Sida loola xiriiro si hufan, Shaqooyinka, Waxbarashada, Ganacsiga).
-
-2. HELITAANKA BUUGAAGTA & BADBAADINTA CREDITS-KA:
-   - Haddii qofku buug weydiiyo, rabo in buug loo diro, ama hadalka baddiyo (si credit-ku uusan u khasaarin):
-     Toos ugu dir warsidaha Dhegeyso Buug: https://dhegeysobuug.substack.com/
-     Qof kasta oo ku biira (subscribe gareeya) wuxuu helayaa 2 buug oo bilaash ah (free) oo si automatic ah ugu soo dhacaya inbox-kiisa (email-kiisa)!
-
-3. SIDEE LOO SAMEEYAY / OPEN SOURCE REPO:
-   - Haddii qofku weydiiyo 'sida loo sameeyay', 'repo', ama 'koodhka':
-     U sheeg in mashruucu yahay 100% Free / Open Source GitHub-ka (https://github.com/Faratoon/Shaqo-Raadiyahaaga-Gaarka-Ah).
-     Qofkii raba inuu barto sida nidaamkan oo kale loogu shubo loona dhiso iyadoo AI la isticmaalayo wuxuu dooran karaa 'Ballan Qabso' (Live 1-on-1 Mentorship oo toos ah oo uu la yeelanayo Mohamed Yasin).
-
-4. KOORSOOYINKA AUTOMATION-KA:
-   - Paid: AI ChatGPT – Data Writing ($24 / Ardayda: $10, 4-5 days).
-   - Free: AI Video Editing, WhatsApp Business Bot, Telegram Business Bot, Messenger & IG Bots, Web Design with AI Tools (Free for students).
-
-5. LIVE BOOKING & MENTORSHIP:
-   - Ardaydu waxay toos u qabsan karaan ballan 1-on-1 ah iyagoo adeegsanaya qeybta 'Ballan Live ah' ama WhatsApp: +1 (587) 306-4137.
-
-6. XOGTA XIRIIRKA:
-   - YouTube: https://www.youtube.com/@Mfaratoon
-   - Substack: https://dhegeysobuug.substack.com/ & https://somalilibrary.substack.com
-
-U jawaab si kooban, xushmad leh, oo qoraal kaliya ah.
-"""
         try:
             resp = client.chat.completions.create(
                 model="gpt-4o-mini",
@@ -509,124 +766,14 @@ U jawaab si kooban, xushmad leh, oo qoraal kaliya ah.
                 ],
                 max_tokens=650,
                 temperature=0.6,
-                timeout=12
+                timeout=10
             )
             return resp.choices[0].message.content
         except Exception:
             pass
 
-    # Built-in Knowledge Base (Fast Local Fallback)
-    if any(k in user_lower for k in ["buug", "book", "isbar", "qiimaha", "pages", "bogag", "soo dir", "dhegeyso"]):
-        return """📚 **Buugaagta Casriga ah ee 'Isbar' (Macallin La'aan):**
-
-1. 💻 **ISBAR COMPUTER** ($5 Kaliya | 89 Pages) • Qore: Yahye Cabdirahmaan • Editor: Mohamed Yasin
-2. 👨‍💻 **ISBAR PROGRAMMING** ($5 Kaliya | 177 Pages) • Qore: Yahye Abdirahmaan • Editor: Mohamed Yasin
-3. 🧠 **ISBAR AI BASIC** ($7 Kaliya | 189 Pages) • Qore: Yahye Abdirahmaan / Mohamed Yasin
-4. 🤖 **ISBAR ChatGPT Prompts** (🎁 FREE / 100% Bilaash! | 87 Pages) • Qore: Mohamed Yasin • Editor: Yahye Abdirahman
-
-📬 **Sidee ku helaysaa Buugaagta?**
-Qof kasta oo ku biira (subscribe gareeya) warsidaha **Dhegeyso Buug** wuxuu helayaa **2 Buug oo Bilaash ah (Free)** oo si toos ah (automatic ah) ugu soo dhacaya inbox-kaaga (email-kaaga)!
-👉 **Is-diiwaangeli halkan si aad 2-da buug u hesho:** [dhegeysobuug.substack.com](https://dhegeysobuug.substack.com/)"""
-
-    elif any(k in user_lower for k in ["sida loo", "sidee loo", "sameeyaa", "repo", "source code", "shubo", "deploy", "dhis", "github"]):
-        return """⭐ **Madashan waa 100% Open Source (Bilaash):**
-
-Repository-ga rasmiga ah ee mashruucan waa bilaash qof kasta ayaana ka faa'iideysan kara:
-🔗 **GitHub:** [github.com/Faratoon/Shaqo-Raadiyahaaga-Gaarka-Ah](https://github.com/Faratoon/Shaqo-Raadiyahaaga-Gaarka-Ah)
-
-🚀 **Ma rabtaa inaad barato sida nidaamkan oo kale loogu shubo loona dhiso iyadoo AI la adeegsanayo?**
-Qofkii raba inuu barto sida loo dhiso loona shubo (deploy) codsiyada casriga ah ee AI-ga:
-• Waxaad dooran kartaa **'Ballan Qabso'** (Live 1-on-1 Mentorship oo toos ah oo aad la yeelanayso **Mohamed Yasin**).
-• 📅 Qabso Ballan Live ah bogga ama toos WhatsApp: `+1 (587) 306-4137`."""
-
-    elif any(k in user_lower for k in ["koorso", "course", "automation", "data writing", "video editing", "whatsapp", "telegram", "free", "bilaash"]):
-        return """🎓 **Koorsooyinka AI Automation & Xirfadaha Casriga ah:**
-
-🔹 **Paid Course (Qiimo-dhimis Gaar ah):**
-• **AI ChatGPT – Data Writing 📝**: Baro curinta nuxurka, ganacsiga, iyo qorista shaqooyinka.
-  - Waqtiga: 4–5 Maalmood
-  - Qiimaha: $24 (Qiimo-dhimista Ardayda: **$10 Kaliya!**)
-
-🎓 **Free Courses (100% Bilaash Ardayda Sanadkan):**
-• 🎥 **AI Video Editing**: Baro habaynta video-yada adoo adeegsanaya AI tools (4–5 Maalmood).
-• 📱 **WhatsApp Automation Business Bot**: Dhis chatbot ganacsi oo 24/7 shaqeeya.
-• 📞 **Telegram Automation Business Bot**: Bot wata flowchart iyo database.
-• 💬 **Messenger Automation Business Bot**: Adeegga macaamiisha Facebook.
-• 📸 **Instagram Automation Business Bot**: DM automation & leads.
-• 🌐 **Web Design with AI Tools**: Dhis website casri ah adoo adeegsanaya HTML, CSS, & AI (Free!).
-
-📅 *Dooro koorsadaada oo ku dhufo 'Ballan Qabso' si aad toos ugu biirto!*"""
-
-    elif any(k in user_lower for k in ["substack", "somalilibrary", "warside", "newsletter"]):
-        return """📬 **Warsidayaasha Rasmiga ah:**
-
-1. 📚 **Dhegeyso Buug Substack (Hel 2 Buug oo Bilaash ah):**
-   Qof kasta oo subscribe gareeya wuxuu helayaa 2 buug oo bilaash ah oo si automatic ah inbox-kiisa ugu soo dhacaya:
-   🔗 [dhegeysobuug.substack.com](https://dhegeysobuug.substack.com/)
-
-2. 📰 **Somalilibrary Substack (Fursadaha Shaqada & AI-ga):**
-   🔗 [somalilibrary.substack.com](https://somalilibrary.substack.com/)"""
-
-    elif any(k in user_lower for k in ["quiz", "quize", "xirfad", "ii raadi", "dooro"]):
-        return """🎯 **Quiz: Ii Raadi Shaqada Ku Habboon (Career Matching Quiz) 🧭**
-
-Si aan kuugu helo shaqada kugu habboon, fadlan ka dooro 3-dan su'aalood:
-
-1. 💼 **Qeybta aad rabto:**
-   • 📊 Maamul & Xisaabaad
-   • 📞 Customer Care & Iib
-   • 🏥 Caafimaad & NGO
-   • 📚 Waxbarasho & Macallin
-   • 💻 IT & Farsamo
-   • 📦 Logistics & Gaadiid
-
-2. 📍 **Goobta aad joogto:**
-   • 🇸🇴 Muqdisho | 🇸🇴 Hargeysa & Puntland
-   • 🇰🇪 Nairobi | 🌐 Remote (Guriga)
-
-3. 🎓 **Khibraddaada:**
-   • 🌱 Ku cusub (Entry/Graduate) | 💼 1-3 Sano | 🏆 3+ Sano
-
-*Ii soo qor tusaale: "Maamul, Muqdisho, Ku cusub", waxaana si toos ah kuugu soo saari doonaa shaqooyinka bannaan!* 🚀"""
-
-    elif any(k in user_lower for k in ["shaqo", "jobs", "soomaaliya", "somalia", "muqdisho", "hargeysa", "kenya", "nairobi"]):
-        return """💼 **Fursadaha Shaqo ee Dhammaan Qeybaha (All Careers in Somalia & East Africa):**
-
-Shaqo Baahiye wuxuu kuu raadinayaa dhammaan noocyada shaqooyinka:
-1. 📊 **Maamulka & Xisaabaadka:** Finance Officer, HR Assistant, Accountant (Dahabshiil, Salaam Somali Bank).
-2. 📞 **Customer Care & Iibka:** Call Center & EVC Plus Support (Hormuud Telecom, Telesom).
-3. 🏥 **Caafimaadka & NGO-yada:** Health Field Officer, Project Assistant (Save the Children, SRCS, UN).
-4. 📚 **Waxbarashada:** Macallimiinta Dugsiyada & Jaamacadaha (English, Math, Science).
-5. 💻 **IT-ga & Farsamada:** IT Support, Web Developer, AI Automation, Junior Cloud Engineer.
-6. 🌐 **Shaqooyinka Guriga (Remote):** Customer Support, Digital Marketing, Data Entry.
-
-🎯 **Ma hubtid shaqada kugu habboon?** Qor `quiz` si aad uga jawaabto 3 su'aalood oo kooban oo shaqo kugu habboon lagugu helo!"""
-
-    elif any(k in user_lower for k in ["booking", "ballan", "xiriir", "contact", "la kulan", "caawin", "mentorship"]):
-        return """📅 **Ballan Live ah & Xiriir Toos ah (Live Booking):**
-
-Waxaad si toos ah ula xiriiri kartaa **Mohamed Yasin**:
-• 📅 **Live Booking Form:** Guji tab-ka **'Ballan Live ah'** ee bogga si aad u doorato taariikhda iyo waqtiga.
-• 📱 **WhatsApp:** `+1 (587) 306-4137`
-• 📧 **Email:** `Suxufi34@gmail.com`
-• 📍 **Goobta:** Edmonton, Alberta, Canada 🇨🇦 & Online Global
-• 🔗 **LinkedIn:** [linkedin.com/in/mfaratoon](https://www.linkedin.com/in/mfaratoon)
-• 📺 **YouTube:** [youtube.com/@Mfaratoon](https://www.youtube.com/@Mfaratoon)
-
-*Haddii aad tahay arday u baahan caawinaad CV, tababar koorso, ama talo shaqo, xor ayaad u tahay inaad nala soo xiriirto!*"""
-
-    else:
-        return """Salamaat walaal! 👋 Waxaan ahay **Kaaliyaha AI ee Shaqo Baahiye**.
-
-Waxaan diyaar kuugu ahay inaan kaa caawiyo:
-1. 💼 **Dhammaan Fursadaha Shaqo (Maamul, Caafimaad, Iib, NGO, IT & Remote)**
-2. 🎯 **Quiz: Ii Raadi Shaqadayda (Hagaha shaqo-helidda oo kooban)**
-3. 📚 **Buugaagta Isbar** (Subscribe dheh [dhegeysobuug.substack.com](https://dhegeysobuug.substack.com/) waxaad helaysaa 2 buug oo bilaash ah oo si automatic ah inbox-kaaga ugu soo dhacaya!)
-4. 🤖 **Koorsooyinka AI Automation & Chatbots (WhatsApp, Telegram, N8n, Typebot)**
-5. ⭐ **Open Source Repo** (100% Free & Open Source)
-6. 📅 **Live Booking & Mentorship 1-on-1 ah la yeelo Mohamed Yasin**
-
-*Ii soo qor su'aashaada gaarka ah ama qor 'quiz' si aad shaqo u raadsato!* 🚀"""
+    # 4. Smart Local Career Engine (Runs reliably offline / 0 credits, with real links & search)
+    return smart_local_career_engine(user_message)
 
 @app.route("/")
 def index():

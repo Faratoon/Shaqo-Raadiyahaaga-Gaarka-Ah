@@ -1,14 +1,32 @@
 version: '3.8'
 
 services:
-  mohamed-job-portal:
+  shaqo-portal:
     build: .
-    container_name: mohamed-job-portal
+    container_name: shaqo-portal
     ports:
       - "5050:5050"
     environment:
       - PORT=5050
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - GROQ_API_KEY=${GROQ_API_KEY}
       - OPENAI_API_KEY=${OPENAI_API_KEY}
     volumes:
       - ./data_folder/output:/app/data_folder/output
-    restart: unless-stopped
+    restart: always
+    command: gunicorn --bind 0.0.0.0:5050 --workers 2 --timeout 120 portal_app:app
+
+  baahiye-telegram-bot:
+    build: .
+    container_name: baahiye-telegram-bot
+    environment:
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    volumes:
+      - ./telegram_management_data.json:/app/telegram_management_data.json
+      - ./data_folder/output:/app/data_folder/output
+    restart: always
+    command: python telegram_career_bot.py

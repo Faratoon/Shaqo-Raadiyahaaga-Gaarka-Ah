@@ -7,6 +7,13 @@ import urllib.parse
 from pathlib import Path
 import requests
 
+if hasattr(sys.stdout, 'reconfigure'):
+    try:
+        sys.stdout.reconfigure(encoding='utf-8', errors='replace')
+        sys.stderr.reconfigure(encoding='utf-8', errors='replace')
+    except Exception:
+        pass
+
 # Ensure imports work from current project root
 BASE_DIR = Path(__file__).resolve().parent
 sys.path.append(str(BASE_DIR))

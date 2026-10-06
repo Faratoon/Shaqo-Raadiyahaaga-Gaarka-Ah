@@ -1,4 +1,6 @@
 @echo off
+chcp 65001 >nul
+set PYTHONIOENCODING=utf-8
 title Shaqo Raadiyaha Dhalinyarada Soomaaliyeed - Telegram Bot
 cd /d "%~dp0"
 echo ================================================================
