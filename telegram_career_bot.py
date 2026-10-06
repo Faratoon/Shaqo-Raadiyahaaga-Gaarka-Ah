@@ -61,7 +61,18 @@ YOUTUBE_URL = "https://www.youtube.com/@Mfaratoon"
 SHARE_TEXT = urllib.parse.quote("🔥 Fursadaha Shaqo, Akadeemiyada Isbar & Maamulka Telegram (isbar-ai.com)! Ka faa'iideyso @Baahiyebot 🚀")
 
 # Database & Telegram Management Configuration
-TG_DATA_FILE = BASE_DIR / "telegram_management_data.json"
+IS_VERCEL = bool(os.environ.get("VERCEL"))
+if IS_VERCEL:
+    TG_DATA_FILE = Path("/tmp/telegram_management_data.json")
+    seed_file = BASE_DIR / "telegram_management_data.json"
+    if seed_file.exists() and not TG_DATA_FILE.exists():
+        try:
+            import shutil
+            shutil.copy2(seed_file, TG_DATA_FILE)
+        except Exception:
+            pass
+else:
+    TG_DATA_FILE = BASE_DIR / "telegram_management_data.json"
 VULGAR_WORDS = [
     "wasmo", "siil", "gus", "futada", "fck", "bitch", "shit",
     "dhuuq", "qaniis", "dhillo", "naago", "futo", "aflagaado"

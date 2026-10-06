@@ -957,6 +957,27 @@ def chat_assistant():
         "count": count
     })
 
+@app.route("/api/telegram_webhook", methods=["GET", "POST"])
+def telegram_webhook():
+    if request.method == "GET":
+        return jsonify({"status": "active", "service": "Telegram Webhook for @Baahiyebot"}), 200
+
+    try:
+        update = request.get_json(force=True, silent=True)
+        if not update:
+            return jsonify({"ok": False, "message": "No payload"}), 400
+
+        from telegram_career_bot import process_message, process_callback_query
+        if "message" in update:
+            process_message(update["message"])
+        elif "callback_query" in update:
+            process_callback_query(update["callback_query"])
+
+        return jsonify({"ok": True}), 200
+    except Exception as e:
+        print(f"[!] Error in telegram_webhook: {e}", flush=True)
+        return jsonify({"ok": False, "error": str(e)}), 200
+
 @app.route("/api/book_session", methods=["POST"])
 def book_session():
     data = request.json or {}
